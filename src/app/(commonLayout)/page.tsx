@@ -1,4 +1,4 @@
-import HeroSection from '../../components/modules/Home/Hero'
+import HeroSection from '@/components/modules/Home/Hero'
 
 const Home = () => {
 	return (

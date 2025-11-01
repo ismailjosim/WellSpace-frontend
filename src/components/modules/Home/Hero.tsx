@@ -50,7 +50,7 @@ export default function HeroSection() {
 	}
 
 	return (
-		<section className='relative w-full h-screen overflow-hidden bg-slate-900'>
+		<section className='relative w-full sm:h-screen flex justify-center items-center py-10 overflow-hidden bg-slate-900'>
 			{/* === Background Image & Overlay === */}
 			<div className='absolute inset-0'>
 				{backgroundImages.map((image, index) => (
@@ -73,7 +73,7 @@ export default function HeroSection() {
 			</div>
 
 			{/* === Main Content === */}
-			<div className='relative h-full flex items-center z-10'>
+			<div className='relative flex items-center z-10 py-10 sm:px-0 px-5'>
 				<div className='container mx-auto flex flex-col lg:flex-row items-center justify-between gap-10'>
 					{/* === Left Section === */}
 					<div className='flex-1 text-white space-y-6'>
@@ -84,7 +84,7 @@ export default function HeroSection() {
 							</span>
 						</div>
 
-						<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight'>
+						<h1 className='text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight'>
 							Find Your Perfect Doctor with AI
 						</h1>
 
@@ -115,7 +115,7 @@ export default function HeroSection() {
 						</div>
 
 						{/* Stats */}
-						<div className='flex flex-wrap gap-8 pt-8'>
+						<div className='flex-wrap gap-8 pt-8 hidden sm:flex'>
 							<div>
 								<div className='text-4xl font-bold text-white'>50K+</div>
 								<div className='text-sm text-gray-300 mt-1'>
@@ -137,7 +137,7 @@ export default function HeroSection() {
 					</div>
 
 					{/* === Right Section: Glass Card === */}
-					<div className='hidden lg:flex flex-1 justify-end'>
+					<div className='flex flex-1 sm:justify-end justify-center'>
 						<Card className='w-full max-w-lg p-8 space-y-6 rounded-2xl border border-white/30 bg-white/20 backdrop-blur-2xl shadow-2xl relative overflow-hidden text-white'>
 							<div className='absolute inset-0 bg-linear-to-br from-white/40 via-white/10 to-transparent opacity-70 pointer-events-none' />
 
@@ -145,7 +145,7 @@ export default function HeroSection() {
 								<CardTitle className='text-2xl font-bold drop-shadow-md'>
 									AI Doctor Finder
 								</CardTitle>
-								<Sparkles className='w-6 h-6 text-primary' />
+								<Sparkles className='w-6 h-6 text-primary-foreground' />
 							</CardHeader>
 
 							<CardContent className='relative z-10 space-y-4'>
