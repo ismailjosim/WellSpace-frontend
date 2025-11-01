@@ -1,9 +1,9 @@
-import { Button } from '../../components/ui/button'
+import HeroSection from '../../components/modules/Home/Hero'
 
 const Home = () => {
 	return (
 		<div>
-			<Button variant={'default'}>Click Me</Button>
+			<HeroSection />
 		</div>
 	)
 }
