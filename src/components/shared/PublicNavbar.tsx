@@ -14,6 +14,7 @@ import {
 	Microscope,
 	Users,
 } from 'lucide-react'
+import { Button } from '../ui/button'
 
 // Map links to corresponding Lucide icons
 const navLinks = [
@@ -91,9 +92,12 @@ const PublicNavbar = () => {
 
 						{/* --- Action Buttons and Mobile Toggle --- */}
 						<div className='flex items-center'>
-							<button className={clsx(buttonStyle, 'hidden lg:inline-flex')}>
-								Login
-							</button>
+							<Button
+								asChild
+								className={clsx(buttonStyle, 'hidden lg:inline-flex')}
+							>
+								<Link href={'/login'}>Login</Link>
+							</Button>
 
 							{/* Mobile Menu Toggle Button */}
 							<button
