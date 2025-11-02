@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { set, z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { HeartHandshake, LogIn, Mail, Eye, EyeOff } from 'lucide-react'
 import Link from 'next/link'
@@ -21,6 +21,7 @@ import { Separator } from '@/components/ui/separator'
 import loginUser from '@/utility/login'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import checkAuthStatus from '../../../utility/checkAuthStatus'
 
 // Zod schema for login validation
 const loginSchema = z.object({
@@ -68,8 +69,29 @@ const LoginForm = () => {
 				toast.success(result.message || 'Login successful!', {
 					duration: 3000,
 				})
-				// Redirect to dashboard if needed
-				router.push('/')
+				const authStatus = await checkAuthStatus()
+
+				if (authStatus.isAuthenticated && authStatus.user) {
+					const { role } = authStatus.user
+
+					// USE SWITCH CASE FOR ROLE BASED REDIRECTION
+					switch (role) {
+						case 'ADMIN':
+							router.push('/dashboard/admin')
+							break
+						case 'DOCTOR':
+							router.push('/dashboard/doctor')
+							break
+						case 'PATIENT':
+							router.push('/dashboard/patient')
+							break
+						default:
+							router.push('/')
+							break
+					}
+				} else {
+					setError('Authentication failed after login.')
+				}
 			} else {
 				setError(result.message || 'Invalid email or password.')
 			}
