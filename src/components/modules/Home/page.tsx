@@ -1,4 +1,4 @@
-import HeroSection from './Hero'
+import HeroSection from './HeroSection'
 
 const HomePage = () => {
 	return (
