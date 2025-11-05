@@ -1,5 +1,11 @@
-const Dashboard = () => {
-	return <div>This is Dashboard component</div>
+import Dashboard from '@/components/modules/Dashboard/Dashboard'
+
+const DashboardPage = () => {
+	return (
+		<>
+			<Dashboard />
+		</>
+	)
 }
 
-export default Dashboard
+export default DashboardPage
