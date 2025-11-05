@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
@@ -15,9 +16,9 @@ import {
 	Users,
 } from 'lucide-react'
 import { Button } from '../ui/button'
+import checkAuthStatus from '@/utility/checkAuthStatus'
 
-// Map links to corresponding Lucide icons
-const navLinks = [
+const baseLinks = [
 	{ name: 'Home', href: '/', icon: Home },
 	{ name: 'Consultation', href: '/consultation', icon: Stethoscope },
 	{ name: 'Health Plans', href: '/health-plans', icon: HeartHandshake },
@@ -29,12 +30,29 @@ const navLinks = [
 const PublicNavbar = () => {
 	const pathname = usePathname()
 	const [isOpen, setIsOpen] = useState(false)
+	const [user, setUser] = useState<any>(null)
+
+	// ✅ Fetch auth status on mount
+	useEffect(() => {
+		const fetchUser = async () => {
+			try {
+				const res = await checkAuthStatus()
+				setUser(res?.user || null)
+			} catch (err) {
+				console.error('Auth check failed:', err)
+			}
+		}
+		fetchUser()
+	}, [])
+
+	const role = user?.role || 'guest'
+	const links =
+		role && role !== 'guest'
+			? [...baseLinks, { name: 'Dashboard', href: '/dashboard', icon: Home }]
+			: baseLinks
 
 	const isActive = (href: string) => {
-		if (href === '/') {
-			return pathname === href
-		}
-		return pathname.startsWith(href)
+		return href === '/' ? pathname === href : pathname.startsWith(href)
 	}
 
 	const linkStyle = 'transition duration-300 font-medium text-lg'
@@ -42,16 +60,13 @@ const PublicNavbar = () => {
 		'px-6 py-2 bg-primary text-primary-foreground font-semibold rounded-lg shadow-lg hover:bg-primary/90 transition duration-300 ease-in-out transform hover:scale-[1.02] dark:shadow-none'
 	const logoColor = 'text-secondary'
 
-	// REFINED: Mobile link classes for a cleaner look
-	const mobileLinkClasses = (href: string) => {
-		const active = isActive(href)
-		return clsx(
+	const mobileLinkClasses = (href: string) =>
+		clsx(
 			'flex items-center space-x-3 w-full py-2 rounded-md text-base transition-colors duration-200',
-			active
-				? 'text-primary font-semibold border-l-4 border-primary bg-primary/5' // Border and subtle background for active
-				: 'text-muted-foreground hover:text-foreground hover:bg-muted/30 hover:font-medium', // Better hover state
+			isActive(href)
+				? 'text-primary font-semibold border-l-4 border-primary bg-primary/5'
+				: 'text-muted-foreground hover:text-foreground hover:bg-muted/30 hover:font-medium',
 		)
-	}
 
 	return (
 		<div className='w-full'>
@@ -74,7 +89,7 @@ const PublicNavbar = () => {
 
 						{/* --- Desktop Navigation --- */}
 						<nav className='hidden lg:flex space-x-8'>
-							{navLinks.map((link) => (
+							{links.map((link) => (
 								<Link
 									key={link.name}
 									href={link.href}
@@ -90,16 +105,22 @@ const PublicNavbar = () => {
 							))}
 						</nav>
 
-						{/* --- Action Buttons and Mobile Toggle --- */}
+						{/* --- Action Buttons + Mobile Toggle --- */}
 						<div className='flex items-center'>
-							<Button
-								asChild
-								className={clsx(buttonStyle, 'hidden lg:inline-flex')}
-							>
-								<Link href={'/login'}>Login</Link>
-							</Button>
+							{user ? (
+								<Button className={clsx(buttonStyle, 'hidden lg:inline-flex')}>
+									Logout
+								</Button>
+							) : (
+								<Button
+									asChild
+									className={clsx(buttonStyle, 'hidden lg:inline-flex')}
+								>
+									<Link href={'/login'}>Login</Link>
+								</Button>
+							)}
 
-							{/* Mobile Menu Toggle Button */}
+							{/* Mobile Menu Toggle */}
 							<button
 								onClick={() => setIsOpen(!isOpen)}
 								className='lg:hidden p-2 text-foreground/80 hover:text-primary transition duration-200'
@@ -116,9 +137,9 @@ const PublicNavbar = () => {
 				</div>
 			</header>
 
-			{/* --- Mobile Menu Drawer --- */}
+			{/* --- Mobile Drawer --- */}
 			<>
-				{/* Overlay to close menu on outside click */}
+				{/* Overlay */}
 				<div
 					className={clsx(
 						'fixed inset-0 top-20 z-40 lg:hidden bg-black/50 transition-opacity duration-300',
@@ -127,7 +148,7 @@ const PublicNavbar = () => {
 					onClick={() => setIsOpen(false)}
 				/>
 
-				{/* The Drawer Content */}
+				{/* Drawer Content */}
 				<div
 					className={clsx(
 						'fixed left-0 top-20 bottom-0 z-50 lg:hidden w-72 bg-background dark:bg-card shadow-xl p-4 flex flex-col space-y-4 transform transition-transform duration-300 ease-in-out',
@@ -135,7 +156,7 @@ const PublicNavbar = () => {
 					)}
 				>
 					<nav className='flex flex-col space-y-2'>
-						{navLinks.map((link) => (
+						{links.map((link) => (
 							<Link
 								key={link.name}
 								href={link.href}
@@ -149,15 +170,9 @@ const PublicNavbar = () => {
 					</nav>
 
 					<div className='pt-4 border-t border-border mt-auto'>
-						{/* Login button spans full width */}
-						<button
-							className={clsx(
-								buttonStyle,
-								'w-full px-4 py-3 text-lg', // Increased padding/size for mobile
-							)}
-						>
-							Login
-						</button>
+						<Button className={clsx(buttonStyle, 'w-full px-4 py-3 text-lg')}>
+							{user ? 'Logout' : 'Login'}
+						</Button>
 					</div>
 				</div>
 			</>

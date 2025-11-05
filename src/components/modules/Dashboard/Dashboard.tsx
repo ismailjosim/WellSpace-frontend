@@ -6,7 +6,7 @@ import { SiteHeader } from '@/components/site-header'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 
 import data from './data.json'
-const Dashboard = () => {
+const Dashboard = async () => {
 	return (
 		<SidebarProvider
 			style={
