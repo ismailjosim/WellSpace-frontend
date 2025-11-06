@@ -1,71 +1,122 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useActionState } from 'react'
-import { UserPlus } from 'lucide-react'
+import { useActionState, useState } from 'react'
+import { UserPlus, Eye, EyeOff } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import {
+	Field,
+	FieldDescription,
+	FieldGroup,
+	FieldLabel,
+} from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { registerUser } from '@/services/auth/registerPatient'
+import { Separator } from '@/components/ui/separator'
+import Link from 'next/link'
 
 const RegisterForm = () => {
 	const [state, formAction, isPending] = useActionState(registerUser, null)
-	console.log('result', state)
+	const [showPassword, setShowPassword] = useState(false)
+
+	const getFieldError = (fieldName: string) => {
+		if (state && state.errors) {
+			const error = state.errors.find((err: any) => err.field === fieldName)
+			return error?.message || null
+		}
+		return null
+	}
+
 	return (
-		<>
-			<form action={formAction} className='space-y-6'>
-				<div className='space-y-2'>
-					<Label htmlFor='name'>Full Name</Label>
+		<form action={formAction}>
+			<FieldGroup>
+				<Field>
+					<FieldLabel htmlFor='name'>Full Name</FieldLabel>
 					<Input
-						type='text'
 						id='name'
 						name='name'
-						required
+						type='text'
 						placeholder='John Doe'
-						className='h-12'
+						required
 					/>
-				</div>
+					{getFieldError('name') && (
+						<FieldDescription className='text-red-500'>
+							{getFieldError('name')}
+						</FieldDescription>
+					)}
+				</Field>
 
-				<div className='space-y-2'>
-					<Label htmlFor='email'>Email Address</Label>
+				<Field>
+					<FieldLabel htmlFor='email'>Email Address</FieldLabel>
 					<Input
-						type='email'
 						id='email'
 						name='email'
-						required
+						type='email'
 						placeholder='your@email.com'
-						className='h-12'
-					/>
-				</div>
-
-				<div className='space-y-2'>
-					<Label htmlFor='password'>Password</Label>
-					<Input
-						type='password'
-						id='password'
-						name='password'
 						required
-						placeholder='••••••••'
-						className='h-12'
 					/>
-				</div>
+					{getFieldError('email') && (
+						<FieldDescription className='text-red-500'>
+							{getFieldError('email')}
+						</FieldDescription>
+					)}
+				</Field>
 
-				<Button
-					type='submit'
-					className='w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg transition-all duration-300'
-					disabled={isPending}
-				>
-					{isPending ? 'Creating Account...' : 'Create Account'}
-					<UserPlus className='w-5 h-5 ml-2' />
-				</Button>
-			</form>
+				<Field>
+					<FieldLabel htmlFor='password'>Password</FieldLabel>
+					<div className='relative'>
+						<Input
+							id='password'
+							name='password'
+							type={showPassword ? 'text' : 'password'}
+							placeholder='••••••••'
+							required
+						/>
+						<button
+							type='button'
+							onClick={() => setShowPassword(!showPassword)}
+							className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors'
+							aria-label={showPassword ? 'Hide password' : 'Show password'}
+						>
+							{showPassword ? (
+								<EyeOff className='h-5 w-5' />
+							) : (
+								<Eye className='h-5 w-5' />
+							)}
+						</button>
+					</div>
+					{getFieldError('password') && (
+						<FieldDescription className='text-red-500'>
+							{getFieldError('password')}
+						</FieldDescription>
+					)}
+				</Field>
 
-			{/* Show error from either state or client-side validation */}
-			{/* {(error || state?.error) && (
-				<Alert variant='destructive' className='my-4'>
-					<AlertDescription>{error || state?.error}</AlertDescription>
-				</Alert>
-			)} */}
-		</>
+				<Field>
+					<Button type='submit' className='w-full' disabled={isPending}>
+						{isPending ? 'Creating Account...' : 'Create Account'}
+						<UserPlus className='w-4 h-4 ml-2' />
+					</Button>
+					{/* Divider */}
+					<div className='flex items-center gap-4 my-6'>
+						<Separator className='flex-1' />
+						<span className='text-sm font-medium text-muted-foreground'>
+							OR
+						</span>
+						<Separator className='flex-1' />
+					</div>
+					<Button variant='outline' type='button' className='w-full'>
+						Sign up with Google
+					</Button>
+					<FieldDescription className='text-center'>
+						Already have an account?{' '}
+						<Link href='/login' className='underline-offset-4 hover:underline'>
+							Login
+						</Link>
+					</FieldDescription>
+				</Field>
+			</FieldGroup>
+		</form>
 	)
 }
 
