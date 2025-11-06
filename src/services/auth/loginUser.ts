@@ -1,26 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server'
 
-import z from 'zod'
+import { z } from 'zod'
 
 const loginValidationSchema = z.object({
 	email: z.email({
-		error: 'invalid email address',
+		error: 'Invalid email address',
 	}),
-	password: z.string().min(6).max(100),
+	password: z
+		.string({
+			error: 'Password is required',
+		})
+		.min(6, 'Password must be at least 6 characters')
+		.max(100, 'Password must be less than 100 characters'),
 })
 
 export const loginUser = async (
 	_currentState: any,
-	formData: any,
+	formData: FormData,
 ): Promise<any> => {
 	try {
-		const loginData = {
-			password: formData.get('password'),
+		// Extract form data
+		const rawData = {
 			email: formData.get('email'),
+			password: formData.get('password'),
 		}
 
-		const validatedFields = loginValidationSchema.safeParse(loginData)
+		// Validate the input fields
+		const validatedFields = loginValidationSchema.safeParse(rawData)
+
 		if (!validatedFields.success) {
 			return {
 				success: false,
@@ -33,18 +41,37 @@ export const loginUser = async (
 			}
 		}
 
-		console.log(validatedFields)
+		// console.log('Sending login data:', validatedFields.data)
 
+		// Send to API
 		const res = await fetch('http://localhost:5000/api/v1/auth/login', {
 			method: 'POST',
-			body: JSON.stringify(loginData),
+			body: JSON.stringify(validatedFields.data),
 			headers: {
 				'Content-Type': 'application/json',
 			},
-		}).then((res) => res.json())
-		return res
+		})
+
+		const data = await res.json()
+		// console.log('Login response:', data)
+
+		return {
+			success: true,
+			data,
+		}
 	} catch (error) {
-		console.log(error)
-		return { error: 'Login failed' }
+		// console.error('Login error:', error)
+		return {
+			success: false,
+			errors: [
+				{
+					field: 'general',
+					message:
+						error instanceof Error
+							? error.message
+							: 'Login failed. Please try again.',
+				},
+			],
+		}
 	}
 }
