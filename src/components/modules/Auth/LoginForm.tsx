@@ -15,7 +15,7 @@ import { loginUser } from '@/services/auth/loginUser'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 
-export function LoginForm() {
+export function LoginForm({ redirect }: { redirect?: string }) {
 	const [state, formAction, isPending] = useActionState(loginUser, null)
 	const [showPassword, setShowPassword] = useState(false)
 
@@ -30,6 +30,7 @@ export function LoginForm() {
 
 	return (
 		<form action={formAction}>
+			{redirect && <input type='hidden' name='redirect' value={redirect} />}
 			<FieldGroup>
 				<Field>
 					<FieldLabel htmlFor='email'>Email Address</FieldLabel>

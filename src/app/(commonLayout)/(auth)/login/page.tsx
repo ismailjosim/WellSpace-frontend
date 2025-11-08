@@ -9,7 +9,12 @@ import {
 
 import { HeartHandshake } from 'lucide-react'
 
-const LoginPage = () => {
+const LoginPage = async ({
+	searchParams,
+}: {
+	searchParams: Promise<{ redirect?: string }>
+}) => {
+	const { redirect } = (await searchParams) || {}
 	return (
 		<div className='min-h-screen flex items-center justify-center bg-secondary p-4'>
 			<Card className='w-full max-w-md shadow-2xl'>
@@ -32,7 +37,7 @@ const LoginPage = () => {
 
 				<CardContent>
 					{/* Login Form */}
-					<LoginForm />
+					<LoginForm redirect={redirect} />
 				</CardContent>
 			</Card>
 		</div>

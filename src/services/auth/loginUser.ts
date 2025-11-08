@@ -4,6 +4,13 @@
 import { z } from 'zod'
 import { parse } from 'cookie'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import jwt, { JwtPayload } from 'jsonwebtoken'
+import {
+	getDefaultDashboardRoutes,
+	isValidRedirectForRole,
+	UserRole,
+} from '../../lib/auth-utils'
 const loginValidationSchema = z.object({
 	email: z.email({
 		error: 'Invalid email address',
@@ -21,6 +28,8 @@ export const loginUser = async (
 	formData: FormData,
 ): Promise<any> => {
 	try {
+		const redirectTo = formData.get('redirect') || null
+
 		let accessTokenObj: null | any = null
 		let refreshTokenObj: null | any = null
 		// Extract form data
@@ -55,10 +64,8 @@ export const loginUser = async (
 			},
 		})
 
-		const data = await res.json()
-
 		const setCookieHeaders = res.headers.getSetCookie()
-		if (setCookieHeaders) {
+		if (setCookieHeaders && setCookieHeaders.length > 0) {
 			setCookieHeaders.forEach((cookie: string) => {
 				const parsedCookie = parse(cookie)
 				if (parsedCookie['accessToken']) {
@@ -70,6 +77,8 @@ export const loginUser = async (
 					refreshTokenObj = parsedCookie
 				}
 			})
+		} else {
+			throw new Error('No Set-Cookie header found')
 		}
 
 		if (!accessTokenObj) {
@@ -87,15 +96,40 @@ export const loginUser = async (
 			httpOnly: true,
 			maxAge: parseInt(accessTokenObj['Max-Age']) || undefined,
 			path: accessTokenObj.Path || '/',
+			sameSite: accessTokenObj['SameSite'] || 'none',
 		})
 		cookieStore.set('refreshToken', refreshTokenObj.refreshToken, {
 			secure: true,
 			httpOnly: true,
 			maxAge: parseInt(refreshTokenObj['Max-Age']) || undefined,
+			sameSite: accessTokenObj['SameSite'] || 'none',
 		})
 
-		return data
-	} catch (error) {
+		const verifiedToken = jwt.verify(
+			accessTokenObj.accessToken,
+			process.env.ACCESS_TOKEN_SECRET as string,
+		)
+
+		let userRole: UserRole = 'PATIENT'
+
+		if (typeof verifiedToken !== 'string' && verifiedToken.role) {
+			userRole = verifiedToken.role as UserRole
+		} else {
+			throw new Error('Invalid token payload')
+		}
+
+		if (redirectTo) {
+			const requestedPath = redirectTo.toString()
+			if (isValidRedirectForRole(requestedPath, userRole)) {
+				redirect(requestedPath)
+			} else {
+				redirect(getDefaultDashboardRoutes(userRole))
+			}
+		}
+	} catch (error: any) {
+		if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+			throw error
+		}
 		return {
 			success: false,
 			errors: [
