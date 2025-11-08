@@ -15,7 +15,7 @@ import { loginUser } from '@/services/auth/loginUser'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 
-export function LoginForm({ className }: React.ComponentProps<'div'>) {
+export function LoginForm() {
 	const [state, formAction, isPending] = useActionState(loginUser, null)
 	const [showPassword, setShowPassword] = useState(false)
 
@@ -26,6 +26,7 @@ export function LoginForm({ className }: React.ComponentProps<'div'>) {
 		}
 		return null
 	}
+	console.log(state)
 
 	return (
 		<form action={formAction}>
@@ -33,6 +34,7 @@ export function LoginForm({ className }: React.ComponentProps<'div'>) {
 				<Field>
 					<FieldLabel htmlFor='email'>Email Address</FieldLabel>
 					<Input
+						defaultValue={'super@wellspace.com'}
 						id='email'
 						name='email'
 						type='email'
@@ -58,6 +60,7 @@ export function LoginForm({ className }: React.ComponentProps<'div'>) {
 					</div>
 					<div className='relative'>
 						<Input
+							defaultValue={'123456'}
 							id='password'
 							name='password'
 							type={showPassword ? 'text' : 'password'}

@@ -32,13 +32,7 @@ const RegisterForm = () => {
 			<FieldGroup>
 				<Field>
 					<FieldLabel htmlFor='name'>Full Name</FieldLabel>
-					<Input
-						id='name'
-						name='name'
-						type='text'
-						placeholder='John Doe'
-						required
-					/>
+					<Input id='name' name='name' type='text' placeholder='John Doe' />
 					{getFieldError('name') && (
 						<FieldDescription className='text-red-500'>
 							{getFieldError('name')}
@@ -48,13 +42,7 @@ const RegisterForm = () => {
 
 				<Field>
 					<FieldLabel htmlFor='email'>Email Address</FieldLabel>
-					<Input
-						id='email'
-						name='email'
-						type='email'
-						placeholder='your@email.com'
-						required
-					/>
+					<Input name='email' type='email' placeholder='your@email.com' />
 					{getFieldError('email') && (
 						<FieldDescription className='text-red-500'>
 							{getFieldError('email')}
@@ -66,11 +54,9 @@ const RegisterForm = () => {
 					<FieldLabel htmlFor='password'>Password</FieldLabel>
 					<div className='relative'>
 						<Input
-							id='password'
 							name='password'
 							type={showPassword ? 'text' : 'password'}
 							placeholder='••••••••'
-							required
 						/>
 						<button
 							type='button'

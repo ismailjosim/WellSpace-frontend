@@ -2,7 +2,8 @@
 'use server'
 
 import { z } from 'zod'
-
+import { parse } from 'cookie'
+import { cookies } from 'next/headers'
 const loginValidationSchema = z.object({
 	email: z.email({
 		error: 'Invalid email address',
@@ -20,6 +21,8 @@ export const loginUser = async (
 	formData: FormData,
 ): Promise<any> => {
 	try {
+		let accessTokenObj: null | any = null
+		let refreshTokenObj: null | any = null
 		// Extract form data
 		const rawData = {
 			email: formData.get('email'),
@@ -53,14 +56,46 @@ export const loginUser = async (
 		})
 
 		const data = await res.json()
-		// console.log('Login response:', data)
 
-		return {
-			success: true,
-			data,
+		const setCookieHeaders = res.headers.getSetCookie()
+		if (setCookieHeaders) {
+			setCookieHeaders.forEach((cookie: string) => {
+				const parsedCookie = parse(cookie)
+				if (parsedCookie['accessToken']) {
+					// Handle access token cookie
+					accessTokenObj = parsedCookie
+				}
+				if (parsedCookie['refreshToken']) {
+					// Handle refresh token cookie
+					refreshTokenObj = parsedCookie
+				}
+			})
 		}
+
+		if (!accessTokenObj) {
+			throw new Error('Authentication tokens are missing')
+		}
+		if (!refreshTokenObj) {
+			throw new Error('Authentication tokens are missing')
+		}
+
+		// set cookies
+		const cookieStore = await cookies()
+
+		cookieStore.set('accessToken', accessTokenObj.accessToken, {
+			secure: true,
+			httpOnly: true,
+			maxAge: parseInt(accessTokenObj['Max-Age']) || undefined,
+			path: accessTokenObj.Path || '/',
+		})
+		cookieStore.set('refreshToken', refreshTokenObj.refreshToken, {
+			secure: true,
+			httpOnly: true,
+			maxAge: parseInt(refreshTokenObj['Max-Age']) || undefined,
+		})
+
+		return data
 	} catch (error) {
-		// console.error('Login error:', error)
 		return {
 			success: false,
 			errors: [
