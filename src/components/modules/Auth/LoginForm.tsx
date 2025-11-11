@@ -26,7 +26,6 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 		}
 		return null
 	}
-	console.log(state)
 
 	return (
 		<form action={formAction}>

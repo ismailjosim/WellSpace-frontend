@@ -1,5 +1,5 @@
 import jwt, { JwtPayload } from 'jsonwebtoken'
-import { cookies } from 'next/headers'
+
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import {
@@ -8,11 +8,11 @@ import {
 	isAuthRoute,
 	UserRole,
 } from './lib/auth-utils'
+import { deleteCookie, getCookie } from './services/auth/tokenHandlers'
 
 export async function proxy(request: NextRequest) {
-	const cookieStore = await cookies()
 	const { pathname } = request.nextUrl
-	const accessToken = request.cookies.get('accessToken')?.value || null
+	const accessToken = (await getCookie('accessToken')) || null
 	let userRole: UserRole | null = null
 	if (accessToken) {
 		const verifiedToken: JwtPayload | string = jwt.verify(
@@ -20,8 +20,8 @@ export async function proxy(request: NextRequest) {
 			process.env.ACCESS_TOKEN_SECRET as string,
 		)
 		if (typeof verifiedToken === 'string') {
-			cookieStore.delete('accessToken')
-			cookieStore.delete('refreshToken')
+			await deleteCookie('accessToken')
+			await deleteCookie('refreshToken')
 			return NextResponse.redirect(new URL('/', request.url))
 		}
 		userRole = verifiedToken.role as UserRole

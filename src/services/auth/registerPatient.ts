@@ -1,24 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { z } from 'zod'
-
-const registerValidationSchema = z.object({
-	name: z
-		.string({
-			error: 'Name is required',
-		})
-		.min(1, 'Name is required'),
-	email: z.email({
-		error: 'Invalid email address',
-	}),
-
-	password: z
-		.string({
-			error: 'Password is required',
-		})
-		.min(6, 'Password must be at least 6 characters')
-		.max(100, 'Password must be less than 100 characters'),
-})
+import { loginUser } from './loginUser'
+import { registerValidationSchema } from '@/schema/authSchema'
 
 export const registerUser = async (
 	_currentState: any,
@@ -56,7 +39,7 @@ export const registerUser = async (
 			},
 		}
 
-		console.log('Sending registration data:', registerData)
+		// console.log('Sending registration data:', registerData)
 
 		// Send to API
 		const newFormData = new FormData()
@@ -70,30 +53,26 @@ export const registerUser = async (
 			},
 		)
 
-		if (!res.ok) {
-			throw new Error(`HTTP error! status: ${res.status}`)
-		}
-
 		const data = await res.json()
-		console.log('Registration response:', data)
 
-		return {
-			success: true,
-			data,
+		// login user user after register
+		if (data.success) {
+			await loginUser(_currentState, formData)
 		}
-	} catch (error) {
-		console.error('Registration error:', error)
+
+		return data
+	} catch (error: any) {
+		if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+			throw error
+		}
+		console.log(error)
 		return {
 			success: false,
-			errors: [
-				{
-					field: 'general',
-					message:
-						error instanceof Error
-							? error.message
-							: 'Registration failed. Please try again.',
-				},
-			],
+			message: `${
+				process.env.NODE_ENV === 'development'
+					? error.message
+					: 'Registration Failed. Please try again.'
+			}`,
 		}
 	}
 }

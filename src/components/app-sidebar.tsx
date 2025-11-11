@@ -42,7 +42,6 @@ const navMainItems = [
 		icon: IconDashboard,
 	},
 ]
-console.log(role)
 
 if (role === 'ADMIN') {
 	navMainItems.push(
