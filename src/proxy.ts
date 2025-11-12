@@ -14,6 +14,7 @@ export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl
 	const accessToken = (await getCookie('accessToken')) || null
 	let userRole: UserRole | null = null
+
 	if (accessToken) {
 		const verifiedToken: JwtPayload | string = jwt.verify(
 			accessToken,
@@ -24,7 +25,7 @@ export async function proxy(request: NextRequest) {
 			await deleteCookie('refreshToken')
 			return NextResponse.redirect(new URL('/', request.url))
 		}
-		userRole = verifiedToken.role as UserRole
+		userRole = verifiedToken.role
 	}
 
 	// find route owner
@@ -72,7 +73,6 @@ export async function proxy(request: NextRequest) {
 			)
 		}
 	}
-	console.log(userRole)
 	return NextResponse.next()
 }
 

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { LogIn, Eye, EyeOff } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -14,27 +15,46 @@ import { Input } from '@/components/ui/input'
 import { loginUser } from '@/services/auth/loginUser'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 export function LoginForm({ redirect }: { redirect?: string }) {
 	const [state, formAction, isPending] = useActionState(loginUser, null)
 	const [showPassword, setShowPassword] = useState(false)
+	const router = useRouter()
 
+	// ✅ helper to get field-specific validation errors
 	const getFieldError = (fieldName: string) => {
-		if (state && state.errors) {
+		if (state?.errors?.length) {
 			const error = state.errors.find((err: any) => err.field === fieldName)
 			return error?.message || null
 		}
 		return null
 	}
 
+	// ✅ handle toast + redirect logic
+	useEffect(() => {
+		if (!state) return
+
+		if (state.success) {
+			toast.success(state.message || 'Login successful!')
+			if (state.redirectTo) {
+				router.push(state.redirectTo)
+			}
+		} else if (state.message && !state.success) {
+			toast.error(state.message)
+		}
+	}, [state, router])
+
 	return (
 		<form action={formAction}>
 			{redirect && <input type='hidden' name='redirect' value={redirect} />}
+
 			<FieldGroup>
+				{/* Email Field */}
 				<Field>
 					<FieldLabel htmlFor='email'>Email Address</FieldLabel>
 					<Input
-						defaultValue={'super@wellspace.com'}
+						defaultValue='super@wellspace.com'
 						id='email'
 						name='email'
 						type='email'
@@ -48,6 +68,7 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 					)}
 				</Field>
 
+				{/* Password Field */}
 				<Field>
 					<div className='flex items-center'>
 						<FieldLabel htmlFor='password'>Password</FieldLabel>
@@ -60,7 +81,7 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 					</div>
 					<div className='relative'>
 						<Input
-							defaultValue={'123456'}
+							defaultValue='123456'
 							id='password'
 							name='password'
 							type={showPassword ? 'text' : 'password'}
@@ -87,11 +108,13 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 					)}
 				</Field>
 
+				{/* Submit Button */}
 				<Field>
 					<Button type='submit' className='w-full' disabled={isPending}>
 						{isPending ? 'Signing In...' : 'Sign In'}
 						<LogIn className='w-4 h-4 ml-2' />
 					</Button>
+
 					{/* Divider */}
 					<div className='flex items-center gap-4 my-6'>
 						<Separator className='flex-1' />
@@ -100,9 +123,11 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 						</span>
 						<Separator className='flex-1' />
 					</div>
+
 					<Button variant='outline' type='button' className='w-full'>
 						Login with Google
 					</Button>
+
 					<FieldDescription className='text-center'>
 						Don&apos;t have an account?{' '}
 						<Link
