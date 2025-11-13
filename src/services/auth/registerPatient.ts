@@ -151,9 +151,7 @@ export const registerUser = async (
 		const userRole: UserRole = verifiedToken.role
 
 		// ✅ Build redirect path
-		const finalRedirect = `${getDefaultDashboardRoutes(
-			userRole,
-		)}?registered=true`
+		const finalRedirect = `${getDefaultDashboardRoutes(userRole)}`
 
 		// ✅ Return success state
 		return {
