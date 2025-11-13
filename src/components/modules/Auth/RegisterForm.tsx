@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { UserPlus, Eye, EyeOff } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -14,10 +15,12 @@ import { Input } from '@/components/ui/input'
 import { registerUser } from '@/services/auth/registerPatient'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 const RegisterForm = () => {
 	const [state, formAction, isPending] = useActionState(registerUser, null)
 	const [showPassword, setShowPassword] = useState(false)
+	const router = useRouter()
 
 	const getFieldError = (fieldName: string) => {
 		if (state && state.errors) {
@@ -27,12 +30,32 @@ const RegisterForm = () => {
 		return null
 	}
 
+	// ✅ Handle toast + redirect logic
+	useEffect(() => {
+		if (!state) return
+
+		if (state.success) {
+			toast.success(state.message || 'Registration successful!')
+			if (state.redirectTo) {
+				router.push(state.redirectTo)
+			}
+		} else if (state.message && !state.success) {
+			toast.error(state.message)
+		}
+	}, [state, router])
+
 	return (
 		<form action={formAction}>
 			<FieldGroup>
 				<Field>
 					<FieldLabel htmlFor='name'>Full Name</FieldLabel>
-					<Input id='name' name='name' type='text' placeholder='John Doe' />
+					<Input
+						id='name'
+						name='name'
+						type='text'
+						placeholder='John Doe'
+						required
+					/>
 					{getFieldError('name') && (
 						<FieldDescription className='text-red-500'>
 							{getFieldError('name')}
@@ -42,7 +65,12 @@ const RegisterForm = () => {
 
 				<Field>
 					<FieldLabel htmlFor='email'>Email Address</FieldLabel>
-					<Input name='email' type='email' placeholder='your@email.com' />
+					<Input
+						name='email'
+						type='email'
+						placeholder='your@email.com'
+						required
+					/>
 					{getFieldError('email') && (
 						<FieldDescription className='text-red-500'>
 							{getFieldError('email')}
@@ -57,6 +85,7 @@ const RegisterForm = () => {
 							name='password'
 							type={showPassword ? 'text' : 'password'}
 							placeholder='••••••••'
+							required
 						/>
 						<button
 							type='button'

@@ -36,7 +36,6 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 		if (!state) return
 
 		if (state.success) {
-			toast.success(state.message || 'Login successful!')
 			if (state.redirectTo) {
 				router.push(state.redirectTo)
 			}
