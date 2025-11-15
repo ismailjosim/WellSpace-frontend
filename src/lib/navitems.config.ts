@@ -27,7 +27,7 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
 				{
 					title: 'Change Password',
 					href: '/change-password',
-					icon: 'Settings', // ✅ String
+					icon: 'Settings',
 					roles: ['PATIENT'],
 				},
 			],
@@ -42,20 +42,20 @@ export const doctorNavItems: NavSection[] = [
 			{
 				title: 'Appointments',
 				href: '/doctor/dashboard/appointments',
-				icon: 'Calendar', // ✅ String
+				icon: 'Calendar',
 				badge: '3',
 				roles: ['DOCTOR'],
 			},
 			{
 				title: 'My Schedules',
 				href: '/doctor/dashboard/my-schedules',
-				icon: 'Clock', // ✅ String
+				icon: 'Clock',
 				roles: ['DOCTOR'],
 			},
 			{
 				title: 'Prescriptions',
 				href: '/doctor/dashboard/prescriptions',
-				icon: 'FileText', // ✅ String
+				icon: 'FileText',
 				roles: ['DOCTOR'],
 			},
 		],
@@ -69,13 +69,13 @@ export const patientNavItems: NavSection[] = [
 			{
 				title: 'My Appointments',
 				href: '/dashboard/my-appointments',
-				icon: 'Calendar', // ✅ String
+				icon: 'Calendar',
 				roles: ['PATIENT'],
 			},
 			{
 				title: 'Book Appointment',
 				href: '/consultation',
-				icon: 'ClipboardList', // ✅ String
+				icon: 'ClipboardList',
 				roles: ['PATIENT'],
 			},
 		],
@@ -86,13 +86,13 @@ export const patientNavItems: NavSection[] = [
 			{
 				title: 'My Prescriptions',
 				href: '/dashboard/my-prescriptions',
-				icon: 'FileText', // ✅ String
+				icon: 'FileText',
 				roles: ['PATIENT'],
 			},
 			{
 				title: 'Health Records',
 				href: '/dashboard/health-records',
-				icon: 'Activity', // ✅ String
+				icon: 'Activity',
 				roles: ['PATIENT'],
 			},
 		],
@@ -106,19 +106,19 @@ export const adminNavItems: NavSection[] = [
 			{
 				title: 'Admins',
 				href: '/admin/dashboard/admins-management',
-				icon: 'Shield', // ✅ String
+				icon: 'Shield',
 				roles: ['ADMIN'],
 			},
 			{
 				title: 'Doctors',
 				href: '/admin/dashboard/doctors-management',
-				icon: 'Stethoscope', // ✅ String
+				icon: 'Stethoscope',
 				roles: ['ADMIN'],
 			},
 			{
 				title: 'Patients',
 				href: '/admin/dashboard/patients-management',
-				icon: 'Users', // ✅ String
+				icon: 'Users',
 				roles: ['ADMIN'],
 			},
 		],
@@ -129,19 +129,19 @@ export const adminNavItems: NavSection[] = [
 			{
 				title: 'Appointments',
 				href: '/admin/dashboard/appointments-management',
-				icon: 'Calendar', // ✅ String
+				icon: 'Calendar',
 				roles: ['ADMIN'],
 			},
 			{
 				title: 'Schedules',
 				href: '/admin/dashboard/schedules-management',
-				icon: 'Clock', // ✅ String
+				icon: 'Clock',
 				roles: ['ADMIN'],
 			},
 			{
 				title: 'Specialties',
 				href: '/admin/dashboard/specialties-management',
-				icon: 'Hospital', // ✅ String
+				icon: 'Hospital',
 				roles: ['ADMIN'],
 			},
 		],
