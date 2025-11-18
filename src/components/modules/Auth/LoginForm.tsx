@@ -15,7 +15,7 @@ import { loginUser } from '@/services/auth/loginUser'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { toast } from 'sonner'
-import getInputFieldError from '../../../lib/getInputFieldError'
+import getInputFieldError from '@/lib/getInputFieldError'
 
 export function LoginForm({ redirect }: { redirect?: string }) {
 	const [state, formAction, isPending] = useActionState(loginUser, null)
@@ -49,7 +49,6 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 						name='email'
 						type='email'
 						placeholder='your@email.com'
-						required
 					/>
 					{getInputFieldError('email', state)}
 				</Field>
@@ -72,7 +71,6 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 							name='password'
 							type={showPassword ? 'text' : 'password'}
 							placeholder='••••••••'
-							required
 						/>
 						<button
 							type='button'

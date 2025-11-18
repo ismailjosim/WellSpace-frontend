@@ -56,7 +56,6 @@ export const loginUser = async (
 		})
 
 		const result = await res.json()
-		console.log(result)
 
 		// ✅ Handle backend-level errors
 		if (!result.success) {

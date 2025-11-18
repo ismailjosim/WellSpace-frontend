@@ -14,8 +14,6 @@ export const registerUser = async (
 	_currentState: any,
 	formData: FormData,
 ): Promise<any> => {
-	const base = responseTemplate()
-
 	try {
 		// -----------------------------
 		// 🔹 1. Extract form data
