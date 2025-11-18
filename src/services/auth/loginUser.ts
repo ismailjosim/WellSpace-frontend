@@ -10,6 +10,7 @@ import {
 	UserRole,
 } from '@/lib/auth-utils'
 import { loginValidationSchema } from '@/schema/authSchema'
+import { serverFetch } from '../../lib/server-fetch'
 
 export const loginUser = async (
 	_currentState: any,
@@ -50,13 +51,12 @@ export const loginUser = async (
 		}
 
 		// ✅ Send to backend API
-		const res = await fetch('http://localhost:5000/api/v1/auth/login', {
-			method: 'POST',
+		const res = await serverFetch.post('/auth/login', {
 			body: JSON.stringify(rawData),
-			headers: { 'Content-Type': 'application/json' },
 		})
 
 		const result = await res.json()
+		console.log(result)
 
 		// ✅ Handle backend-level errors
 		if (!result.success) {

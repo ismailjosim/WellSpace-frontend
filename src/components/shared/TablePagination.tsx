@@ -79,7 +79,6 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
 			</Button>
 
 			<span className='text-sm text-muted-foreground ml-2'>
-				{/* Page 9 of 20 */}
 				Page {currentPage} of {totalPages}
 			</span>
 		</div>

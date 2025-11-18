@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useActionState, useEffect, useState } from 'react'
@@ -16,20 +15,12 @@ import { loginUser } from '@/services/auth/loginUser'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import getInputFieldError from '../../../lib/getInputFieldError'
 
 export function LoginForm({ redirect }: { redirect?: string }) {
 	const [state, formAction, isPending] = useActionState(loginUser, null)
 	const [showPassword, setShowPassword] = useState(false)
 	const router = useRouter()
-
-	// ✅ helper to get field-specific validation errors
-	const getFieldError = (fieldName: string) => {
-		if (state?.errors?.length) {
-			const error = state.errors.find((err: any) => err.field === fieldName)
-			return error?.message || null
-		}
-		return null
-	}
 
 	// ✅ handle toast + redirect logic
 	useEffect(() => {
@@ -60,11 +51,7 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 						placeholder='your@email.com'
 						required
 					/>
-					{getFieldError('email') && (
-						<FieldDescription className='text-red-500'>
-							{getFieldError('email')}
-						</FieldDescription>
-					)}
+					{getInputFieldError('email', state)}
 				</Field>
 
 				{/* Password Field */}
@@ -100,11 +87,7 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 							)}
 						</button>
 					</div>
-					{getFieldError('password') && (
-						<FieldDescription className='text-red-500'>
-							{getFieldError('password')}
-						</FieldDescription>
-					)}
+					{getInputFieldError('password', state)}
 				</Field>
 
 				{/* Submit Button */}

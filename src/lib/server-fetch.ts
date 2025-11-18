@@ -25,28 +25,49 @@ const serverFetchHelper = async (
 
 export const serverFetch = {
 	get: async (endpoint: string, options: RequestInit = {}): Promise<Response> =>
-		serverFetchHelper(endpoint, { ...options, method: 'GET' }),
+		serverFetchHelper(endpoint, {
+			method: 'GET',
+			...options,
+		}),
 
-	post: async (
-		endpoint: string,
-		options: RequestInit = {},
-	): Promise<Response> =>
-		serverFetchHelper(endpoint, { ...options, method: 'POST' }),
+	post: (endpoint: string, options: RequestInit = {}) =>
+		serverFetchHelper(endpoint, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				...(options.headers || {}),
+			},
+			...options,
+		}),
 
-	put: async (endpoint: string, options: RequestInit = {}): Promise<Response> =>
-		serverFetchHelper(endpoint, { ...options, method: 'PUT' }),
+	put: (endpoint: string, options: RequestInit = {}) =>
+		serverFetchHelper(endpoint, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				...(options.headers || {}),
+			},
+			...options,
+		}),
 
-	patch: async (
-		endpoint: string,
-		options: RequestInit = {},
-	): Promise<Response> =>
-		serverFetchHelper(endpoint, { ...options, method: 'PATCH' }),
+	patch: (endpoint: string, options: RequestInit = {}) =>
+		serverFetchHelper(endpoint, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				...(options.headers || {}),
+			},
+			...options,
+		}),
 
-	delete: async (
-		endpoint: string,
-		options: RequestInit = {},
-	): Promise<Response> =>
-		serverFetchHelper(endpoint, { ...options, method: 'DELETE' }),
+	delete: (endpoint: string, options: RequestInit = {}) =>
+		serverFetchHelper(endpoint, {
+			method: 'DELETE',
+			...options,
+		}),
 }
 
 // serverFetch.get('/auth/me')

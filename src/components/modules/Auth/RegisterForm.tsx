@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useActionState, useEffect, useState } from 'react'
@@ -16,19 +15,12 @@ import { registerUser } from '@/services/auth/registerPatient'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import getInputFieldError from '../../../lib/getInputFieldError'
 
 const RegisterForm = () => {
 	const [state, formAction, isPending] = useActionState(registerUser, null)
 	const [showPassword, setShowPassword] = useState(false)
 	const router = useRouter()
-
-	const getFieldError = (fieldName: string) => {
-		if (state && state.errors) {
-			const error = state.errors.find((err: any) => err.field === fieldName)
-			return error?.message || null
-		}
-		return null
-	}
 
 	// ✅ Handle toast + redirect logic
 	useEffect(() => {
@@ -56,11 +48,7 @@ const RegisterForm = () => {
 						placeholder='John Doe'
 						required
 					/>
-					{getFieldError('name') && (
-						<FieldDescription className='text-red-500'>
-							{getFieldError('name')}
-						</FieldDescription>
-					)}
+					{getInputFieldError('name', state)}
 				</Field>
 
 				<Field>
@@ -71,11 +59,7 @@ const RegisterForm = () => {
 						placeholder='your@email.com'
 						required
 					/>
-					{getFieldError('email') && (
-						<FieldDescription className='text-red-500'>
-							{getFieldError('email')}
-						</FieldDescription>
-					)}
+					{getInputFieldError('email', state)}
 				</Field>
 
 				<Field>
@@ -100,11 +84,7 @@ const RegisterForm = () => {
 							)}
 						</button>
 					</div>
-					{getFieldError('password') && (
-						<FieldDescription className='text-red-500'>
-							{getFieldError('password')}
-						</FieldDescription>
-					)}
+					{getInputFieldError('password', state)}
 				</Field>
 
 				<Field>
