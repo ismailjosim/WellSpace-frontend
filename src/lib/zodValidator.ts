@@ -1,6 +1,28 @@
-import { ZodObject } from 'zod'
+import { ZodObject, ZodTypeAny } from 'zod'
 
-export const zodValidator = <T>(payload: T, schema: ZodObject) => {
+// Define proper return types
+type ValidationSuccess<T> = {
+	success: true
+	data: T
+}
+
+type ValidationError = {
+	success: false
+	type: 'validation'
+	message: string
+	errors: Array<{
+		field: string
+		message: string
+	}>
+}
+
+type ValidationResult<T> = ValidationSuccess<T> | ValidationError
+
+// Update the function signature
+export const zodValidator = <T extends ZodTypeAny>(
+	payload: unknown,
+	schema: T,
+): ValidationResult<T['_output']> => {
 	const validatePayload = schema.safeParse(payload)
 
 	if (!validatePayload.success) {

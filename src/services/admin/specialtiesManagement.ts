@@ -14,19 +14,19 @@ export async function createSpecialty(_prevState: any, formData: FormData) {
 			title: formData.get('title') as string,
 		}
 
-		if (
-			zodValidator(payload, createSpecialtyValidationSchema).success === false
-		) {
-			return zodValidator(payload, createSpecialtyValidationSchema)
+		// ✅ Store the validation result once
+		const validation = zodValidator(payload, createSpecialtyValidationSchema)
+
+		// ✅ Early return if validation fails
+		if (!validation.success) {
+			return validation
 		}
 
-		const validatePayload = zodValidator(
-			payload,
-			createSpecialtyValidationSchema,
-		)
+		// ✅ TypeScript now knows validation.data exists
+		const validatedPayload = validation.data
 
 		const newFormData = new FormData()
-		newFormData.append('data', JSON.stringify(validatePayload.data))
+		newFormData.append('data', JSON.stringify(validatedPayload))
 
 		if (formData.get('file')) {
 			newFormData.append('file', formData.get('file') as Blob)
