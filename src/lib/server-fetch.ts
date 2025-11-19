@@ -33,33 +33,18 @@ export const serverFetch = {
 	post: (endpoint: string, options: RequestInit = {}) =>
 		serverFetchHelper(endpoint, {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				...(options.headers || {}),
-			},
 			...options,
 		}),
 
 	put: (endpoint: string, options: RequestInit = {}) =>
 		serverFetchHelper(endpoint, {
 			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				...(options.headers || {}),
-			},
 			...options,
 		}),
 
 	patch: (endpoint: string, options: RequestInit = {}) =>
 		serverFetchHelper(endpoint, {
 			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				...(options.headers || {}),
-			},
 			...options,
 		}),
 

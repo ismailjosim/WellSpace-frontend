@@ -1,6 +1,7 @@
+'use server'
 import z from 'zod'
-import { serverFetch } from '../../lib/server-fetch'
-import { zodValidator } from '../../lib/zodValidator'
+import { serverFetch } from '@/lib/server-fetch'
+import { zodValidator } from '@/lib/zodValidator'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const createSpecialtyValidationSchema = z.object({
@@ -25,7 +26,7 @@ export async function createSpecialty(_prevState: any, formData: FormData) {
 		)
 
 		const newFormData = new FormData()
-		newFormData.append('data', JSON.stringify(validatePayload))
+		newFormData.append('data', JSON.stringify(validatePayload.data))
 
 		if (formData.get('file')) {
 			newFormData.append('file', formData.get('file') as Blob)

@@ -47,11 +47,14 @@ export const registerUser = async (
 		// 🔹 4. API request (JSON only)
 		// -----------------------------
 		const res = await serverFetch.post('/user/create-patient', {
-			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(registerData),
+			headers: {
+				'Content-Type': 'application/json',
+			},
 		})
 
 		const result = await res.json()
+		console.log('Register Response', result)
 
 		if (!result.success) {
 			return responseTemplate({
@@ -66,11 +69,16 @@ export const registerUser = async (
 		// 🔥 AUTO LOGIN AFTER REGISTER
 		// =============================
 
+		const loginPayload = {
+			email: payload?.email,
+			password: payload?.password,
+		}
+
 		const loginRes = await serverFetch.post('/auth/login', {
-			body: JSON.stringify({
-				email: payload?.email,
-				password: payload?.password,
-			}),
+			body: JSON.stringify(loginPayload),
+			headers: {
+				'Content-Type': 'application/json',
+			},
 		})
 
 		const loginResult = await loginRes.json()

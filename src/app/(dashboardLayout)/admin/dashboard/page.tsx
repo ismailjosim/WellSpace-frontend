@@ -1,11 +1,5 @@
-import Dashboard from '@/components/modules/Dashboard/Dashboard'
-
-const DashboardPage = () => {
-	return (
-		<>
-			<Dashboard />
-		</>
-	)
+const AdminDashboardPage = () => {
+	return <div>AdminDashboardPage</div>
 }
 
-export default DashboardPage
+export default AdminDashboardPage

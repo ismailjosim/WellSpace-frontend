@@ -15,7 +15,7 @@ import { registerUser } from '@/services/auth/registerPatient'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { toast } from 'sonner'
-import getInputFieldError from '../../../lib/getInputFieldError'
+import InputFieldError from '../../shared/InputFieldError'
 
 const RegisterForm = () => {
 	const [state, formAction, isPending] = useActionState(registerUser, null)
@@ -42,13 +42,14 @@ const RegisterForm = () => {
 				<Field>
 					<FieldLabel htmlFor='name'>Full Name</FieldLabel>
 					<Input id='name' name='name' type='text' placeholder='John Doe' />
-					{getInputFieldError('name', state)}
+
+					<InputFieldError field='name' state={state} />
 				</Field>
 
 				<Field>
 					<FieldLabel htmlFor='email'>Email Address</FieldLabel>
 					<Input name='email' type='email' placeholder='your@email.com' />
-					{getInputFieldError('email', state)}
+					<InputFieldError field='email' state={state} />
 				</Field>
 
 				<Field>
@@ -72,7 +73,7 @@ const RegisterForm = () => {
 							)}
 						</button>
 					</div>
-					{getInputFieldError('password', state)}
+					<InputFieldError field='password' state={state} />
 				</Field>
 
 				<Field>
