@@ -1,4 +1,4 @@
-import { useRouter, useSearchParams } from 'next/navigation'
+'use client'
 import { useTransition } from 'react'
 import {
 	Select,
@@ -7,6 +7,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '../ui/select'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface SelectFilterProps {
 	paramName: string // ?gender=

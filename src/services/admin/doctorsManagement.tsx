@@ -142,6 +142,13 @@ export async function updateDoctor(
 
 		if (!validation.success) return validation
 
+		const newFormData = new FormData()
+		newFormData.append('data', JSON.stringify(validation.data))
+
+		if (formData.get('file')) {
+			newFormData.append('file', formData.get('file') as Blob)
+		}
+
 		const res = await serverFetch.patch(`/doctor/${id}`, {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(validation.data),
@@ -165,7 +172,7 @@ export async function updateDoctor(
 // ======================================================
 export async function softDeleteDoctor(id: string) {
 	try {
-		const res = await serverFetch.delete(`/doctor/soft/${id}`)
+		const res = await serverFetch.delete(`/doctor/${id}`)
 		return await res.json()
 	} catch (error: any) {
 		console.log(error)
