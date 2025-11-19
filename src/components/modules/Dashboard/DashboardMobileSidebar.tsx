@@ -26,6 +26,7 @@ const DashboardMobileSidebar = ({
 	dashboardHome,
 }: DashboardMobileSidebarContentProps) => {
 	const pathname = usePathname()
+
 	return (
 		<div className=' flex h-full flex-col'>
 			{/* Logo */}
