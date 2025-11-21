@@ -12,12 +12,15 @@ export interface IDoctor {
 	qualification: string
 	currentWorkingPlace: string
 	designation: string
+	specialties?: string[]
+	removeSpecialties?: string[]
 	profilePhoto?: string
 	isDeleted?: boolean
 	averageRating?: number
 	createdAt?: string
 	updatedAt?: string
 	doctorSpecialties?: Array<{
+		specialtiesId: string
 		specialties?: {
 			id: string
 			title: string

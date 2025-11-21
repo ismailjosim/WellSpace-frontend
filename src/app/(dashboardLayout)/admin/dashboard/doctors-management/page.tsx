@@ -8,10 +8,22 @@ import { getDoctors } from '@/services/admin/doctorsManagement'
 import SearchFilter from '@/components/shared/SearchFilter'
 import SelectFilter from '@/components/shared/SelectFilter'
 import { ISpecialty } from '@/types/specialties.interface'
+import { queryStringFormatter } from '@/lib/formatters.ts'
+import TablePagination from '@/components/shared/TablePagination'
 
-const DoctorsManagementPage = async () => {
-	const doctors = await getDoctors()
-	const specialties = await getSpecialties()
+const DoctorsManagementPage = async ({
+	searchParams,
+}: {
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) => {
+	const searchParamsObj = await searchParams
+	const queryStr = queryStringFormatter(searchParamsObj)
+	const doctors = await getDoctors(queryStr)
+	const specialties = await getSpecialties({ limit: 1000 })
+
+	// calculate pagination
+	const totalPages = Math.ceil(doctors.meta.total / doctors.meta.limit)
+
 	return (
 		<div className='space-y-6'>
 			<DoctorsManagementHeader specialties={specialties.data} />
@@ -29,6 +41,10 @@ const DoctorsManagementPage = async () => {
 			</div>
 			<Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
 				<DoctorsTable doctors={doctors.data} specialties={specialties.data} />
+				<TablePagination
+					currentPage={doctors.meta.page}
+					totalPages={totalPages}
+				/>
 			</Suspense>
 		</div>
 	)
