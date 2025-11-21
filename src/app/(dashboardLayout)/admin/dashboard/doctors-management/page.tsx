@@ -19,7 +19,7 @@ const DoctorsManagementPage = async ({
 	const searchParamsObj = await searchParams
 	const queryStr = queryStringFormatter(searchParamsObj)
 	const doctors = await getDoctors(queryStr)
-	const specialties = await getSpecialties({ limit: 1000 })
+	const specialties = await getSpecialties()
 
 	// calculate pagination
 	const totalPages = Math.ceil(doctors.meta.total / doctors.meta.limit)

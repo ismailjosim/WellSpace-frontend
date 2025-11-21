@@ -49,10 +49,10 @@ export async function createSpecialty(_prevState: any, formData: FormData) {
 	}
 }
 
-export async function getSpecialties({ limit = 10, page = 1 }) {
+export async function getSpecialties(queryString?: string) {
 	try {
 		const res = await serverFetch.get(
-			`/specialties?limit=${limit}&page=${page}`,
+			`/specialties${queryString ? `?${queryString}` : ''}`,
 		)
 		const result = await res.json()
 		return result
