@@ -41,7 +41,8 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
 	const searchParams = useSearchParams()
 	const [isPending, startTransition] = useTransition()
 	const [open, setOpen] = useState(false)
-	// ?speciality=Cardiology&speciality=Dermatology
+
+	// ?specialty=Cardiology&specialty=Dermatology
 	const [localSpecialties, setLocalSpecialties] = useState<string[]>(
 		() => searchParams.getAll('specialties') || [],
 	)

@@ -16,6 +16,7 @@ const DoctorsManagementPage = async ({
 	const searchParamsObj = await searchParams
 	const queryStr = queryStringFormatter(searchParamsObj)
 	const doctors = await getDoctors(queryStr)
+
 	const specialties = await getSpecialties()
 
 	// calculate pagination
