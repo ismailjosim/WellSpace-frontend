@@ -83,7 +83,7 @@ interface ClearFiltersButtonProps {
  */
 const ClearFiltersButton = ({
 	preserveParams = [],
-	excludeFromCount = ['page', 'limit', 'sortBy', 'sortOrder'],
+	excludeFromCount = ['page', 'limit', 'sortBy', 'orderBy'],
 	onBeforeClear,
 	onAfterClear,
 	variant = 'ghost',

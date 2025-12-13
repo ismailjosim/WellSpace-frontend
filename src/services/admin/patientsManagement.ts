@@ -93,7 +93,7 @@ export async function updatePatient(
 // ======================================================
 export async function softDeletePatient(id: string) {
 	try {
-		const res = await serverFetch.delete(`/patient/soft/${id}`)
+		const res = await serverFetch.delete(`/patient/${id}`)
 		return await res.json()
 	} catch (error: any) {
 		console.log(error)
