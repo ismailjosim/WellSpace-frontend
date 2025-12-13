@@ -12,6 +12,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 interface SelectFilterProps {
 	paramName: string // ?gender=
 	placeholder?: string
+	defaultValue?: string
 	options: { label: string; value: string }[]
 }
 
@@ -19,6 +20,7 @@ const SelectFilter = ({
 	paramName,
 	placeholder,
 	options,
+	defaultValue,
 }: SelectFilterProps) => {
 	const router = useRouter()
 	const searchParams = useSearchParams()
@@ -46,6 +48,7 @@ const SelectFilter = ({
 			value={currentValue}
 			onValueChange={handleChange}
 			disabled={isPending}
+			defaultValue={defaultValue}
 		>
 			<SelectTrigger>
 				<SelectValue placeholder={placeholder} />
