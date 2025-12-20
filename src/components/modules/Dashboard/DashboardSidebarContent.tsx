@@ -21,14 +21,13 @@ interface DashboardSidebarContentProps {
 const DashboardSidebarContent = ({
 	userInfo,
 	navItems,
-	dashboardHome,
 }: DashboardSidebarContentProps) => {
 	const pathname = usePathname()
 	return (
 		<div className='hidden md:flex h-full w-64 flex-col border-r bg-card'>
 			{/* Logo/Brand */}
 			<div className='flex h-16 items-center border-b px-6'>
-				<Link href={dashboardHome} className='flex items-center space-x-2'>
+				<Link href={'/'} className='flex items-center space-x-2'>
 					<div className='w-6 h-6 bg-primary rounded-full flex items-center justify-center'>
 						<Stethoscope className='w-4 h-4 text-primary-foreground' />
 					</div>

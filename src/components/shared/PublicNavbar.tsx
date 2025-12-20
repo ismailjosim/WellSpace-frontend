@@ -13,7 +13,6 @@ const PublicNavbar = async () => {
 		{ href: '#', label: 'Medicine' },
 		{ href: '#', label: 'Diagnostics' },
 		{ href: '#', label: 'NGOs' },
-		{ href: '/dashboard', label: 'Dashboard' },
 	]
 
 	const accessToken = await getCookie('accessToken')
@@ -40,6 +39,14 @@ const PublicNavbar = async () => {
 							{link.label}
 						</Link>
 					))}
+					{accessToken && (
+						<Link
+							href='/dashboard'
+							className='text-foreground hover:text-primary transition-colors'
+						>
+							Dashboard
+						</Link>
+					)}
 				</nav>
 
 				<div className='hidden md:flex items-center space-x-2'>

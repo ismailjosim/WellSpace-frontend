@@ -54,7 +54,7 @@ export const registerUser = async (
 		})
 
 		const result = await res.json()
-		console.log('Register Response', result)
+		// console.log('Register Response', result)
 
 		if (!result.success) {
 			return responseTemplate({
