@@ -1,3 +1,4 @@
+'use client'
 import { UserInfo } from '@/types/user.interface'
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar'
@@ -8,7 +9,7 @@ import { Button } from '../../ui/button'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { getInitials } from '../../../lib/formatters.ts'
-import { updateMyProfile } from '../../../services/auth/getUserInfo'
+import { updateMyProfile } from '../../../services/auth/authService'
 
 interface MyProfileProps {
 	userInfo: UserInfo
@@ -23,7 +24,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
 
 	const getProfilePhoto = () => {
 		if (userInfo.role === 'ADMIN') {
-			return userInfo.admin?.profilePhoto
+			return userInfo?.admin?.profilePhoto
 		} else if (userInfo.role === 'DOCTOR') {
 			return userInfo.doctor?.profilePhoto
 		} else if (userInfo.role === 'PATIENT') {
@@ -67,13 +68,13 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
 		startTransition(async () => {
 			const result = await updateMyProfile(formData)
 
-			// if (result.success) {
-			// 	setSuccess(result.message)
-			// 	setPreviewImage(null)
-			// 	router.refresh()
-			// } else {
-			// 	setError(result.message)
-			// }
+			if (result.success) {
+				setSuccess(result.message)
+				setPreviewImage(null)
+				router.refresh()
+			} else {
+				setError(result.message)
+			}
 		})
 	}
 	return (
