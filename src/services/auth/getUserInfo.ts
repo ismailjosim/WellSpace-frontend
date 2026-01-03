@@ -33,3 +33,7 @@ export const getUserInfo = async (): Promise<UserInfo | null> => {
 		return null
 	}
 }
+
+export const updateMyProfile = async (data: any) => {
+	console.log('Updating profile with data:', data)
+}
