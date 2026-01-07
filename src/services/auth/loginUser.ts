@@ -116,8 +116,20 @@ export const loginUser = async (
 
 		const userRole: UserRole = verifiedToken.role
 
+		// console.log(result.data.user)
+
+		if (redirectTo && result.data.user?.needPasswordChange) {
+			const requestedPath = redirectTo.toString()
+			console.log(requestedPath)
+			if (isValidRedirectForRole(requestedPath, userRole)) {
+				redirect(`/reset-password?redirect=${requestedPath}`)
+			} else {
+				redirect('/reset-password')
+			}
+		}
+
 		// redirect to the reset-password page if the user is required to change password
-		if (result.data?.needPasswordChange) {
+		if (result.data.user?.needPasswordChange) {
 			redirect('/reset-password')
 		}
 

@@ -9,6 +9,7 @@ import {
 	UserRole,
 } from './lib/auth-utils'
 import { deleteCookie, getCookie } from './services/auth/tokenHandlers'
+import { getUserInfo } from './services/auth/getUserInfo'
 
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl
@@ -55,13 +56,31 @@ export async function proxy(request: NextRequest) {
 		loginUrl.searchParams.set('redirect', pathname)
 		return NextResponse.redirect(loginUrl)
 	}
-
-	//* Rule 3 : User is trying to access common protected route
+	// * rule 3: user need password change
+	if (accessToken) {
+		const userInfo = await getUserInfo()
+		if (userInfo?.needPasswordChange) {
+			// check user into the reset password route
+			if (pathname !== '/reset-password') {
+				const resetPasswordUrl = new URL('/reset-password', request.url)
+				resetPasswordUrl.searchParams.set('redirect', pathname)
+				return NextResponse.redirect(resetPasswordUrl)
+			}
+			return NextResponse.next()
+		}
+		// if user is in reset password route and doesn't need password change, redirect to default dashboard
+		if (pathname === '/reset-password' && !userInfo?.needPasswordChange) {
+			return NextResponse.redirect(
+				new URL(getDefaultDashboardRoutes(userRole as UserRole), request.url),
+			)
+		}
+	}
+	//* Rule 4 : User is trying to access common protected route
 	if (routerOwner === 'COMMON') {
 		return NextResponse.next()
 	}
 
-	//* Rule 4 : User is trying to access role based protected route
+	//* Rule 5 : User is trying to access role based protected route
 	if (
 		routerOwner === 'ADMIN' ||
 		routerOwner === 'DOCTOR' ||

@@ -81,6 +81,8 @@ export async function resetPassword(_prevState: any, formData: FormData) {
 			errors: validatedPayload.errors,
 		}
 	}
+	const payload = validatedPayload.success ? validatedPayload.data : null
+	// console.log(payload)
 
 	try {
 		const accessToken = await getCookie('accessToken')
@@ -97,11 +99,13 @@ export async function resetPassword(_prevState: any, formData: FormData) {
 		const userRole: UserRole = verifiedToken.role
 
 		const user = await getUserInfo()
+		revalidateTag('user-info', { expire: 0 })
+		// console.log(user)
 		// API Call
 		const response = await serverFetch.post('/auth/reset-password', {
 			body: JSON.stringify({
 				id: user?.id,
-				password: validationPayload.newPassword,
+				password: payload?.newPassword,
 			}),
 			headers: {
 				Authorization: accessToken,
@@ -131,6 +135,7 @@ export async function resetPassword(_prevState: any, formData: FormData) {
 			redirect(`${getDefaultDashboardRoutes(userRole)}?loggedIn=true`)
 		}
 	} catch (error: any) {
+		console.log('error in reset password', error)
 		// Re-throw NEXT_REDIRECT errors so Next.js can handle them
 		if (error?.digest?.startsWith('NEXT_REDIRECT')) {
 			throw error
