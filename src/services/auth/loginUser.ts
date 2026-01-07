@@ -11,6 +11,7 @@ import {
 } from '@/lib/auth-utils'
 import { loginValidationSchema } from '@/schema/authSchema'
 import { serverFetch } from '@/lib/server-fetch'
+import { redirect } from 'next/navigation'
 
 export const loginUser = async (
 	_currentState: any,
@@ -114,6 +115,11 @@ export const loginUser = async (
 		}
 
 		const userRole: UserRole = verifiedToken.role
+
+		// redirect to the reset-password page if the user is required to change password
+		if (result.data?.needPasswordChange) {
+			redirect('/reset-password')
+		}
 
 		// ✅ Build redirect path
 		let finalRedirect = ''

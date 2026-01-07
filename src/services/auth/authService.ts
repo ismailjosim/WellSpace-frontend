@@ -1,5 +1,9 @@
 'use server'
-import { isValidRedirectForRole, UserRole } from '@/lib/auth-utils'
+import {
+	getDefaultDashboardRoutes,
+	isValidRedirectForRole,
+	UserRole,
+} from '@/lib/auth-utils'
 
 import { serverFetch } from '@/lib/server-fetch'
 import { zodValidator } from '@/lib/zodValidator'
@@ -10,6 +14,7 @@ import { revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getUserInfo } from './getUserInfo'
 import { deleteCookie, getCookie, setCookie } from './tokenHandlers'
+import { resetPasswordSchema } from '../../schema/authSchema'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function updateMyProfile(formData: FormData) {
@@ -56,87 +61,87 @@ export async function updateMyProfile(formData: FormData) {
 }
 
 // Reset Password
-// export async function resetPassword(_prevState: any, formData: FormData) {
-// 	const redirectTo = formData.get('redirect') || null
+export async function resetPassword(_prevState: any, formData: FormData) {
+	const redirectTo = formData.get('redirect') || null
 
-// 	// Build validation payload
-// 	const validationPayload = {
-// 		newPassword: formData.get('newPassword') as string,
-// 		confirmPassword: formData.get('confirmPassword') as string,
-// 	}
+	// Build validation payload
+	const validationPayload = {
+		newPassword: formData.get('newPassword') as string,
+		confirmPassword: formData.get('confirmPassword') as string,
+	}
 
-// 	// Validate
-// 	const validatedPayload = zodValidator(validationPayload, resetPasswordSchema)
+	// Validate
+	const validatedPayload = zodValidator(validationPayload, resetPasswordSchema)
 
-// 	if (!validatedPayload.success && validatedPayload.errors) {
-// 		return {
-// 			success: false,
-// 			message: 'Validation failed',
-// 			formData: validationPayload,
-// 			errors: validatedPayload.errors,
-// 		}
-// 	}
+	if (!validatedPayload.success && validatedPayload.errors) {
+		return {
+			success: false,
+			message: 'Validation failed',
+			formData: validationPayload,
+			errors: validatedPayload.errors,
+		}
+	}
 
-// 	try {
-// 		const accessToken = await getCookie('accessToken')
+	try {
+		const accessToken = await getCookie('accessToken')
 
-// 		if (!accessToken) {
-// 			throw new Error('User not authenticated')
-// 		}
+		if (!accessToken) {
+			throw new Error('User not authenticated')
+		}
 
-// 		const verifiedToken = jwt.verify(
-// 			accessToken as string,
-// 			process.env.JWT_SECRET!,
-// 		) as jwt.JwtPayload
+		const verifiedToken = jwt.verify(
+			accessToken as string,
+			process.env.ACCESS_TOKEN_SECRET as string,
+		) as jwt.JwtPayload
 
-// 		const userRole: UserRole = verifiedToken.role
+		const userRole: UserRole = verifiedToken.role
 
-// 		const user = await getUserInfo()
-// 		// API Call
-// 		const response = await serverFetch.post('/auth/reset-password', {
-// 			body: JSON.stringify({
-// 				id: user?.id,
-// 				password: validationPayload.newPassword,
-// 			}),
-// 			headers: {
-// 				Authorization: accessToken,
-// 				'Content-Type': 'application/json',
-// 			},
-// 		})
+		const user = await getUserInfo()
+		// API Call
+		const response = await serverFetch.post('/auth/reset-password', {
+			body: JSON.stringify({
+				id: user?.id,
+				password: validationPayload.newPassword,
+			}),
+			headers: {
+				Authorization: accessToken,
+				'Content-Type': 'application/json',
+			},
+		})
 
-// 		const result = await response.json()
+		const result = await response.json()
 
-// 		if (!result.success) {
-// 			throw new Error(result.message || 'Reset password failed')
-// 		}
+		if (!result.success) {
+			throw new Error(result.message || 'Reset password failed')
+		}
 
-// 		if (result.success) {
-// 			// await get
-// 			revalidateTag('user-info', { expire: 0 })
-// 		}
+		if (result.success) {
+			// await get
+			revalidateTag('user-info', { expire: 0 })
+		}
 
-// 		if (redirectTo) {
-// 			const requestedPath = redirectTo.toString()
-// 			if (isValidRedirectForRole(requestedPath, userRole)) {
-// 				redirect(`${requestedPath}?loggedIn=true`)
-// 			} else {
-// 				redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`)
-// 			}
-// 		} else {
-// 			redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`)
-// 		}
-// 	} catch (error: any) {
-// 		// Re-throw NEXT_REDIRECT errors so Next.js can handle them
-// 		if (error?.digest?.startsWith('NEXT_REDIRECT')) {
-// 			throw error
-// 		}
-// 		return {
-// 			success: false,
-// 			message: error?.message || 'Something went wrong',
-// 			formData: validationPayload,
-// 		}
-// 	}
-// }
+		if (redirectTo) {
+			const requestedPath = redirectTo.toString()
+			if (isValidRedirectForRole(requestedPath, userRole)) {
+				redirect(`${requestedPath}?loggedIn=true`)
+			} else {
+				redirect(`${getDefaultDashboardRoutes(userRole)}?loggedIn=true`)
+			}
+		} else {
+			redirect(`${getDefaultDashboardRoutes(userRole)}?loggedIn=true`)
+		}
+	} catch (error: any) {
+		// Re-throw NEXT_REDIRECT errors so Next.js can handle them
+		if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+			throw error
+		}
+		return {
+			success: false,
+			message: error?.message || 'Something went wrong',
+			formData: validationPayload,
+		}
+	}
+}
 
 // export async function getNewAccessToken() {
 // 	try {

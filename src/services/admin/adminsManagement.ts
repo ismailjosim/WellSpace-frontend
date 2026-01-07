@@ -26,6 +26,7 @@ export async function createAdmin(_prevState: any, formData: FormData) {
 		if (!validation.success) return validation
 
 		const validatedPayload = validation?.data
+		console.log({ validatedPayload })
 
 		const finalPayload = {
 			password: validatedPayload.password,
@@ -33,7 +34,6 @@ export async function createAdmin(_prevState: any, formData: FormData) {
 				name: validatedPayload.name,
 				email: validatedPayload.email,
 				contactNumber: validatedPayload.contactNumber,
-				password: validatedPayload.password,
 			},
 		}
 
@@ -47,6 +47,7 @@ export async function createAdmin(_prevState: any, formData: FormData) {
 		const res = await serverFetch.post('/user/create-admin', {
 			body: newFormData,
 		})
+		// console.log(res)
 
 		return await res.json()
 	} catch (error: any) {
