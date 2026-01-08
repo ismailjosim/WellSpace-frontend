@@ -10,9 +10,30 @@ import {
 } from './lib/auth-utils'
 import { deleteCookie, getCookie } from './services/auth/tokenHandlers'
 import { getUserInfo } from './services/auth/getUserInfo'
+import { getNewAccessToken } from './services/auth/authService'
 
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl
+	const hasTokenRefreshedParam =
+		request.nextUrl.searchParams.has('tokenRefreshed')
+
+	// If coming back after token refresh, remove the param and continue
+	if (hasTokenRefreshedParam) {
+		const url = request.nextUrl.clone()
+		url.searchParams.delete('tokenRefreshed')
+		return NextResponse.redirect(url)
+	}
+
+	const tokenRefreshResult = await getNewAccessToken()
+	// console.log({ tokenRefreshResult })
+
+	// If token was refreshed, redirect to same page to fetch with new token
+	if (tokenRefreshResult?.tokenRefreshed) {
+		const url = request.nextUrl.clone()
+		url.searchParams.set('tokenRefreshed', 'true')
+		return NextResponse.redirect(url)
+	}
+
 	const accessToken = (await getCookie('accessToken')) || null
 	let userRole: UserRole | null = null
 

@@ -67,7 +67,7 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 					</div>
 					<div className='relative'>
 						<Input
-							defaultValue='123456'
+							defaultValue='Mdjasim99@'
 							id='password'
 							name='password'
 							type={showPassword ? 'text' : 'password'}
