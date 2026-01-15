@@ -1,3 +1,5 @@
+import { IDoctorSchedule } from './schedule.interface'
+
 export interface IDoctor {
 	id?: string
 	name: string
@@ -19,7 +21,9 @@ export interface IDoctor {
 	averageRating?: number
 	createdAt?: string
 	updatedAt?: string
+	doctorSchedules?: IDoctorSchedule[]
 	doctorSpecialties?: Array<{
+		title: string
 		specialtiesId: string
 		specialties?: {
 			id: string

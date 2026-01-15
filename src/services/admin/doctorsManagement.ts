@@ -95,11 +95,12 @@ export async function createDoctor(_prevState: any, formData: FormData) {
 // ======================================================
 // GET ALL DOCTORS
 // ======================================================
-export async function getDoctors(queryString?: string) {
+export async function getDoctors(queryString?: string): Promise<any> {
 	try {
 		const res = await serverFetch.get(
 			`/doctor${queryString ? `?${queryString}` : ''}`,
 		)
+
 		return await res.json()
 	} catch (error: any) {
 		console.log(error)
@@ -116,9 +117,10 @@ export async function getDoctors(queryString?: string) {
 // ======================================================
 // GET DOCTOR BY ID
 // ======================================================
-export async function getDoctorById(id: string) {
+export async function getDoctorById(id: string): Promise<any> {
 	try {
 		const res = await serverFetch.get(`/doctor/${id}`)
+
 		return await res.json()
 	} catch (error: any) {
 		console.log(error)
