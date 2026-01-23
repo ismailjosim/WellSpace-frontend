@@ -8,7 +8,8 @@ import clsx from 'clsx'
 
 const PublicNavbar = async () => {
 	const navItems = [
-		{ href: '#', label: 'Consultation' },
+		{ href: '/', label: 'Home' },
+		{ href: '/consultation', label: 'Consultation' },
 		{ href: '#', label: 'Health Plans' },
 		{ href: '#', label: 'Medicine' },
 		{ href: '#', label: 'Diagnostics' },

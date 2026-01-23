@@ -15,7 +15,7 @@ import { loginUser } from '@/services/auth/loginUser'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { toast } from 'sonner'
-import getInputFieldError from '@/lib/getInputFieldError'
+// import getInputFieldError from '@/lib/getInputFieldError'
 import InputFieldError from '../../shared/InputFieldError'
 
 export function LoginForm({ redirect }: { redirect?: string }) {
@@ -45,7 +45,7 @@ export function LoginForm({ redirect }: { redirect?: string }) {
 				<Field>
 					<FieldLabel htmlFor='email'>Email Address</FieldLabel>
 					<Input
-						defaultValue='super@wellspace.com'
+						defaultValue='jufanohime@mailinator.com'
 						id='email'
 						name='email'
 						type='email'
