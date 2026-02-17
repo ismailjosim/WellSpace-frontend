@@ -29,7 +29,7 @@ export async function createPrescription(data: IPrescriptionFormData) {
 export async function getMyPrescriptions(queryString?: string) {
 	try {
 		const response = await serverFetch.get(
-			`/prescription/my-prescription${queryString ? `?${queryString}` : ''}`,
+			`/prescription/my-prescriptions${queryString ? `?${queryString}` : ''}`,
 		)
 		const result = await response.json()
 		return result
