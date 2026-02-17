@@ -1,10 +1,19 @@
-import React from 'react'
+import AppointmentsList from '@/components/modules/Patient/PatientAppointment/AppointmentsList'
+import { getMyAppointments } from '@/services/patient/appointment.service'
+import { IAppointment } from '@/types/appointments.interface'
 
-const MyAppointmentsPage = () => {
+const MyAppointmentsPage = async () => {
+	const res = await getMyAppointments()
+	const appointments: IAppointment[] = res.data || []
 	return (
-		<div>
-			<h1>My Appointments</h1>
-			<p>This is where your appointments will be displayed.</p>
+		<div className='space-y-6'>
+			<div>
+				<h1 className='text-3xl font-bold tracking-tight'>My Appointments</h1>
+				<p className='text-muted-foreground mt-2'>
+					View and manage your scheduled appointments
+				</p>
+			</div>
+			<AppointmentsList appointments={appointments} />
 		</div>
 	)
 }
