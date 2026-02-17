@@ -191,12 +191,19 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
 									{appointment.doctor.doctorSpecialties
 										.slice(0, 2)
 										.map((ds, idx) => (
-											<Badge key={idx} variant='secondary' className='text-xs'>
+											<Badge
+												key={idx}
+												variant='secondary'
+												className='text-xs bg-primary text-white'
+											>
 												{ds.specialties?.title || 'N/A'}
 											</Badge>
 										))}
 									{appointment.doctor.doctorSpecialties.length > 2 && (
-										<Badge variant='secondary' className='text-xs'>
+										<Badge
+											variant='secondary'
+											className='text-xs bg-primary text-white'
+										>
 											+{appointment.doctor.doctorSpecialties.length - 2} more
 										</Badge>
 									)}

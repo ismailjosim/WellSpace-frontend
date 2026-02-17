@@ -23,7 +23,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 // import ReviewDialog from "./ReviewDialog";
 import { changeAppointmentStatus } from '@/services/patient/appointment.service'
-import { initiatePayment } from '@/services/payment/payment.service'
+// import { initiatePayment } from '@/services/payment/payment.service'
 import {
 	AppointmentStatus,
 	IAppointment,
@@ -48,29 +48,29 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 	const isScheduled = appointment.status === AppointmentStatus.SCHEDULED
 	const canReview =
 		isCompleted &&
-		!appointment.review &&
+		!appointment.reviews &&
 		appointment.paymentStatus === PaymentStatus.PAID
 	const canCancel = isScheduled && !isCanceled
 
 	const handlePayNow = async () => {
 		setIsProcessingPayment(true)
-		try {
-			const result = await initiatePayment(appointment.id)
+		// try {
+		// 	const result = await initiatePayment(appointment.id)
 
-			if (result.success && result.data?.paymentUrl) {
-				toast.success('Redirecting to payment...')
-				// Store return URL before redirecting to payment
-				sessionStorage.setItem('paymentReturnUrl', '/dashboard/my-appointments')
-				window.location.replace(result.data.paymentUrl)
-			} else {
-				toast.error(result.message || 'Failed to initiate payment')
-				setIsProcessingPayment(false)
-			}
-		} catch (error) {
-			toast.error('An error occurred while initiating payment')
-			setIsProcessingPayment(false)
-			console.error(error)
-		}
+		// 	if (result.success && result.data?.paymentUrl) {
+		// 		toast.success('Redirecting to payment...')
+		// 		// Store return URL before redirecting to payment
+		// 		sessionStorage.setItem('paymentReturnUrl', '/dashboard/my-appointments')
+		// 		window.location.replace(result.data.paymentUrl)
+		// 	} else {
+		// 		toast.error(result.message || 'Failed to initiate payment')
+		// 		setIsProcessingPayment(false)
+		// 	}
+		// } catch (error) {
+		// 	toast.error('An error occurred while initiating payment')
+		// 	setIsProcessingPayment(false)
+		// 	console.error(error)
+		// }
 	}
 
 	const handleCancelAppointment = async () => {
@@ -195,7 +195,7 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 
 			{/* Payment Required Alert - Show if completed but not paid */}
 			{!isCompleted &&
-				!appointment.review &&
+				!appointment.reviews &&
 				appointment.paymentStatus === PaymentStatus.UNPAID && (
 					<Card className='border-red-200 bg-red-50'>
 						<CardContent className='pt-6'>
@@ -234,7 +234,7 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 				)}
 
 			{/* Cannot Review Yet - Only show if not completed and no review */}
-			{!isCompleted && !appointment.review && (
+			{!isCompleted && !appointment.reviews && (
 				<Card className='border-blue-200 bg-blue-50'>
 					<CardContent className='pt-6'>
 						<div className='flex items-start gap-3'>
@@ -283,8 +283,12 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 										</div>
 										<div className='flex flex-wrap gap-2'>
 											{appointment.doctor.doctorSpecialties.map((ds, idx) => (
-												<Badge key={idx} variant='secondary'>
-													{ds.specialities?.title || 'N/A'}
+												<Badge
+													className='bg-primary text-white'
+													key={idx}
+													variant='secondary'
+												>
+													{ds.specialties?.title || 'N/A'}
 												</Badge>
 											))}
 										</div>
@@ -482,7 +486,7 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 			</div>
 
 			{/* Review Section - Full Width Below */}
-			{appointment.review && (
+			{appointment.reviews && (
 				<Card className='border-yellow-200'>
 					<CardHeader>
 						<CardTitle className='flex items-center gap-2 text-yellow-700'>
@@ -497,24 +501,24 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 									<Star
 										key={star}
 										className={`h-5 w-5 ${
-											star <= appointment.review!.rating
+											star <= appointment.reviews!.rating
 												? 'fill-yellow-500 text-yellow-500'
 												: 'text-gray-300'
 										}`}
 									/>
 								))}
 								<span className='ml-2 text-sm font-medium text-yellow-900'>
-									{appointment.review.rating}/5
+									{appointment.reviews.rating}/5
 								</span>
 							</div>
 
-							{appointment.review.comment && (
+							{appointment.reviews.comment && (
 								<div>
 									<p className='text-sm text-yellow-900 font-medium mb-1'>
 										Comment:
 									</p>
 									<p className='text-sm text-yellow-800'>
-										{appointment.review.comment}
+										{appointment.reviews.comment}
 									</p>
 								</div>
 							)}

@@ -1,12 +1,30 @@
-import React from 'react'
+import AppointmentDetails from '@/components/modules/Patient/PatientAppointment/AppointmentDetails'
+import { getAppointmentById } from '@/services/patient/appointment.service'
+import { IAppointment } from '@/types/appointments.interface'
+import { notFound } from 'next/navigation'
 
-const AppointmentDetailsPage = () => {
+interface AppointmentDetailPageProps {
+	params: Promise<{
+		id: string
+	}>
+}
+
+export default async function AppointmentDetailPage({
+	params,
+}: AppointmentDetailPageProps) {
+	const { id } = await params
+
+	const response = await getAppointmentById(id)
+
+	if (!response?.success || !response?.data) {
+		notFound()
+	}
+
+	const appointment: IAppointment = response.data
+
 	return (
-		<div>
-			<h1>Appointment Details</h1>
-			<p>This is the appointment details page.</p>
+		<div className='container mx-auto px-4 py-8'>
+			<AppointmentDetails appointment={appointment} />
 		</div>
 	)
 }
-
-export default AppointmentDetailsPage

@@ -68,7 +68,7 @@ const DashboardSidebarContent = ({
 											{item.badge && (
 												<Badge
 													variant={isActive ? 'secondary' : 'default'}
-													className='ml-auto'
+													className='ml-auto text-white '
 												>
 													{item.badge}
 												</Badge>
