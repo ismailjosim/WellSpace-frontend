@@ -30,7 +30,7 @@ export interface IAppointment {
 	createdAt: string
 	updatedAt: string
 	prescription?: IPrescription
-	reviews?: IReview
+	reviews?: IReview[]
 	// payment?: IPayment;
 }
 

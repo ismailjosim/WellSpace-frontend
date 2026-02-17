@@ -21,7 +21,7 @@ import {
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-// import ReviewDialog from "./ReviewDialog";
+
 import { changeAppointmentStatus } from '@/services/patient/appointment.service'
 // import { initiatePayment } from '@/services/payment/payment.service'
 import {
@@ -46,9 +46,11 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 	const isCompleted = appointment.status === AppointmentStatus.COMPLETED
 	const isCanceled = appointment.status === AppointmentStatus.CANCELED
 	const isScheduled = appointment.status === AppointmentStatus.SCHEDULED
+
+	console.log({ appointment })
 	const canReview =
 		isCompleted &&
-		!appointment.reviews &&
+		appointment.reviews?.length === 0 &&
 		appointment.paymentStatus === PaymentStatus.PAID
 	const canCancel = isScheduled && !isCanceled
 
@@ -195,7 +197,7 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 
 			{/* Payment Required Alert - Show if completed but not paid */}
 			{!isCompleted &&
-				!appointment.reviews &&
+				appointment.reviews?.length === 0 &&
 				appointment.paymentStatus === PaymentStatus.UNPAID && (
 					<Card className='border-red-200 bg-red-50'>
 						<CardContent className='pt-6'>
@@ -508,7 +510,7 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 									/>
 								))}
 								<span className='ml-2 text-sm font-medium text-yellow-900'>
-									{appointment.reviews.rating}/5
+									{appointment.reviews.length}/5
 								</span>
 							</div>
 
