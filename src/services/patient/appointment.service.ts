@@ -67,7 +67,7 @@ export async function getMyAppointments(queryString?: string) {
 			`/appointment/my-appointment${queryString ? `?${queryString}` : '?sortBy=createdAt&orderBy=desc'}`,
 		)
 		const result = await response.json()
-		console.log({ result })
+		// console.log({ result })
 		return result
 	} catch (error: any) {
 		console.error('Error fetching appointments:', error)
