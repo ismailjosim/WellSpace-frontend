@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IDoctor } from './doctor.interface'
 import { IPatient } from './patient.interface'
 import { IPrescription } from './prescription.interface'
@@ -14,6 +15,19 @@ export enum AppointmentStatus {
 export enum PaymentStatus {
 	PAID = 'PAID',
 	UNPAID = 'UNPAID',
+}
+
+export interface IPayment {
+	id: string
+	appointmentId: string
+	amount: number
+	transactionId: string
+	status: PaymentStatus
+	paymentGatewayData?: any
+	stripeEventId?: string
+
+	createdAt: string
+	updatedAt: string
 }
 
 export interface IAppointment {
