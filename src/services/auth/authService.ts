@@ -14,7 +14,11 @@ import { revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getUserInfo } from './getUserInfo'
 import { deleteCookie, getCookie, setCookie } from './tokenHandlers'
-import { resetPasswordSchema } from '../../schema/authSchema'
+import {
+	changePasswordZodSchema,
+	forgotPasswordZodSchema,
+	resetPasswordSchema,
+} from '../../schema/authSchema'
 import { verifyAccessToken } from '../../lib/JWTHandlers'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -258,6 +262,111 @@ export async function getNewAccessToken() {
 			tokenRefreshed: false,
 			success: false,
 			message: error?.message || 'Something went wrong',
+		}
+	}
+}
+
+export async function forgotPassword(_prevState: any, formData: FormData) {
+	// Build validation payload
+	const validationPayload = {
+		email: formData.get('email') as string,
+	}
+
+	// Validate
+	const validatedPayload = zodValidator(
+		validationPayload,
+		forgotPasswordZodSchema,
+	)
+
+	if (!validatedPayload.success && validatedPayload.errors) {
+		return {
+			success: false,
+			message: 'Validation failed',
+			formData: validationPayload,
+			errors: validatedPayload.errors,
+		}
+	}
+
+	try {
+		// API Call
+		const response = await serverFetch.post('/auth/forgot-password', {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				email: validationPayload.email,
+			}),
+		})
+
+		const result = await response.json()
+
+		if (!result.success) {
+			throw new Error(result.message || 'Failed to send reset link')
+		}
+
+		return {
+			success: true,
+			message: 'Password reset link has been sent to your email!',
+		}
+	} catch (error: any) {
+		return {
+			success: false,
+			message: error?.message || 'Something went wrong',
+			formData: validationPayload,
+		}
+	}
+}
+
+export async function changePassword(_prevState: any, formData: FormData) {
+	// Build validation payload
+	const validationPayload = {
+		oldPassword: formData.get('oldPassword') as string,
+		newPassword: formData.get('newPassword') as string,
+		confirmPassword: formData.get('confirmPassword') as string,
+	}
+
+	// Validate
+	const validatedPayload = zodValidator(
+		validationPayload,
+		changePasswordZodSchema,
+	)
+
+	if (!validatedPayload.success && validatedPayload.errors) {
+		return {
+			success: false,
+			message: 'Validation failed',
+			formData: validationPayload,
+			errors: validatedPayload.errors,
+		}
+	}
+
+	try {
+		// API Call
+		const response = await serverFetch.post('/auth/change-password', {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				oldPassword: validationPayload.oldPassword,
+				newPassword: validationPayload.newPassword,
+			}),
+		})
+
+		const result = await response.json()
+
+		if (!result.success) {
+			throw new Error(result.message || 'Password change failed')
+		}
+
+		return {
+			success: true,
+			message: result.message || 'Password changed successfully!',
+		}
+	} catch (error: any) {
+		return {
+			success: false,
+			message: error?.message || 'Something went wrong',
+			formData: validationPayload,
 		}
 	}
 }
