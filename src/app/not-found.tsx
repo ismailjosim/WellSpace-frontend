@@ -11,7 +11,7 @@ export default function Custom404() {
 			<div className='flex-1'>
 				<h1 className='text-6xl font-bold'>404</h1>
 				<p className='mt-4 text-lg'>
-					Oops! The page you’re looking for can’t be found.
+					Oops! The page you&apos;re looking for can&apos;t be found.
 				</p>
 				<div className='mt-6 space-x-4'>
 					<Link href='/'>

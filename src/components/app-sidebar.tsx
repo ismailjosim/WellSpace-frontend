@@ -1,26 +1,7 @@
 'use client'
-
 import * as React from 'react'
-import {
-	IconCamera,
-	IconChartBar,
-	IconDashboard,
-	IconDatabase,
-	IconFileAi,
-	IconFileDescription,
-	IconFileWord,
-	IconFolder,
-	IconHelp,
-	IconInnerShadowTop,
-	IconListDetails,
-	IconReport,
-	IconSearch,
-	IconSettings,
-	IconUsers,
-} from '@tabler/icons-react'
-
+import { IconDashboard, IconUsers } from '@tabler/icons-react'
 import { NavMain } from '@/components/nav-main'
-
 import { NavUser } from '@/components/nav-user'
 import {
 	Sidebar,
@@ -29,7 +10,6 @@ import {
 	SidebarHeader,
 } from '@/components/ui/sidebar'
 import checkAuthStatus from '../utility/checkAuthStatus'
-
 import clsx from 'clsx'
 
 const { user } = await checkAuthStatus()
