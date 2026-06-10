@@ -46,6 +46,7 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 	const isCompleted = appointment.status === AppointmentStatus.COMPLETED
 	const isCanceled = appointment.status === AppointmentStatus.CANCELED
 	const isScheduled = appointment.status === AppointmentStatus.SCHEDULED
+	const review = appointment.reviews?.[0]
 
 	console.log({ appointment })
 	const canReview =
@@ -488,7 +489,7 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 			</div>
 
 			{/* Review Section - Full Width Below */}
-			{appointment.reviews && (
+			{review && (
 				<Card className='border-yellow-200'>
 					<CardHeader>
 						<CardTitle className='flex items-center gap-2 text-yellow-700'>
@@ -503,24 +504,24 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 									<Star
 										key={star}
 										className={`h-5 w-5 ${
-											star <= appointment.reviews!.rating
+											star <= review.rating
 												? 'fill-yellow-500 text-yellow-500'
 												: 'text-gray-300'
 										}`}
 									/>
 								))}
 								<span className='ml-2 text-sm font-medium text-yellow-900'>
-									{appointment.reviews.length}/5
+									{review.rating}/5
 								</span>
 							</div>
 
-							{appointment.reviews.comment && (
+							{review.comment && (
 								<div>
 									<p className='text-sm text-yellow-900 font-medium mb-1'>
 										Comment:
 									</p>
 									<p className='text-sm text-yellow-800'>
-										{appointment.reviews.comment}
+										{review.comment}
 									</p>
 								</div>
 							)}

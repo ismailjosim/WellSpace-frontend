@@ -131,7 +131,10 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
 	}
 	return (
 		<div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-			{appointments.map((appointment) => (
+			{appointments.map((appointment) => {
+				const review = appointment.reviews?.[0]
+
+				return (
 				<Card
 					key={appointment.id}
 					className='hover:shadow-lg transition-shadow'
@@ -154,7 +157,7 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
 									</Badge>
 								)}
 								{appointment.status === AppointmentStatus.COMPLETED &&
-									!appointment.reviews && (
+									!review && (
 										<Badge
 											variant='outline'
 											className='bg-amber-50 text-amber-700 border-amber-300 animate-pulse'
@@ -260,10 +263,10 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
 						{/* Review Status */}
 						{appointment.status === AppointmentStatus.COMPLETED && (
 							<div>
-								{appointment.reviews ? (
+								{review ? (
 									<div className='flex items-center gap-2 text-sm text-yellow-600 bg-yellow-50 rounded-lg p-2'>
 										<Star className='h-4 w-4 fill-yellow-600' />
-										<span>Rated {appointment.reviews.rating}/5</span>
+										<span>Rated {review.rating}/5</span>
 									</div>
 								) : (
 									<div className='text-sm text-muted-foreground bg-gray-50 rounded-lg p-2'>
@@ -305,7 +308,8 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
 						</div>
 					</CardFooter>
 				</Card>
-			))}
+				)
+			})}
 		</div>
 	)
 }
