@@ -1,11 +1,11 @@
-import HeartbeatLoader from '@/components/shared/HeartbeatLoader'
+import HeartbeatLoader from "@/components/shared/HeartbeatLoader";
 
 const Loading = () => {
-	return (
-		<>
-			<HeartbeatLoader />
-		</>
-	)
-}
+  return (
+    <>
+      <HeartbeatLoader />
+    </>
+  );
+};
 
-export default Loading
+export default Loading;

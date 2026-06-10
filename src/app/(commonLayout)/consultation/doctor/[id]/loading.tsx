@@ -1,5 +1,5 @@
 const DoctorDetailsLoading = () => {
-	return <div>DoctorDetailsLoading</div>
-}
+  return <div>DoctorDetailsLoading</div>;
+};
 
-export default DoctorDetailsLoading
+export default DoctorDetailsLoading;

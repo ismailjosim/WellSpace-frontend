@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const PatientDashboardLayout = ({
-	children,
+  children,
 }: {
-	children: React.ReactNode
+  children: React.ReactNode;
 }) => {
-	return children
-}
+  return children;
+};
 
-export default PatientDashboardLayout
+export default PatientDashboardLayout;

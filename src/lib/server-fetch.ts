@@ -1,75 +1,75 @@
-import { getCookie } from '@/services/auth/tokenHandlers'
-import { getNewAccessToken } from '../services/auth/authService'
+import { getCookie } from "@/services/auth/tokenHandlers";
+import { getNewAccessToken } from "../services/auth/authService";
 
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL
+const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
 const AUTH_REFRESH_EXCLUDED_ENDPOINTS = [
-	'/auth/login',
-	'/auth/register',
-	'/auth/forgot-password',
-	'/auth/forget-password',
-	'/auth/refresh-token',
-]
+  "/auth/login",
+  "/auth/register",
+  "/auth/forgot-password",
+  "/auth/forget-password",
+  "/auth/refresh-token",
+];
 
 const serverFetchHelper = async (
-	endpoint: string,
-	options: RequestInit,
+  endpoint: string,
+  options: RequestInit,
 ): Promise<Response> => {
-	const { headers, ...restOptions } = options
-	const accessToken = await getCookie('accessToken')
+  const { headers, ...restOptions } = options;
+  const accessToken = await getCookie("accessToken");
 
-	if (!BACKEND_API_URL) {
-		throw new Error('NEXT_PUBLIC_BACKEND_API_URL is not configured')
-	}
+  if (!BACKEND_API_URL) {
+    throw new Error("NEXT_PUBLIC_BACKEND_API_URL is not configured");
+  }
 
-	if (!AUTH_REFRESH_EXCLUDED_ENDPOINTS.includes(endpoint)) {
-		await getNewAccessToken()
-	}
+  if (!AUTH_REFRESH_EXCLUDED_ENDPOINTS.includes(endpoint)) {
+    await getNewAccessToken();
+  }
 
-	const res = await fetch(`${BACKEND_API_URL}${endpoint}`, {
-		headers: {
-			Cookie: accessToken ? `accessToken=${accessToken}` : '',
-			...headers,
-			// * if send token inside Authorization
-			// ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-			// ...(accessToken ? { Authorization: accessToken } : {}),
-		},
-		...restOptions,
-	})
+  const res = await fetch(`${BACKEND_API_URL}${endpoint}`, {
+    headers: {
+      Cookie: accessToken ? `accessToken=${accessToken}` : "",
+      ...headers,
+      // * if send token inside Authorization
+      // ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      // ...(accessToken ? { Authorization: accessToken } : {}),
+    },
+    ...restOptions,
+  });
 
-	return res
-}
+  return res;
+};
 
 export const serverFetch = {
-	get: async (endpoint: string, options: RequestInit = {}): Promise<Response> =>
-		serverFetchHelper(endpoint, {
-			method: 'GET',
-			...options,
-		}),
+  get: async (endpoint: string, options: RequestInit = {}): Promise<Response> =>
+    serverFetchHelper(endpoint, {
+      method: "GET",
+      ...options,
+    }),
 
-	post: (endpoint: string, options: RequestInit = {}) =>
-		serverFetchHelper(endpoint, {
-			method: 'POST',
-			...options,
-		}),
+  post: (endpoint: string, options: RequestInit = {}) =>
+    serverFetchHelper(endpoint, {
+      method: "POST",
+      ...options,
+    }),
 
-	put: (endpoint: string, options: RequestInit = {}) =>
-		serverFetchHelper(endpoint, {
-			method: 'PUT',
-			...options,
-		}),
+  put: (endpoint: string, options: RequestInit = {}) =>
+    serverFetchHelper(endpoint, {
+      method: "PUT",
+      ...options,
+    }),
 
-	patch: (endpoint: string, options: RequestInit = {}) =>
-		serverFetchHelper(endpoint, {
-			method: 'PATCH',
-			...options,
-		}),
+  patch: (endpoint: string, options: RequestInit = {}) =>
+    serverFetchHelper(endpoint, {
+      method: "PATCH",
+      ...options,
+    }),
 
-	delete: (endpoint: string, options: RequestInit = {}) =>
-		serverFetchHelper(endpoint, {
-			method: 'DELETE',
-			...options,
-		}),
-}
+  delete: (endpoint: string, options: RequestInit = {}) =>
+    serverFetchHelper(endpoint, {
+      method: "DELETE",
+      ...options,
+    }),
+};
 
 // serverFetch.get('/auth/me')
 // serverFetch.post('/auth/register',{body: JSON.stringify({})})

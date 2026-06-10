@@ -1,14 +1,14 @@
-import { ManagementPageLoading } from '@/components/shared/ManagementPageLoader'
+import { ManagementPageLoading } from "@/components/shared/ManagementPageLoader";
 
 const DoctorsManagementLoading = () => {
-	return (
-		<ManagementPageLoading
-			columns={10}
-			hasActionButton={true}
-			filterCount={5}
-			filterWidths={['w-48', 'w-32', 'w-40', 'w-24', 'w-36']}
-		/>
-	)
-}
+  return (
+    <ManagementPageLoading
+      columns={10}
+      hasActionButton={true}
+      filterCount={5}
+      filterWidths={["w-48", "w-32", "w-40", "w-24", "w-36"]}
+    />
+  );
+};
 
-export default DoctorsManagementLoading
+export default DoctorsManagementLoading;

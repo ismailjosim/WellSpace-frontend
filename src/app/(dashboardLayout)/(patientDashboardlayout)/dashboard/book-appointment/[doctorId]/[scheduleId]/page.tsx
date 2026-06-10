@@ -1,39 +1,39 @@
-import AppointmentConfirmation from '@/components/modules/Patient/PatientAppointment/AppointmentConfirmation'
+import AppointmentConfirmation from "@/components/modules/Patient/PatientAppointment/AppointmentConfirmation";
 
-import { getScheduleById } from '@/services/admin/schedulesManagement'
-import { IDoctor } from '@/types/doctor.interface'
-import { ISchedule } from '@/types/schedule.interface'
-import { notFound } from 'next/navigation'
-import { getDoctorById } from '@/services/admin/doctorsManagement'
+import { getScheduleById } from "@/services/admin/schedulesManagement";
+import { IDoctor } from "@/types/doctor.interface";
+import { ISchedule } from "@/types/schedule.interface";
+import { notFound } from "next/navigation";
+import { getDoctorById } from "@/services/admin/doctorsManagement";
 
 interface BookAppointmentPageProps {
-	params: Promise<{
-		doctorId: string
-		scheduleId: string
-	}>
+  params: Promise<{
+    doctorId: string;
+    scheduleId: string;
+  }>;
 }
 
 export default async function BookAppointmentPage({
-	params,
+  params,
 }: BookAppointmentPageProps) {
-	const { doctorId, scheduleId } = await params
+  const { doctorId, scheduleId } = await params;
 
-	// Fetch doctor and schedule in parallel
-	const [doctorResponse, scheduleResponse] = await Promise.all([
-		getDoctorById(doctorId),
-		getScheduleById(scheduleId),
-	])
+  // Fetch doctor and schedule in parallel
+  const [doctorResponse, scheduleResponse] = await Promise.all([
+    getDoctorById(doctorId),
+    getScheduleById(scheduleId),
+  ]);
 
-	if (!doctorResponse?.success || !scheduleResponse?.success) {
-		notFound()
-	}
+  if (!doctorResponse?.success || !scheduleResponse?.success) {
+    notFound();
+  }
 
-	const doctor: IDoctor = doctorResponse.data
-	const schedule: ISchedule = scheduleResponse.data
+  const doctor: IDoctor = doctorResponse.data;
+  const schedule: ISchedule = scheduleResponse.data;
 
-	return (
-		<div className='container mx-auto px-4 py-8'>
-			<AppointmentConfirmation doctor={doctor} schedule={schedule} />
-		</div>
-	)
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <AppointmentConfirmation doctor={doctor} schedule={schedule} />
+    </div>
+  );
 }

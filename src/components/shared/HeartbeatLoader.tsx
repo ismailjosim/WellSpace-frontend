@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { motion } from "framer-motion";
 import { Activity } from "lucide-react";
 
@@ -39,7 +39,9 @@ export default function HeartbeatLoader({
   };
 
   return (
-    <div className={`flex flex-col items-center gap-4 ${className} justify-center min-h-screen`}>
+    <div
+      className={`flex flex-col items-center gap-4 ${className} justify-center min-h-screen`}
+    >
       {/* Main Container */}
       <div className={`relative ${sizeClasses[size]}`}>
         {/* Outer Pulsing Ring */}
