@@ -2,6 +2,13 @@ import { getCookie } from '@/services/auth/tokenHandlers'
 import { getNewAccessToken } from '../services/auth/authService'
 
 const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL
+const AUTH_REFRESH_EXCLUDED_ENDPOINTS = [
+	'/auth/login',
+	'/auth/register',
+	'/auth/forgot-password',
+	'/auth/forget-password',
+	'/auth/refresh-token',
+]
 
 const serverFetchHelper = async (
 	endpoint: string,
@@ -10,8 +17,11 @@ const serverFetchHelper = async (
 	const { headers, ...restOptions } = options
 	const accessToken = await getCookie('accessToken')
 
-	//to stop recursion loop
-	if (endpoint !== '/auth/refresh-token') {
+	if (!BACKEND_API_URL) {
+		throw new Error('NEXT_PUBLIC_BACKEND_API_URL is not configured')
+	}
+
+	if (!AUTH_REFRESH_EXCLUDED_ENDPOINTS.includes(endpoint)) {
 		await getNewAccessToken()
 	}
 

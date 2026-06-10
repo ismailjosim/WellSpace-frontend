@@ -13,6 +13,8 @@ import { loginValidationSchema } from '@/schema/authSchema'
 import { serverFetch } from '@/lib/server-fetch'
 import { redirect } from 'next/navigation'
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 export const loginUser = async (
 	_currentState: any,
 	formData: FormData,
@@ -90,18 +92,19 @@ export const loginUser = async (
 
 		// ✅ Set cookies securely in Next.js
 		await setCookie('accessToken', accessTokenObj.accessToken, {
-			secure: true,
+			secure: isProduction,
 			httpOnly: true,
 			maxAge: parseInt(accessTokenObj['Max-Age']) || undefined,
 			path: accessTokenObj.Path || '/',
-			sameSite: accessTokenObj['SameSite'] || 'none',
+			sameSite: isProduction ? accessTokenObj['SameSite'] || 'none' : 'lax',
 		})
 
 		await setCookie('refreshToken', refreshTokenObj.refreshToken, {
-			secure: true,
+			secure: isProduction,
 			httpOnly: true,
 			maxAge: parseInt(refreshTokenObj['Max-Age']) || undefined,
-			sameSite: refreshTokenObj['SameSite'] || 'none',
+			path: refreshTokenObj.Path || '/',
+			sameSite: isProduction ? refreshTokenObj['SameSite'] || 'none' : 'lax',
 		})
 
 		// ✅ Decode access token to determine user role
