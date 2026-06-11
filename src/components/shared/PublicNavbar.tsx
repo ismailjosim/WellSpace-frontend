@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import UserLogout from "./UserLogout";
 import clsx from "clsx";
+import { ThemeToggle } from "../theme-toggle";
 
 const PublicNavbar = async () => {
   const navItems = [
@@ -51,6 +52,7 @@ const PublicNavbar = async () => {
         </nav>
 
         <div className="hidden md:flex items-center space-x-2">
+          <ThemeToggle />
           {accessToken ? (
             <UserLogout />
           ) : (
@@ -83,7 +85,9 @@ const PublicNavbar = async () => {
                   </Link>
                 ))}
                 <div className="border-t pt-4 flex flex-col space-y-4">
-                  <div className="flex justify-center"></div>
+                  <div className="flex justify-start">
+                    <ThemeToggle />
+                  </div>
                   <Link href="/login" className="text-lg font-medium">
                     <Button>Login</Button>
                   </Link>

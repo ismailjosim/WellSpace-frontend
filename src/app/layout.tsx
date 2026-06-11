@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import LogoutSuccessToast from "../components/shared/LogoutSuccessToast";
 import LoginSuccessToast from "../components/shared/LoginSuccessToast";
 import { Suspense } from "react";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,12 +34,19 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        <Toaster />
-        <Suspense fallback={null}>
-          <LoginSuccessToast />
-          <LogoutSuccessToast />
-        </Suspense>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster richColors />
+          <Suspense fallback={null}>
+            <LoginSuccessToast />
+            <LogoutSuccessToast />
+          </Suspense>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import DashboardMobileSidebar from "./DashboardMobileSidebar";
 import NotificationDropdown from "./NotificationDropdown";
 import UserDropdown from "./UserDropdown";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 interface DashboardNavbarContentProps {
   userInfo: UserInfo | null;
@@ -66,6 +67,7 @@ const DashboardNavbarContent = ({
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <NotificationDropdown />
 
           {/* User Dropdown */}
