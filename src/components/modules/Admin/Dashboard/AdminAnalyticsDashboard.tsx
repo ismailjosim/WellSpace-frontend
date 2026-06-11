@@ -191,9 +191,7 @@ export default function AdminAnalyticsDashboard({
     <div className="space-y-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Admin Analytics
-          </h1>
+          <h1 className="text-3xl font-bold tracking-tight">Admin Analytics</h1>
           <p className="mt-2 text-muted-foreground">
             Platform operations, revenue, appointments, and provider quality.
           </p>
@@ -207,9 +205,7 @@ export default function AdminAnalyticsDashboard({
               <Link href="/admin/dashboard?range=30">30d</Link>
             </TabsTrigger>
             <TabsTrigger value="90" asChild>
-              <Link href="/admin/dashboard?range=90&granularity=week">
-                90d
-              </Link>
+              <Link href="/admin/dashboard?range=90&granularity=week">90d</Link>
             </TabsTrigger>
             <TabsTrigger value="365" asChild>
               <Link href="/admin/dashboard?range=365&granularity=month">

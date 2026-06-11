@@ -18,7 +18,9 @@ const getRangeStartDate = (range: string) => {
   return startDate.toISOString();
 };
 
-const AdminDashboardPage = async ({ searchParams }: AdminDashboardPageProps) => {
+const AdminDashboardPage = async ({
+  searchParams,
+}: AdminDashboardPageProps) => {
   const params = await searchParams;
   const activeRange = params?.range || "30";
   const queryParams = new URLSearchParams({

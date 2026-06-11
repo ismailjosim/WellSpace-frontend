@@ -4,6 +4,8 @@ import { IAppointment } from "@/types/appointments.interface";
 import { IPrescription } from "@/types/prescription.interface";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 async function PrescriptionsContent() {
   // Get all doctor's appointments
   const response = await getMyAppointments();

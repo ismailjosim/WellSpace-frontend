@@ -2,6 +2,8 @@ import AppointmentsList from "@/components/modules/Patient/PatientAppointment/Ap
 import { getMyAppointments } from "@/services/patient/appointment.service";
 import { IAppointment } from "@/types/appointments.interface";
 
+export const dynamic = "force-dynamic";
+
 const MyAppointmentsPage = async () => {
   const res = await getMyAppointments();
   const appointments: IAppointment[] = res.data || [];

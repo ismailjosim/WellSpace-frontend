@@ -10,12 +10,12 @@ export async function getDashboardMetaData(queryString?: string) {
     const response = await serverFetch.get(
       `/metadata${queryString ? `?${queryString}` : ""}`,
       {
-      // next: {
-      // 	tags: [cacheTag, 'dashboard-meta', 'meta-data'],
-      // 	// Faster revalidation for dashboard (30 seconds)
-      // 	// Dashboard stats should update frequently for real-time feel
-      // 	revalidate: 30,
-      // },
+        // next: {
+        // 	tags: [cacheTag, 'dashboard-meta', 'meta-data'],
+        // 	// Faster revalidation for dashboard (30 seconds)
+        // 	// Dashboard stats should update frequently for real-time feel
+        // 	revalidate: 30,
+        // },
       },
     );
     const result = await response.json();

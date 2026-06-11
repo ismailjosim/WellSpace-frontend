@@ -4,6 +4,8 @@ import { getMyAppointments } from "@/services/patient/appointment.service";
 import { IAppointment } from "@/types/appointments.interface";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 async function AppointmentsContent() {
   const response = await getMyAppointments();
   const appointments: IAppointment[] = response?.data || [];

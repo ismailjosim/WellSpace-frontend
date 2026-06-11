@@ -464,10 +464,7 @@ export default function HealthRecordsClient({
                           <div className="flex items-center gap-2 text-sm text-primary">
                             <Calendar className="h-4 w-4" />
                             Follow-up{" "}
-                            {format(
-                              new Date(prescription.followUpDate),
-                              "PPP",
-                            )}
+                            {format(new Date(prescription.followUpDate), "PPP")}
                           </div>
                         )}
                       </div>
