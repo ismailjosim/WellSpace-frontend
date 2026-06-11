@@ -1,4 +1,4 @@
-import { ZodObject, ZodTypeAny } from "zod";
+import { ZodTypeAny } from "zod";
 
 // Define proper return types
 type ValidationSuccess<T> = {

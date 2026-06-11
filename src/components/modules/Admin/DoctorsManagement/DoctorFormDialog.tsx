@@ -41,7 +41,6 @@ const DoctorFormDialog = ({
 }: IDoctorFormDialogInterface) => {
   const isEdit = !!doctor;
 
-  const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
   const [gender, setGender] = useState<"MALE" | "FEMALE">(
     doctor?.gender || "MALE",
   );
@@ -69,7 +68,7 @@ const DoctorFormDialog = ({
     } else if (state && !state.success) {
       toast.error(state.message);
     }
-  }, [state]);
+  }, [state, onClose, onSuccess]);
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-h-[90vh] flex flex-col p-0">

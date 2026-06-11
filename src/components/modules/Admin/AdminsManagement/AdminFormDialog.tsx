@@ -63,7 +63,7 @@ const AdminFormDialog = ({
         fileInputRef.current.files = dataTransfer.files;
       }
     }
-  }, [state]);
+  }, [state, onClose, onSuccess, selectedFile]);
 
   const handleClose = () => {
     setSelectedFile(null);

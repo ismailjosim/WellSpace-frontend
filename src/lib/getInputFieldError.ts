@@ -1,5 +1,3 @@
-import { FieldDescription } from "@/components/ui/field";
-
 export interface IInputErrorState {
   success: boolean;
   errors?: { field: string; message: string }[];

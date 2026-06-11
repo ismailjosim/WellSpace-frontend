@@ -17,7 +17,7 @@ const checkAuthStatus = async () => {
     const data = await res.json();
     isAuthenticated = true;
     return { isAuthenticated, user: data.data };
-  } catch (error) {
+  } catch {
     return { isAuthenticated, user: null };
   }
 };

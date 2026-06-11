@@ -33,7 +33,7 @@ const SpecialtiesFormDialog = ({
     } else if (state && !state.success) {
       toast.error(state.message);
     }
-  }, [state]);
+  }, [state, onClose, onSuccess]);
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>

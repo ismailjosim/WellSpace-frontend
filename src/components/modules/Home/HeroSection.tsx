@@ -1,14 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Search,
-  Calendar,
-  Star,
-  Sparkles,
-} from "lucide-react";
+import { Search, Calendar, Star, Sparkles } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -60,9 +54,12 @@ export default function HeroSection() {
               index === currentSlide ? "opacity-100" : "opacity-0"
             }`}
           >
-            <img
-              src={image.src}
+            <Image
+              src={image}
               alt={`Background ${index + 1}`}
+              fill
+              priority={index === 0}
+              sizes="100vw"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-[radial-gradient(125%_125%_at_50%_10%,rgba(0,0,0,0.2)_40%,rgba(20,184,166,0.6)_100%)] mix-blend-overlay opacity-[0.85]" />

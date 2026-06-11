@@ -13,7 +13,6 @@ import {
   ArrowBigRight,
   LucideLinkedin,
   Sparkles,
-  Star,
 } from "lucide-react";
 
 const reviews = [

@@ -2,11 +2,9 @@
 "use server";
 
 import { serverFetch } from "@/lib/server-fetch";
-import { getUserInfo } from "../auth/getUserInfo";
 
 export async function getDashboardMetaData() {
   try {
-    const userInfo = await getUserInfo();
     // const cacheTag = `${userInfo.role.toLowerCase()}-dashboard-meta`
 
     const response = await serverFetch.get("/meta", {

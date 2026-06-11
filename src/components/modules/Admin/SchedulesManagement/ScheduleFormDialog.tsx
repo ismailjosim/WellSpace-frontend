@@ -38,7 +38,7 @@ const ScheduleFormDialog = ({
     } else if (state?.message && !state.success) {
       toast.error(state.message);
     }
-  }, [state]);
+  }, [state, onClose, onSuccess]);
 
   const handleClose = () => {
     formRef.current?.reset();

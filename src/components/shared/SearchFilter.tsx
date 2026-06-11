@@ -41,7 +41,7 @@ const SearchFilter = ({
     startTransition(() => {
       router.push(`?${params.toString()}`);
     });
-  }, [debouncedValue, paramName, router]);
+  }, [debouncedValue, paramName, router, searchParams]);
 
   return (
     <div className="relative">

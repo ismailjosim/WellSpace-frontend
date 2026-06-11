@@ -47,7 +47,7 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
     };
 
     return userInfo;
-  } catch (error: any) {
+  } catch {
     return {
       id: "",
       name: "Unknown User",

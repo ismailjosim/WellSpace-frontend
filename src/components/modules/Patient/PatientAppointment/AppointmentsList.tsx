@@ -24,8 +24,6 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-import { toast } from "sonner";
 import AppointmentCountdown from "./AppointmentCountdown";
 
 interface AppointmentsListProps {
@@ -33,9 +31,7 @@ interface AppointmentsListProps {
 }
 
 const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
-  const [processingPaymentId, setProcessingPaymentId] = useState<string | null>(
-    null,
-  );
+  const processingPaymentId: string | null = null;
 
   const handlePayNow = async (appointmentId: string) => {
     console.log(appointmentId);

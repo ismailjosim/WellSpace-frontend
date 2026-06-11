@@ -34,12 +34,12 @@ const AppointmentConfirmation = ({
   schedule,
 }: AppointmentConfirmationProps) => {
   const router = useRouter();
-  const [isBooking, setIsBooking] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
 
   // payment states
   const [isPayingNow, setIsPayingNow] = useState(false);
   const [isPayingLater, setIsPayingLater] = useState(false);
+  const isBooking = isPayingNow || isPayingLater;
 
   const handleConfirmBooking = async () => {
     setIsPayingNow(true);
