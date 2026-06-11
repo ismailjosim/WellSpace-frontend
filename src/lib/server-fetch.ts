@@ -27,11 +27,9 @@ const serverFetchHelper = async (
 
   const res = await fetch(`${BACKEND_API_URL}${endpoint}`, {
     headers: {
-      Cookie: accessToken ? `accessToken=${accessToken}` : "",
+      "Content-Type": "application/json",
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
       ...headers,
-      // * if send token inside Authorization
-      // ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-      // ...(accessToken ? { Authorization: accessToken } : {}),
     },
     ...restOptions,
   });

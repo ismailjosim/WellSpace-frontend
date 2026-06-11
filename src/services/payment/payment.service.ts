@@ -179,3 +179,35 @@ export async function changeAppointmentStatus(
     };
   }
 }
+
+export async function initiatePayment(appointmentId: string) {
+  try {
+    const response = await serverFetch.post(
+      `/appointment/${appointmentId}/initiate-payment`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    const result = await response.json();
+
+    if (result.success) {
+      revalidateTag("my-appointments", { expire: 0 });
+      revalidateTag("patient-dashboard-meta", { expire: 0 });
+    }
+
+    return result;
+  } catch (error: any) {
+    console.error("Error initiating payment:", error);
+    return {
+      success: false,
+      data: null,
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Failed to initiate payment",
+    };
+  }
+}
