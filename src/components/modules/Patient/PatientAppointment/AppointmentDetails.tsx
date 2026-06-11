@@ -452,7 +452,7 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
           {appointment.prescription && (
             <Card className="border-green-500/30">
               <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-green-700 dark:text-green-300">
+                <CardTitle className="flex items-center gap-2 text-green-700 dark:text-green-300">
                   <CheckCircle2 className="h-5 w-5" />
                   Prescription Available
                 </CardTitle>

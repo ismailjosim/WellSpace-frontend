@@ -1,6 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CheckCircle, Shield, Users, Zap } from "lucide-react";
 import Link from "next/link";
 
@@ -57,18 +63,37 @@ export default function HealthPlansPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-primary mb-4">Health Plans & Packages</h1>
+        <h1 className="text-4xl font-bold text-primary mb-4">
+          Health Plans & Packages
+        </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Choose a plan that fits your care needs, from routine consultations to family coverage.
+          Choose a plan that fits your care needs, from routine consultations to
+          family coverage.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
         {[
-          { icon: Shield, title: "Coverage", desc: "Core digital care services" },
-          { icon: Users, title: "Family Ready", desc: "Plans for household care" },
-          { icon: Zap, title: "Fast Access", desc: "Quick appointment booking" },
-          { icon: CheckCircle, title: "Verified Care", desc: "Trusted healthcare providers" },
+          {
+            icon: Shield,
+            title: "Coverage",
+            desc: "Core digital care services",
+          },
+          {
+            icon: Users,
+            title: "Family Ready",
+            desc: "Plans for household care",
+          },
+          {
+            icon: Zap,
+            title: "Fast Access",
+            desc: "Quick appointment booking",
+          },
+          {
+            icon: CheckCircle,
+            title: "Verified Care",
+            desc: "Trusted healthcare providers",
+          },
         ].map((benefit) => {
           const Icon = benefit.icon;
           return (
@@ -87,7 +112,12 @@ export default function HealthPlansPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {plans.map((plan) => (
-          <Card key={plan.name} className={plan.popular ? "relative border-primary shadow-lg" : "relative"}>
+          <Card
+            key={plan.name}
+            className={
+              plan.popular ? "relative border-primary shadow-lg" : "relative"
+            }
+          >
             {plan.popular && (
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <Badge>Most Popular</Badge>
@@ -97,7 +127,9 @@ export default function HealthPlansPage() {
               <CardTitle className="text-2xl mb-2">{plan.name}</CardTitle>
               <CardDescription>{plan.description}</CardDescription>
               <div className="mt-4">
-                <span className="text-4xl font-bold text-primary">{plan.price}</span>
+                <span className="text-4xl font-bold text-primary">
+                  {plan.price}
+                </span>
                 <span className="text-muted-foreground">{plan.period}</span>
               </div>
             </CardHeader>
@@ -110,7 +142,12 @@ export default function HealthPlansPage() {
                   </li>
                 ))}
               </ul>
-              <Button className="w-full" variant={plan.popular ? "default" : "outline"} size="lg" asChild>
+              <Button
+                className="w-full"
+                variant={plan.popular ? "default" : "outline"}
+                size="lg"
+                asChild
+              >
                 <Link href="/register">Get Started</Link>
               </Button>
             </CardContent>
@@ -122,7 +159,8 @@ export default function HealthPlansPage() {
         <CardContent className="p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Need a Custom Plan?</h2>
           <p className="text-muted-foreground mb-6">
-            Contact support to create a healthcare package for your organization or family.
+            Contact support to create a healthcare package for your organization
+            or family.
           </p>
           <Button size="lg" variant="outline" asChild>
             <Link href="/contact">Contact Sales</Link>

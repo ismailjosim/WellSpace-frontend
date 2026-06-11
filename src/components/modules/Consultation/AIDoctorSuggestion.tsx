@@ -103,7 +103,8 @@ export default function AIDoctorSuggestion() {
             </div>
             <div className="space-y-3">
               <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                {suggestion.reasoning || "Recommended doctors based on your symptoms."}
+                {suggestion.reasoning ||
+                  "Recommended doctors based on your symptoms."}
               </p>
               {suggestion.recommendedDoctors &&
                 suggestion.recommendedDoctors.length > 0 && (
@@ -115,7 +116,9 @@ export default function AIDoctorSuggestion() {
                       >
                         <p className="font-medium">{doctor.name || "Doctor"}</p>
                         <p className="text-xs text-muted-foreground">
-                          {doctor.designation || doctor.qualification || "Specialist"}
+                          {doctor.designation ||
+                            doctor.qualification ||
+                            "Specialist"}
                         </p>
                       </div>
                     ))}
