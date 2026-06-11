@@ -10,6 +10,7 @@ export interface IPatient {
   updatedAt: string;
   patientHealthData?: IPatientHealthData;
   medicalReport?: IMedicalReport[];
+  prescriptions?: import("./prescription.interface").IPrescription[];
 }
 
 export interface IPatientHealthData {
@@ -38,7 +39,7 @@ export interface IPatientHealthData {
   hasPastSurgeries?: boolean;
   recentAnxiety?: boolean;
   recentDepression?: boolean;
-  maritalStatus?: "MARRIED" | "UNMARRIED";
+  maritalStatus?: "MARRIED" | "SINGLE";
   createdAt: string;
   updatedAt: string;
 }
