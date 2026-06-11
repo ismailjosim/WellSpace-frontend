@@ -14,11 +14,15 @@ import { Loader2, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Textarea } from "../../ui/textarea";
+import {
+  AISuggestionResult,
+  fetchAIDoctorSuggestion,
+} from "@/lib/ai-suggestion-client";
 
 export default function AIDoctorSuggestion() {
   const [symptoms, setSymptoms] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [suggestion, setSuggestion] = useState<string>("");
+  const [suggestion, setSuggestion] = useState<AISuggestionResult | null>(null);
   const [showSuggestion, setShowSuggestion] = useState(false);
 
   const handleGetSuggestion = async () => {
@@ -28,33 +32,29 @@ export default function AIDoctorSuggestion() {
     }
 
     setIsLoading(true);
-    setSuggestion("");
+    setSuggestion(null);
     setShowSuggestion(false);
 
     try {
-      //   const response = await getDoctorSuggestion(symptoms);
-      //   if (response.success) {
-      //     setSuggestion(response.data || "No suggestion available");
-      //     setShowSuggestion(true);
-      //   } else {
-      //     toast.error(response.message || "Failed to get AI suggestion");
-      //   }
+      const response = await fetchAIDoctorSuggestion(symptoms);
+      setSuggestion(response);
+      setShowSuggestion(true);
     } catch (error) {
       console.error("Error getting AI suggestion:", error);
-      toast.error("Failed to get AI suggestion");
+      toast.error(
+        error instanceof Error ? error.message : "Failed to get AI suggestion",
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Card className="bg-linear-to-br from-purple-50 to-blue-50 border-purple-200">
+    <Card className="bg-linear-to-br from-primary/10 to-secondary/10 border-primary/20">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-purple-600" />
-          <CardTitle className="text-purple-900">
-            AI Doctor Suggestion
-          </CardTitle>
+          <Sparkles className="h-5 w-5 text-primary" />
+          <CardTitle>AI Doctor Suggestion</CardTitle>
         </div>
         <CardDescription>
           Describe your symptoms and get AI-powered doctor specialty
@@ -68,7 +68,7 @@ export default function AIDoctorSuggestion() {
             value={symptoms}
             onChange={(e) => setSymptoms(e.target.value)}
             rows={4}
-            className="resize-none bg-white"
+            className="resize-none bg-background"
             disabled={isLoading}
           />
           <p className="text-xs text-muted-foreground mt-1">
@@ -79,7 +79,7 @@ export default function AIDoctorSuggestion() {
         <Button
           onClick={handleGetSuggestion}
           disabled={isLoading || symptoms.trim().length < 5}
-          className="w-full bg-purple-600 hover:bg-purple-700"
+          className="w-full"
         >
           {isLoading ? (
             <>
@@ -95,19 +95,32 @@ export default function AIDoctorSuggestion() {
         </Button>
 
         {showSuggestion && suggestion && (
-          <div className="space-y-3 p-4 bg-white rounded-lg border border-purple-200">
+          <div className="space-y-3 p-4 bg-background rounded-lg border">
             <div className="flex items-center gap-2">
-              <Badge
-                variant="outline"
-                className="bg-purple-100 text-purple-700"
-              >
+              <Badge variant="outline" className="bg-primary/10 text-primary">
                 AI Recommendation
               </Badge>
             </div>
-            <div className="prose prose-sm max-w-none">
-              <p className="text-sm text-gray-700 whitespace-pre-wrap">
-                {suggestion}
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                {suggestion.reasoning || "Recommended doctors based on your symptoms."}
               </p>
+              {suggestion.recommendedDoctors &&
+                suggestion.recommendedDoctors.length > 0 && (
+                  <div className="grid gap-2">
+                    {suggestion.recommendedDoctors.slice(0, 3).map((doctor) => (
+                      <div
+                        key={doctor.id || doctor.name}
+                        className="rounded-md border bg-card p-3"
+                      >
+                        <p className="font-medium">{doctor.name || "Doctor"}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {doctor.designation || doctor.qualification || "Specialist"}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
             </div>
           </div>
         )}

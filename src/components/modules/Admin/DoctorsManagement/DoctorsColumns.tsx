@@ -27,7 +27,9 @@ export const doctorsColumns: Column<IDoctor>[] = [
       const specialties: any = doctor.doctorSpecialties;
 
       if (!specialties || specialties.length === 0) {
-        return <span className="text-xs text-gray-500">No specialties</span>;
+        return (
+          <span className="text-xs text-muted-foreground">No specialties</span>
+        );
       }
 
       return (
@@ -39,7 +41,7 @@ export const doctorsColumns: Column<IDoctor>[] = [
             return (
               <span
                 key={specialtyId}
-                className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300"
+                className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary"
               >
                 {specialtyTitle}
               </span>

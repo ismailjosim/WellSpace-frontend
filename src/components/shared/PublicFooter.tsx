@@ -29,18 +29,18 @@ const PublicFooter = () => {
   ];
 
   return (
-    <footer className="bg-secondary-foreground text-white">
+    <footer className="border-t bg-card text-card-foreground">
       <div className="container mx-auto py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
-                <Stethoscope className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                <Stethoscope className="w-5 h-5 text-primary-foreground" />
               </div>
               <span className="text-2xl font-bold">WellSpace</span>
             </div>
-            <p className="text-blue-200 text-sm">
+            <p className="text-muted-foreground text-sm">
               Connecting Care, Anytime, Anywhere.
             </p>
             <div className="flex space-x-4">
@@ -48,7 +48,7 @@ const PublicFooter = () => {
                 <Link
                   key={social.name}
                   href={social.href}
-                  className="text-blue-200 hover:text-white transition-colors duration-200"
+                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
                   aria-label={social.name}
                 >
                   <social.icon className="w-5 h-5" />
@@ -65,7 +65,7 @@ const PublicFooter = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-blue-200 hover:text-white transition-colors duration-200 text-sm"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-200 text-sm"
                   >
                     {link.name}
                   </Link>
@@ -82,7 +82,7 @@ const PublicFooter = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-blue-200 hover:text-white transition-colors duration-200 text-sm"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-200 text-sm"
                   >
                     {link.name}
                   </Link>
@@ -99,7 +99,7 @@ const PublicFooter = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-blue-200 hover:text-white transition-colors duration-200 text-sm"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-200 text-sm"
                   >
                     {link.name}
                   </Link>
@@ -110,8 +110,8 @@ const PublicFooter = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-blue-700">
-          <p className="text-center text-blue-300 text-sm">
+        <div className="mt-12 pt-8 border-t">
+          <p className="text-center text-muted-foreground text-sm">
             © 2025 WellSpace. All rights reserved. Designed with modern web
             standards.
           </p>

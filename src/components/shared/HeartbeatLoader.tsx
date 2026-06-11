@@ -142,7 +142,7 @@ export default function HeartbeatLoader({
       {/* Text */}
       {text && (
         <motion.p
-          className={`font-medium text-gray-600 text-center ${textSizeClasses[size]}`}
+          className={`font-medium text-muted-foreground text-center ${textSizeClasses[size]}`}
           initial={animated ? { opacity: 0, y: 10 } : {}}
           animate={animated ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5, duration: 0.5 }}

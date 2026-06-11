@@ -108,7 +108,7 @@ export default function PatientReviews() {
       >
         {reviews.map((review) => (
           <SwiperSlide key={review.id}>
-            <Card className="p-5 rounded-xl shadow-md bg-white h-full flex flex-col justify-between">
+            <Card className="p-5 rounded-xl shadow-md bg-card h-full flex flex-col justify-between">
               {/* Header */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center">
@@ -136,7 +136,9 @@ export default function PatientReviews() {
 
               {/* Review Text */}
               <CardContent className="p-0">
-                <p className="text-sm text-gray-700 mb-4">{review.text}</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {review.text}
+                </p>
               </CardContent>
 
               {/* Platform */}

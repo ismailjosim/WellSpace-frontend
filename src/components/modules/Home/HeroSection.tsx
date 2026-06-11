@@ -1,11 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, Calendar, Star, Sparkles } from "lucide-react";
+import { Search, Calendar, Star, Sparkles, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  AISuggestionResult,
+  fetchAIDoctorSuggestion,
+} from "@/lib/ai-suggestion-client";
 
 import slide01 from "@/assets/images/slide-01.jpeg";
 import slide02 from "@/assets/images/slide-02.jpeg";
@@ -15,6 +19,11 @@ import slide04 from "@/assets/images/slide-04.jpeg";
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [symptoms, setSymptoms] = useState("");
+  const [isLoadingSuggestion, setIsLoadingSuggestion] = useState(false);
+  const [aiSuggestion, setAiSuggestion] = useState<AISuggestionResult | null>(
+    null,
+  );
+  const [aiError, setAiError] = useState("");
 
   const backgroundImages = [slide01, slide02, slide03, slide04];
 
@@ -39,12 +48,33 @@ export default function HeroSection() {
     setCurrentSlide(index);
   };
 
-  const handleGetRecommendations = () => {
-    alert("Getting AI recommendations for: " + symptoms);
+  const handleGetRecommendations = async () => {
+    if (symptoms.trim().length < 5) {
+      setAiError("Please describe your symptoms with at least 5 characters.");
+      setAiSuggestion(null);
+      return;
+    }
+
+    setIsLoadingSuggestion(true);
+    setAiError("");
+    setAiSuggestion(null);
+
+    try {
+      const response = await fetchAIDoctorSuggestion(symptoms);
+      setAiSuggestion(response);
+    } catch (error) {
+      setAiError(
+        error instanceof Error
+          ? error.message
+          : "Failed to get AI recommendations.",
+      );
+    } finally {
+      setIsLoadingSuggestion(false);
+    }
   };
 
   return (
-    <section className="relative w-full sm:h-screen flex justify-center items-center py-10 overflow-hidden bg-slate-900">
+    <section className="relative w-full sm:h-screen flex justify-center items-center py-10 overflow-hidden bg-background">
       {/* === Background Image & Overlay === */}
       <div className="absolute inset-0">
         {backgroundImages.map((image, index) => (
@@ -74,7 +104,7 @@ export default function HeroSection() {
         <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-10">
           {/* === Left Section === */}
           <div className="flex-1 text-white space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/10 backdrop-blur-sm rounded-full border border-primary-foreground/20">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
               <span className="text-sm font-medium tracking-wider">
                 AI Powered Healthcare
@@ -85,7 +115,7 @@ export default function HeroSection() {
               Find Your Perfect Doctor with AI
             </h1>
 
-            <p className="text-lg sm:text-xl text-gray-300 max-w-2xl leading-relaxed">
+            <p className="text-lg sm:text-xl text-white/80 max-w-2xl leading-relaxed">
               Our advanced AI technology analyzes your symptoms, medical
               history, and preferences to match you with the best-fit doctors in
               seconds.
@@ -104,7 +134,7 @@ export default function HeroSection() {
               <Button
                 size={"lg"}
                 variant="outline"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 border-2 border-white/30 text-white backdrop-blur-sm font-semibold rounded-lg transition-all duration-300"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-background/10 hover:bg-background/20 border-2 border-primary-foreground/30 text-white backdrop-blur-sm font-semibold rounded-lg transition-all duration-300"
               >
                 <Calendar className="w-5 h-5" />
                 Book Appointment
@@ -115,28 +145,28 @@ export default function HeroSection() {
             <div className="flex-wrap gap-8 pt-8 hidden sm:flex">
               <div>
                 <div className="text-4xl font-bold text-white">50K+</div>
-                <div className="text-sm text-gray-300 mt-1">
+                <div className="text-sm text-white/80 mt-1">
                   Patients Served
                 </div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-white">1000+</div>
-                <div className="text-sm text-gray-300 mt-1">Expert Doctors</div>
+                <div className="text-sm text-white/80 mt-1">Expert Doctors</div>
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <span className="text-4xl font-bold text-white">4.9</span>
                   <Star className="w-8 h-8 fill-yellow-400 text-yellow-400" />
                 </div>
-                <div className="text-sm text-gray-300 mt-1">Patient Rating</div>
+                <div className="text-sm text-white/80 mt-1">Patient Rating</div>
               </div>
             </div>
           </div>
 
           {/* === Right Section: Glass Card === */}
           <div className="flex flex-1 sm:justify-end justify-center">
-            <Card className="w-full max-w-lg p-8 space-y-6 rounded-2xl border border-white/30 bg-white/20 backdrop-blur-2xl shadow-2xl relative overflow-hidden text-white">
-              <div className="absolute inset-0 bg-linear-to-br from-white/40 via-white/10 to-transparent opacity-70 pointer-events-none" />
+            <Card className="w-full max-w-lg p-8 space-y-6 rounded-2xl border border-primary-foreground/30 bg-card/20 backdrop-blur-2xl shadow-2xl relative overflow-hidden text-white">
+              <div className="absolute inset-0 bg-linear-to-br from-background/30 via-background/10 to-transparent opacity-70 pointer-events-none" />
 
               <CardHeader className="relative z-10 flex items-center justify-between p-0">
                 <CardTitle className="text-2xl font-bold drop-shadow-md">
@@ -155,17 +185,62 @@ export default function HeroSection() {
                     placeholder="e.g. headache, fever, cough"
                     value={symptoms}
                     onChange={(e) => setSymptoms(e.target.value)}
-                    className="bg-white/20 border-white/30 py-5 text-white placeholder:text-white/60 focus:ring-2 focus:ring-primary focus:border-transparent backdrop-blur-md"
+                    className="bg-background/20 border-primary-foreground/30 py-5 text-white placeholder:text-white/60 focus:ring-2 focus:ring-primary focus:border-transparent backdrop-blur-md"
                   />
                 </div>
 
                 <Button
                   size={"lg"}
                   onClick={handleGetRecommendations}
+                  disabled={isLoadingSuggestion || symptoms.trim().length < 5}
                   className="w-full py-4 bg-primary hover:bg-primary/80 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl backdrop-blur-md"
                 >
-                  Get AI Recommendations
+                  {isLoadingSuggestion ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Finding Doctors...
+                    </>
+                  ) : (
+                    "Get AI Recommendations"
+                  )}
                 </Button>
+
+                {(aiError || aiSuggestion) && (
+                  <div className="rounded-lg border border-white/20 bg-background/15 p-3 backdrop-blur-md">
+                    {aiError ? (
+                      <p className="text-sm text-red-100">{aiError}</p>
+                    ) : (
+                      <div className="space-y-3">
+                        <p className="text-sm text-white/80 line-clamp-3">
+                          {aiSuggestion?.reasoning ||
+                            "These doctors look like a good match for your symptoms."}
+                        </p>
+                        {aiSuggestion?.recommendedDoctors &&
+                          aiSuggestion.recommendedDoctors.length > 0 && (
+                            <div className="grid gap-2">
+                              {aiSuggestion.recommendedDoctors
+                                .slice(0, 2)
+                                .map((doctor) => (
+                                  <div
+                                    key={doctor.id || doctor.name}
+                                    className="rounded-md bg-background/20 px-3 py-2"
+                                  >
+                                    <p className="text-sm font-medium">
+                                      {doctor.name || "Doctor"}
+                                    </p>
+                                    <p className="text-xs text-white/70">
+                                      {doctor.designation ||
+                                        doctor.qualification ||
+                                        "Specialist"}
+                                    </p>
+                                  </div>
+                                ))}
+                            </div>
+                          )}
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 <div className="flex items-center justify-center gap-2 text-xs text-white/70">
                   <Sparkles className="w-3 h-3 text-teal-200" />
@@ -213,7 +288,7 @@ export default function HeroSection() {
             className={`transition-all duration-300 rounded-full ${
               index === currentSlide
                 ? "w-12 h-3 bg-primary-dark"
-                : "w-3 h-3 bg-white/50 hover:bg-white/80"
+                : "w-3 h-3 bg-muted/60 hover:bg-muted"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

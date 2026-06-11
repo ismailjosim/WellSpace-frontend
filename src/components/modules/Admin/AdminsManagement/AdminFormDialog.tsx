@@ -161,7 +161,7 @@ const AdminFormDialog = ({
                   accept="image/*"
                   onChange={handleFileChange}
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Upload a profile photo for the admin
                 </p>
                 <InputFieldError field="profilePhoto" state={state} />
@@ -170,7 +170,7 @@ const AdminFormDialog = ({
           </div>
 
           {/* Form Actions */}
-          <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50">
+          <div className="flex justify-end gap-2 px-6 py-4 border-t bg-muted/50">
             <Button
               type="button"
               variant="outline"

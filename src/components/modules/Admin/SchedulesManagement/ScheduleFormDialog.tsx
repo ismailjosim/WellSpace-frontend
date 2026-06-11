@@ -92,7 +92,7 @@ const ScheduleFormDialog = ({
                 defaultValue={state?.formData?.startTime || ""}
                 placeholder="HH:MM"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Example: 09:00 (24-hour format)
               </p>
               <InputFieldError field="startTime" state={state} />
@@ -108,7 +108,7 @@ const ScheduleFormDialog = ({
                 defaultValue={state?.formData?.endTime || ""}
                 placeholder="HH:MM"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Example: 17:00 (24-hour format). Schedules will be created in
                 30-minute intervals.
               </p>
@@ -117,7 +117,7 @@ const ScheduleFormDialog = ({
           </div>
 
           {/* Form Actions */}
-          <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50">
+          <div className="flex justify-end gap-2 px-6 py-4 border-t bg-muted/50">
             <Button
               type="button"
               variant="outline"

@@ -28,10 +28,10 @@ export default function SpecialistsSection() {
     <section className="relative py-20 bg-linear-to-b from-primary/5 via-background to-secondary/10">
       <div className="container mx-auto px-6 text-center">
         <div className="space-y-4 mb-12">
-          <h2 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="text-4xl font-bold tracking-tight text-foreground">
             Our <span className="text-primary">Specialists</span>
           </h2>
-          <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Meet our highly qualified doctors across multiple departments —
             powered by AI to match you with the best expertise.
           </p>
@@ -43,13 +43,13 @@ export default function SpecialistsSection() {
             return (
               <Card
                 key={item.id}
-                className="group relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-lg shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.03]"
+                className="group relative overflow-hidden rounded-2xl border bg-card/80 backdrop-blur-lg shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.03]"
               >
                 <CardContent className="flex flex-col items-center justify-center p-8 space-y-4">
                   <div className="p-4 rounded-full bg-linear-to-br from-primary/70 to-secondary/70 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-8 h-8" />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                  <h3 className="text-lg font-semibold text-foreground">
                     {item.name}
                   </h3>
                 </CardContent>

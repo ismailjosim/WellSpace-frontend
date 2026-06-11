@@ -101,7 +101,7 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
     return (
       <Badge
         variant="outline"
-        className="bg-orange-50 text-orange-700 border-orange-300"
+        className="bg-orange-500/10 text-orange-700 border-orange-500/30 dark:text-orange-300"
       >
         Payment Pending
       </Badge>
@@ -146,7 +146,7 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
                   {appointment.prescription && (
                     <Badge
                       variant="outline"
-                      className="bg-green-50 text-green-700"
+                      className="bg-green-500/10 text-green-700 dark:text-green-300"
                     >
                       <FileText className="h-3 w-3 mr-1" />
                       Prescription
@@ -156,7 +156,7 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
                     !review && (
                       <Badge
                         variant="outline"
-                        className="bg-amber-50 text-amber-700 border-amber-300 animate-pulse"
+                        className="bg-amber-500/10 text-amber-700 border-amber-500/30 dark:text-amber-300 animate-pulse"
                       >
                         <MessageSquare className="h-3 w-3 mr-1" />
                         Can Review
@@ -168,8 +168,8 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
               {/* Doctor Info */}
               <div>
                 <div className="flex items-start gap-3">
-                  <div className="bg-blue-100 rounded-full p-2">
-                    <User className="h-5 w-5 text-blue-600" />
+                  <div className="bg-primary/10 rounded-full p-2">
+                    <User className="h-5 w-5 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-lg">
@@ -211,7 +211,7 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
 
               {/* Schedule */}
               {appointment.schedule && (
-                <div className="space-y-2 bg-gray-50 rounded-lg p-3">
+                <div className="space-y-2 bg-muted rounded-lg p-3">
                   <div className="flex items-center gap-2 text-sm">
                     <Calendar className="h-4 w-4 text-muted-foreground" />
                     <span className="font-medium">
@@ -237,7 +237,7 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
                   </div>
                   {appointment.status === AppointmentStatus.SCHEDULED &&
                     appointment.schedule.startDateTime && (
-                      <div className="pt-2 border-t border-gray-200">
+                      <div className="pt-2 border-t">
                         <AppointmentCountdown
                           appointmentDateTime={
                             appointment.schedule.startDateTime
@@ -262,12 +262,12 @@ const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
               {appointment.status === AppointmentStatus.COMPLETED && (
                 <div>
                   {review ? (
-                    <div className="flex items-center gap-2 text-sm text-yellow-600 bg-yellow-50 rounded-lg p-2">
+                    <div className="flex items-center gap-2 text-sm text-yellow-700 dark:text-yellow-300 bg-yellow-500/10 rounded-lg p-2">
                       <Star className="h-4 w-4 fill-yellow-600" />
                       <span>Rated {review.rating}/5</span>
                     </div>
                   ) : (
-                    <div className="text-sm text-muted-foreground bg-gray-50 rounded-lg p-2">
+                    <div className="text-sm text-muted-foreground bg-muted rounded-lg p-2">
                       No review yet
                     </div>
                   )}

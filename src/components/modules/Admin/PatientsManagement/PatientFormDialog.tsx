@@ -119,7 +119,7 @@ const PatientFormDialog = ({
           </div>
 
           {/* Form Actions */}
-          <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50">
+          <div className="flex justify-end gap-2 px-6 py-4 border-t bg-muted/50">
             <Button
               type="button"
               variant="outline"

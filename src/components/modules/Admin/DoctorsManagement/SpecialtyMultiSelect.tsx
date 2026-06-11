@@ -115,7 +115,7 @@ const SpecialtyMultiSelect = ({
         </Button>
       </div>
 
-      <p className="text-xs text-gray-500 mt-1">
+      <p className="text-xs text-muted-foreground mt-1">
         {isEdit
           ? "Add new specialties or remove existing ones"
           : "Select at least one specialty for the doctor"}

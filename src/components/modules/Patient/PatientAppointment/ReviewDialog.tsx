@@ -111,7 +111,7 @@ export default function ReviewDialog({
                       className={`h-8 w-8 ${
                         star <= (hoveredRating || rating)
                           ? "fill-yellow-500 text-yellow-500"
-                          : "text-gray-300"
+                          : "text-muted-foreground/40"
                       }`}
                     />
                   </button>
@@ -151,8 +151,8 @@ export default function ReviewDialog({
             </div>
 
             {/* Warning */}
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-              <p className="text-sm text-amber-800">
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+              <p className="text-sm text-amber-800 dark:text-amber-300">
                 <strong>Note:</strong> Reviews cannot be edited or deleted once
                 submitted. Please ensure your feedback is accurate.
               </p>

@@ -274,7 +274,7 @@ const DoctorFormDialog = ({
               <Field>
                 <FieldLabel htmlFor="file">Profile Photo</FieldLabel>
                 <Input id="file" name="file" type="file" accept="image/*" />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Upload a profile photo for the doctor
                 </p>
                 <InputFieldError state={state} field="file" />
@@ -282,7 +282,7 @@ const DoctorFormDialog = ({
             )}
           </div>
 
-          <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50">
+          <div className="flex justify-end gap-2 px-6 py-4 border-t bg-muted/50">
             <Button
               type="button"
               variant="outline"

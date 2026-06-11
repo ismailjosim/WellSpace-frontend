@@ -11,10 +11,10 @@ const PublicNavbar = async () => {
   const navItems = [
     { href: "/", label: "Home" },
     { href: "/consultation", label: "Consultation" },
-    { href: "#", label: "Health Plans" },
-    { href: "#", label: "Medicine" },
-    { href: "#", label: "Diagnostics" },
-    { href: "#", label: "NGOs" },
+    { href: "/health-plans", label: "Health Plans" },
+    { href: "/medicine", label: "Medicine" },
+    { href: "/diagnostics", label: "Diagnostics" },
+    { href: "/ngos", label: "NGOs" },
   ];
 
   const accessToken = await getCookie("accessToken");

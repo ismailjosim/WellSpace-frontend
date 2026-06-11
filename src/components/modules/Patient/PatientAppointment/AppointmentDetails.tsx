@@ -171,15 +171,15 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 
       {/* Review Notification - Only show if can review (completed but no review) */}
       {canReview && (
-        <Card className="border-amber-200 bg-amber-50">
+        <Card className="border-amber-500/30 bg-amber-500/10">
           <CardContent className="pt-6">
             <div className="flex items-start gap-3">
               <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5" />
               <div className="flex-1">
-                <h3 className="font-semibold text-amber-900">
+                <h3 className="font-semibold text-amber-900 dark:text-amber-200">
                   Review This Appointment
                 </h3>
-                <p className="text-sm text-amber-700 mt-1">
+                <p className="text-sm text-amber-700 dark:text-amber-300 mt-1">
                   Your appointment has been completed. Share your experience by
                   leaving a review for Dr. {appointment.doctor?.name}.
                 </p>
@@ -200,15 +200,15 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
       {!isCompleted &&
         appointment.reviews?.length === 0 &&
         appointment.paymentStatus === PaymentStatus.UNPAID && (
-          <Card className="border-red-200 bg-red-50">
+          <Card className="border-red-500/30 bg-red-500/10">
             <CardContent className="pt-6">
               <div className="flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-red-600 mt-0.5" />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-red-900">
+                  <h3 className="font-semibold text-red-900 dark:text-red-200">
                     Payment Required to Review
                   </h3>
-                  <p className="text-sm text-red-700 mt-1">
+                  <p className="text-sm text-red-700 dark:text-red-300 mt-1">
                     Please complete the payment for this appointment before
                     leaving a review.
                   </p>
@@ -238,15 +238,15 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 
       {/* Cannot Review Yet - Only show if not completed and no review */}
       {!isCompleted && !appointment.reviews && (
-        <Card className="border-blue-200 bg-blue-50">
+        <Card className="border-blue-500/30 bg-blue-500/10">
           <CardContent className="pt-6">
             <div className="flex items-start gap-3">
               <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-blue-900">
+                <h3 className="font-semibold text-blue-900 dark:text-blue-200">
                   Review Not Available Yet
                 </h3>
-                <p className="text-sm text-blue-700 mt-1">
+                <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
                   You can review this appointment after it has been completed.
                 </p>
               </div>
@@ -350,12 +350,12 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
             {appointment.doctor?.appointmentFee !== undefined && (
               <>
                 <Separator />
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-blue-900">
+                    <span className="text-sm font-medium text-blue-900 dark:text-blue-200">
                       Consultation Fee
                     </span>
-                    <span className="text-xl font-bold text-blue-600">
+                    <span className="text-xl font-bold text-blue-700 dark:text-blue-300">
                       ${appointment.doctor.appointmentFee}
                     </span>
                   </div>
@@ -392,16 +392,16 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="bg-linear-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 space-y-3">
+                <div className="bg-linear-to-br from-blue-500/10 to-primary/10 border border-blue-500/30 rounded-lg p-4 space-y-3">
                   <div>
                     <p className="text-sm text-muted-foreground mb-1">Date</p>
-                    <p className="text-xl font-bold text-blue-900">
+                    <p className="text-xl font-bold text-blue-900 dark:text-blue-200">
                       {format(
                         new Date(appointment.schedule.startDateTime),
                         "EEEE",
                       )}
                     </p>
-                    <p className="text-blue-700">
+                    <p className="text-blue-700 dark:text-blue-300">
                       {format(
                         new Date(appointment.schedule.startDateTime),
                         "MMMM d, yyyy",
@@ -409,13 +409,13 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
                     </p>
                   </div>
 
-                  <Separator className="bg-blue-200" />
+                  <Separator className="bg-blue-500/30" />
 
                   <div className="flex items-center gap-2">
-                    <Clock className="h-5 w-5 text-blue-600" />
+                    <Clock className="h-5 w-5 text-blue-700 dark:text-blue-300" />
                     <div>
                       <p className="text-sm text-muted-foreground">Time</p>
-                      <p className="font-semibold text-blue-900">
+                      <p className="font-semibold text-blue-900 dark:text-blue-200">
                         {format(
                           new Date(appointment.schedule.startDateTime),
                           "h:mm a",
@@ -432,13 +432,13 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
                   {appointment.status === AppointmentStatus.SCHEDULED &&
                     appointment.schedule.startDateTime && (
                       <>
-                        <Separator className="bg-blue-200" />
+                        <Separator className="bg-blue-500/30" />
                         <div className="pt-2">
                           <AppointmentCountdown
                             appointmentDateTime={
                               appointment.schedule.startDateTime
                             }
-                            className="text-blue-700"
+                            className="text-blue-700 dark:text-blue-300"
                           />
                         </div>
                       </>
@@ -450,30 +450,30 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 
           {/* Prescription */}
           {appointment.prescription && (
-            <Card className="border-green-200">
+            <Card className="border-green-500/30">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-700">
+              <CardTitle className="flex items-center gap-2 text-green-700 dark:text-green-300">
                   <CheckCircle2 className="h-5 w-5" />
                   Prescription Available
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="bg-green-50 rounded-lg p-3 space-y-2">
+                <div className="bg-green-500/10 rounded-lg p-3 space-y-2">
                   <div>
-                    <span className="text-sm font-medium text-green-900">
+                    <span className="text-sm font-medium text-green-900 dark:text-green-200">
                       Instructions:
                     </span>
-                    <p className="text-sm text-green-700 mt-1">
+                    <p className="text-sm text-green-700 dark:text-green-300 mt-1">
                       {appointment.prescription.instructions}
                     </p>
                   </div>
 
                   {appointment.prescription.followUpDate && (
                     <div>
-                      <span className="text-sm font-medium text-green-900">
+                      <span className="text-sm font-medium text-green-900 dark:text-green-200">
                         Follow-up Date:
                       </span>
-                      <p className="text-sm text-green-700">
+                      <p className="text-sm text-green-700 dark:text-green-300">
                         {format(
                           new Date(appointment.prescription.followUpDate),
                           "MMMM d, yyyy",
@@ -490,15 +490,15 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 
       {/* Review Section - Full Width Below */}
       {review && (
-        <Card className="border-yellow-200">
+        <Card className="border-yellow-500/30">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-yellow-700">
+            <CardTitle className="flex items-center gap-2 text-yellow-700 dark:text-yellow-300">
               <Star className="h-5 w-5 fill-yellow-600" />
               Your Review
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="bg-yellow-50 rounded-lg p-4 space-y-3">
+            <div className="bg-yellow-500/10 rounded-lg p-4 space-y-3">
               <div className="flex items-center gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star
@@ -506,25 +506,27 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
                     className={`h-5 w-5 ${
                       star <= review.rating
                         ? "fill-yellow-500 text-yellow-500"
-                        : "text-gray-300"
+                        : "text-muted-foreground/40"
                     }`}
                   />
                 ))}
-                <span className="ml-2 text-sm font-medium text-yellow-900">
+                <span className="ml-2 text-sm font-medium text-yellow-900 dark:text-yellow-200">
                   {review.rating}/5
                 </span>
               </div>
 
               {review.comment && (
                 <div>
-                  <p className="text-sm text-yellow-900 font-medium mb-1">
+                  <p className="text-sm text-yellow-900 dark:text-yellow-200 font-medium mb-1">
                     Comment:
                   </p>
-                  <p className="text-sm text-yellow-800">{review.comment}</p>
+                  <p className="text-sm text-yellow-800 dark:text-yellow-300">
+                    {review.comment}
+                  </p>
                 </div>
               )}
 
-              <p className="text-xs text-yellow-600 italic">
+              <p className="text-xs text-yellow-700 dark:text-yellow-300 italic">
                 Reviews cannot be edited or deleted once submitted.
               </p>
             </div>
