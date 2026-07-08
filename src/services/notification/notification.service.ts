@@ -26,7 +26,8 @@ const getNotifications = async (): Promise<INotificationResponse> => {
     if (!response.ok) {
       console.error("[Notifications Error]", result);
       throw new Error(
-        result.message || `API Error: ${response.status} ${response.statusText}`
+        result.message ||
+          `API Error: ${response.status} ${response.statusText}`,
       );
     }
 
