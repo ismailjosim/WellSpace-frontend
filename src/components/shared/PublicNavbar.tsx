@@ -20,7 +20,7 @@ const PublicNavbar = async () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 transition-all">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
+      <div className="w-full max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
         {/* Brand Logo */}
         <Link href="/" className="group flex items-center space-x-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary via-primary to-cyan-500 text-primary-foreground shadow-md shadow-primary/20 transition-transform duration-300 group-hover:scale-105">

@@ -12,12 +12,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, MessageSquare } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  Send,
+  CheckCircle2,
+  MessageSquare,
+  AlertTriangle,
+  Stethoscope,
+  CreditCard,
+  Building2,
+  PhoneCall,
+  UserCheck,
+} from "lucide-react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [department, setDepartment] = useState("clinical");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,8 +48,44 @@ export default function ContactPage() {
     }, 1000);
   };
 
+  const departments = [
+    {
+      id: "clinical",
+      name: "Patient & Clinical Care",
+      icon: Stethoscope,
+      email: "clinical@wellspace.health",
+      phone: "+880 1700-000001",
+      description: "Consultation coordination, prescription queries, and patient records.",
+    },
+    {
+      id: "billing",
+      name: "Billing & Refund Inquiries",
+      icon: CreditCard,
+      email: "billing@wellspace.health",
+      phone: "+880 1700-000002",
+      description: "Payment status, invoice receipts, and 24-hr refund requests.",
+    },
+    {
+      id: "providers",
+      name: "Doctor Credentialing",
+      icon: UserCheck,
+      email: "providers@wellspace.health",
+      phone: "+880 1700-000003",
+      description: "Physician onboarding, BMDC verification, and scheduling portal.",
+    },
+    {
+      id: "corporate",
+      name: "Corporate Health & NGOs",
+      icon: Building2,
+      email: "enterprise@wellspace.health",
+      phone: "+880 1700-000004",
+      description: "Employee health benefits, NGO camps, and diagnostic center tie-ups.",
+    },
+  ];
+
   return (
     <div className="container mx-auto px-4 sm:px-6 py-16 space-y-12 max-w-5xl">
+      {/* Header */}
       <div className="text-center space-y-4">
         <Badge
           variant="outline"
@@ -43,13 +95,95 @@ export default function ContactPage() {
           24/7 Support Desk
         </Badge>
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
-          Contact <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">WellSpace</span> Support
+          Contact{" "}
+          <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">
+            WellSpace
+          </span>{" "}
+          Support
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto">
           Have a question about appointment bookings, doctor onboarding, or telehealth services? Our clinical coordinators are here to assist you.
         </p>
       </div>
 
+      {/* Emergency Triage Notice */}
+      <div className="rounded-2xl border-2 border-red-500/30 bg-red-500/10 p-5 md:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-start gap-3.5">
+          <div className="p-2 rounded-xl bg-red-500/20 text-red-600 dark:text-red-400 shrink-0">
+            <AlertTriangle className="h-5 w-5" />
+          </div>
+          <div className="space-y-1">
+            <h4 className="font-bold text-sm text-foreground">
+              Are you experiencing a medical emergency?
+            </h4>
+            <p className="text-xs text-muted-foreground max-w-xl leading-relaxed">
+              Do not wait for a contact reply if you have chest pain, sudden difficulty breathing, or severe trauma. Call your local emergency hotline immediately.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <Button asChild size="sm" variant="destructive" className="rounded-full px-4 font-bold shadow-sm">
+            <a href="tel:999" className="flex items-center gap-1.5">
+              <PhoneCall className="h-3.5 w-3.5" />
+              <span>Call 999 / 911</span>
+            </a>
+          </Button>
+          <Button asChild size="sm" variant="outline" className="rounded-full px-3 text-xs">
+            <Link href="/disclaimer">Read Disclaimer</Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Department Routing Directory */}
+      <div className="space-y-4">
+        <h2 className="text-lg font-bold text-foreground">
+          Direct Department Directory
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {departments.map((dept) => {
+            const Icon = dept.icon;
+            const isSelected = department === dept.id;
+            return (
+              <Card
+                key={dept.id}
+                onClick={() => setDepartment(dept.id)}
+                className={`cursor-pointer rounded-2xl border transition-all ${
+                  isSelected
+                    ? "border-primary shadow-md bg-primary/5 ring-1 ring-primary/20"
+                    : "border-border/60 bg-card hover:border-primary/40"
+                }`}
+              >
+                <CardContent className="p-4 space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <div className="h-9 w-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                      <Icon className="h-4.5 w-4.5" />
+                    </div>
+                    {isSelected && (
+                      <Badge className="bg-primary text-primary-foreground text-[10px] px-2 py-0.5">
+                        Selected
+                      </Badge>
+                    )}
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-xs text-foreground">
+                      {dept.name}
+                    </h3>
+                    <p className="text-[11px] text-muted-foreground mt-0.5 line-clamp-2">
+                      {dept.description}
+                    </p>
+                  </div>
+                  <div className="pt-1 border-t border-border/40 text-[11px] space-y-0.5 text-muted-foreground">
+                    <p className="font-medium text-foreground">{dept.email}</p>
+                    <p>{dept.phone}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Main Grid: Contact Cards & Form */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Contact Info Cards */}
         <div className="space-y-4">
@@ -59,12 +193,12 @@ export default function ContactPage() {
                 <Phone className="h-5 w-5" />
               </div>
               <div>
-                <p className="font-bold text-sm text-foreground">Emergency & Helpline</p>
+                <p className="font-bold text-sm text-foreground">24/7 Patient Hotline</p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   +880 1700-000000
                 </p>
                 <span className="inline-block mt-1 text-[10px] font-semibold text-emerald-500 uppercase tracking-wider">
-                  Toll-free 24/7
+                  Toll-free 24/7 Care
                 </span>
               </div>
             </CardContent>
@@ -76,7 +210,7 @@ export default function ContactPage() {
                 <Mail className="h-5 w-5" />
               </div>
               <div>
-                <p className="font-bold text-sm text-foreground">Email Support</p>
+                <p className="font-bold text-sm text-foreground">Email Support Desk</p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   support@wellspace.health
                 </p>
@@ -93,9 +227,9 @@ export default function ContactPage() {
                 <MapPin className="h-5 w-5" />
               </div>
               <div>
-                <p className="font-bold text-sm text-foreground">Global Operations</p>
+                <p className="font-bold text-sm text-foreground">Global Operations HQ</p>
                 <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-                  WellSpace Health Tower, Gulshan-2, Dhaka, Bangladesh
+                  WellSpace Health Tower, Level 14, Gulshan-2, Dhaka, Bangladesh
                 </p>
               </div>
             </CardContent>
@@ -109,7 +243,7 @@ export default function ContactPage() {
               <div>
                 <p className="font-bold text-sm text-foreground">Operating Schedule</p>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Telehealth Consults: 24/7
+                  Telehealth Consults: 24/7 Continuous
                 </p>
                 <p className="text-[11px] text-muted-foreground">
                   Support Desk: Mon - Sat (8 AM - 10 PM)
@@ -122,9 +256,14 @@ export default function ContactPage() {
         {/* Contact Form */}
         <Card className="md:col-span-2 rounded-3xl border border-border/60 bg-card shadow-lg p-2 sm:p-4">
           <CardHeader>
-            <CardTitle className="text-xl font-bold text-foreground">Send Us a Direct Message</CardTitle>
+            <CardTitle className="text-xl font-bold text-foreground">
+              Send Us a Direct Message
+            </CardTitle>
             <CardDescription className="text-xs text-muted-foreground">
-              Fill out the form below and an agent will follow up promptly.
+              Routing to:{" "}
+              <strong className="text-foreground">
+                {departments.find((d) => d.id === department)?.name}
+              </strong>
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -137,7 +276,7 @@ export default function ContactPage() {
                   Message Delivered Successfully
                 </h3>
                 <p className="text-xs text-muted-foreground max-w-md mx-auto leading-relaxed">
-                  Our clinical care coordinator has received your message and will contact you via email shortly.
+                  Our clinical care coordinator for the {departments.find((d) => d.id === department)?.name} team has received your ticket and will contact you via email shortly.
                 </p>
                 <Button
                   variant="outline"
@@ -152,11 +291,19 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-foreground">Your Name</label>
-                    <Input required placeholder="John Doe" className="rounded-xl h-11" />
+                    <label className="text-xs font-semibold text-foreground">
+                      Your Name
+                    </label>
+                    <Input
+                      required
+                      placeholder="John Doe"
+                      className="rounded-xl h-11"
+                    />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-foreground">Email Address</label>
+                    <label className="text-xs font-semibold text-foreground">
+                      Email Address
+                    </label>
                     <Input
                       required
                       type="email"
@@ -166,17 +313,49 @@ export default function ContactPage() {
                   </div>
                 </div>
 
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-foreground">
+                      Phone Number (Optional)
+                    </label>
+                    <Input
+                      placeholder="+880 1..."
+                      className="rounded-xl h-11"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-foreground">
+                      Department
+                    </label>
+                    <select
+                      value={department}
+                      onChange={(e) => setDepartment(e.target.value)}
+                      className="w-full h-11 rounded-xl border border-input bg-background px-3 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                    >
+                      {departments.map((d) => (
+                        <option key={d.id} value={d.id}>
+                          {d.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-foreground">Subject</label>
+                  <label className="text-xs font-semibold text-foreground">
+                    Subject
+                  </label>
                   <Input
                     required
-                    placeholder="Appointment inquiry, feedback, or technical help"
+                    placeholder="Appointment inquiry, feedback, or refund assistance"
                     className="rounded-xl h-11"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-foreground">Message</label>
+                  <label className="text-xs font-semibold text-foreground">
+                    Message Details
+                  </label>
                   <Textarea
                     required
                     rows={5}

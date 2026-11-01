@@ -33,7 +33,10 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  const accessToken = (await getCookie("accessToken")) || null;
+  const accessToken =
+    request.cookies.get("accessToken")?.value ||
+    (await getCookie("accessToken")) ||
+    null;
   let userRole: UserRole | null = null;
 
   if (accessToken) {
@@ -46,7 +49,10 @@ export async function proxy(request: NextRequest) {
       if (!verifiedToken || typeof verifiedToken === "string") {
         await deleteCookie("accessToken");
         await deleteCookie("refreshToken");
-        return NextResponse.redirect(new URL("/", request.url));
+        const res = NextResponse.redirect(new URL("/", request.url));
+        res.cookies.delete("accessToken");
+        res.cookies.delete("refreshToken");
+        return res;
       }
       userRole = verifiedToken.role as UserRole;
     } catch {
@@ -54,7 +60,10 @@ export async function proxy(request: NextRequest) {
       await deleteCookie("refreshToken");
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(loginUrl);
+      const res = NextResponse.redirect(loginUrl);
+      res.cookies.delete("accessToken");
+      res.cookies.delete("refreshToken");
+      return res;
     }
   }
 

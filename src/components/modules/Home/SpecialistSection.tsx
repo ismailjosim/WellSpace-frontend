@@ -32,7 +32,7 @@ export default function SpecialistsSection() {
       {/* Subtle ambient light */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="container relative mx-auto px-4 sm:px-6">
+      <div className="w-full max-w-7xl relative mx-auto px-4 sm:px-6 min-w-0">
         <div className="text-center max-w-2xl mx-auto space-y-4 mb-16">
           <Badge
             variant="outline"

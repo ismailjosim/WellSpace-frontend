@@ -21,6 +21,8 @@ const PublicFooter = () => {
   const legalLinks = [
     { name: "Terms of Service", href: "/terms" },
     { name: "Privacy Policy", href: "/privacy" },
+    { name: "Refund & Cancellation", href: "/refund-policy" },
+    { name: "Patient Rights & Consent", href: "/patient-rights" },
     { name: "Medical Disclaimer", href: "/disclaimer" },
   ];
 
@@ -35,7 +37,7 @@ const PublicFooter = () => {
       {/* Top ambient highlight line */}
       <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
-      <div className="container mx-auto px-4 sm:px-6 py-14">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-14 min-w-0">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Brand & Mission */}
           <div className="space-y-4 md:col-span-2">

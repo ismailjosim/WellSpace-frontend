@@ -91,25 +91,27 @@ export default function HeroSection() {
       </div>
 
       {/* Main Hero Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Vision & Calls to Action */}
           <div className="lg:col-span-7 space-y-6 text-white">
             {/* 2026 Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-xs">
-              <span className="relative flex h-2 w-2">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-xs max-w-full">
+              <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-400"></span>
               </span>
-              <span className="text-xs font-semibold tracking-wide text-teal-200 uppercase">
-                AI Telehealth Network
+              <span className="text-[11px] sm:text-xs font-semibold tracking-wide text-teal-200 uppercase">
+                AI Telehealth
               </span>
               <span className="text-white/40">|</span>
-              <span className="text-xs text-white/90 font-medium">Instant Video Consults</span>
+              <span className="text-[11px] sm:text-xs text-white/90 font-medium truncate">
+                Instant Video Consults
+              </span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.1]">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.15]">
               Next-Gen Healthcare,{" "}
               <span className="bg-gradient-to-r from-teal-300 via-cyan-200 to-sky-300 bg-clip-text text-transparent">
                 Connected by AI
@@ -122,45 +124,45 @@ export default function HeroSection() {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap gap-3.5 pt-2">
-              <Link href="/consultation">
+            <div className="flex flex-col sm:flex-row gap-3 pt-2 w-full sm:w-auto">
+              <Link href="/consultation" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="rounded-full px-7 py-6 text-base font-semibold bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-600 text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                  className="w-full sm:w-auto rounded-full px-6 py-5 sm:px-7 sm:py-6 text-sm sm:text-base font-semibold bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-600 text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
                 >
-                  <Search className="w-5 h-5 mr-1" />
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5" />
                   Find Your Specialist
                 </Button>
               </Link>
 
-              <Link href="/consultation">
+              <Link href="/consultation" className="w-full sm:w-auto">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-full px-7 py-6 text-base font-semibold bg-white/10 hover:bg-white/20 border-white/30 text-white backdrop-blur-md transition-all duration-300 cursor-pointer"
+                  className="w-full sm:w-auto rounded-full px-6 py-5 sm:px-7 sm:py-6 text-sm sm:text-base font-semibold bg-white/10 hover:bg-white/20 border-white/30 text-white backdrop-blur-md transition-all duration-300 cursor-pointer"
                 >
-                  <Calendar className="w-5 h-5 mr-1" />
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5" />
                   Book Appointment
                 </Button>
               </Link>
             </div>
 
             {/* Verified Trust Badges */}
-            <div className="pt-6 border-t border-white/15 grid grid-cols-3 gap-6 max-w-lg">
+            <div className="pt-6 border-t border-white/15 grid grid-cols-3 gap-2 sm:gap-6 max-w-lg">
               <div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-white">50K+</div>
-                <div className="text-xs text-slate-300/80 mt-0.5">Patients Served</div>
+                <div className="text-xl sm:text-3xl font-extrabold text-white">50K+</div>
+                <div className="text-[11px] sm:text-xs text-slate-300/80 mt-0.5">Patients Served</div>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-white">1,000+</div>
-                <div className="text-xs text-slate-300/80 mt-0.5">Verified Doctors</div>
+                <div className="text-xl sm:text-3xl font-extrabold text-white">1,000+</div>
+                <div className="text-[11px] sm:text-xs text-slate-300/80 mt-0.5">Verified Doctors</div>
               </div>
               <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-2xl sm:text-3xl font-extrabold text-white">4.9</span>
-                  <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
+                <div className="flex items-center gap-1">
+                  <span className="text-xl sm:text-3xl font-extrabold text-white">4.9</span>
+                  <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-400 text-amber-400" />
                 </div>
-                <div className="text-xs text-slate-300/80 mt-0.5">Patient Satisfaction</div>
+                <div className="text-[11px] sm:text-xs text-slate-300/80 mt-0.5">Rating (12k+)</div>
               </div>
             </div>
           </div>

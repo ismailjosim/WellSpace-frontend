@@ -56,7 +56,7 @@ const topDoctors = [
 export default function TopDoctorsSection() {
   return (
     <section className="py-24 bg-background">
-      <div className="container mx-auto px-4 sm:px-6">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 min-w-0">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="space-y-4 max-w-xl">
             <Badge

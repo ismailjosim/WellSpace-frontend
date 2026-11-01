@@ -24,7 +24,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
   const [success, setSuccess] = useState<string | null>(null);
 
   const getProfilePhoto = () => {
-    if (userInfo.role === "ADMIN") {
+    if (userInfo.role === "ADMIN" || userInfo.role === "SUPER_ADMIN") {
       return userInfo?.admin?.profilePhoto;
     } else if (userInfo.role === "DOCTOR") {
       return userInfo.doctor?.profilePhoto;
@@ -35,7 +35,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
   };
 
   const getProfileData = () => {
-    if (userInfo.role === "ADMIN") {
+    if (userInfo.role === "ADMIN" || userInfo.role === "SUPER_ADMIN") {
       return userInfo.admin;
     } else if (userInfo.role === "DOCTOR") {
       return userInfo.doctor;

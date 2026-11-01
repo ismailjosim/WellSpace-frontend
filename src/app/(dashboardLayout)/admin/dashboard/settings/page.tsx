@@ -2,6 +2,8 @@ import { getAllAdminSettings } from "@/services/admin/settings.service";
 import PlatformSettingsManager from "@/components/modules/Admin/Settings/PlatformSettingsManager";
 import { Settings } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminSettingsPage() {
   const result = await getAllAdminSettings();
   const settingsList = result.data?.raw || [];

@@ -70,8 +70,8 @@ export default function PatientReviews() {
   const swiperRef = useRef<SwiperType | null>(null);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-background via-accent/20 to-background overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6">
+    <section className="py-24 bg-gradient-to-b from-background via-accent/20 to-background overflow-hidden w-full">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 min-w-0">
         {/* Section Header with Controls */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
           <div className="space-y-4 max-w-xl">
@@ -113,69 +113,71 @@ export default function PatientReviews() {
         </div>
 
         {/* Reviews Slider */}
-        <Swiper
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-          }}
-          modules={[Navigation, Autoplay]}
-          slidesPerView={3}
-          spaceBetween={24}
-          loop={true}
-          autoplay={{ delay: 6000, disableOnInteraction: false }}
-          speed={600}
-          slidesPerGroup={1}
-          breakpoints={{
-            0: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          className="pb-4"
-        >
-          {reviews.map((review) => (
-            <SwiperSlide key={review.id} className="h-auto">
-              <Card className="h-full rounded-2xl border border-border/60 bg-card/80 backdrop-blur-md p-6 sm:p-7 flex flex-col justify-between hover:border-primary/40 hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-0 space-y-4">
-                  {/* Rating Stars & Quote Icon */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex text-amber-400 gap-0.5">
-                      {Array.from({ length: review.rating }).map((_, idx) => (
-                        <Star key={idx} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                      ))}
-                    </div>
-                    <Quote className="h-6 w-6 text-primary/30" />
-                  </div>
-
-                  {/* Review Text */}
-                  <p className="text-sm text-foreground/90 leading-relaxed italic">
-                    &ldquo;{review.text}&rdquo;
-                  </p>
-                </CardContent>
-
-                {/* Patient Author Info */}
-                <div className="pt-6 mt-4 border-t border-border/40 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="w-10 h-10 border border-primary/20">
-                      <AvatarImage src={review.avatarUrl} alt={review.name} />
-                      <AvatarFallback className="text-xs bg-primary/10 text-primary font-bold">
-                        {review.name.slice(0, 2).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <p className="font-bold text-sm text-foreground">{review.name}</p>
-                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+        <div className="w-full min-w-0 max-w-full overflow-hidden">
+          <Swiper
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            modules={[Navigation, Autoplay]}
+            slidesPerView={3}
+            spaceBetween={24}
+            loop={true}
+            autoplay={{ delay: 6000, disableOnInteraction: false }}
+            speed={600}
+            slidesPerGroup={1}
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            className="pb-4"
+          >
+            {reviews.map((review) => (
+              <SwiperSlide key={review.id} className="h-auto">
+                <Card className="h-full rounded-2xl border border-border/60 bg-card/80 backdrop-blur-md p-6 sm:p-7 flex flex-col justify-between hover:border-primary/40 hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-0 space-y-4">
+                    {/* Rating Stars & Quote Icon */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex text-amber-400 gap-0.5">
+                        {Array.from({ length: review.rating }).map((_, idx) => (
+                          <Star key={idx} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                        ))}
                       </div>
-                      <p className="text-[11px] text-muted-foreground">{review.role}</p>
+                      <Quote className="h-6 w-6 text-primary/30" />
                     </div>
+
+                    {/* Review Text */}
+                    <p className="text-sm text-foreground/90 leading-relaxed italic">
+                      &ldquo;{review.text}&rdquo;
+                    </p>
+                  </CardContent>
+
+                  {/* Patient Author Info */}
+                  <div className="pt-6 mt-4 border-t border-border/40 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-10 h-10 border border-primary/20">
+                        <AvatarImage src={review.avatarUrl} alt={review.name} />
+                        <AvatarFallback className="text-xs bg-primary/10 text-primary font-bold">
+                          {review.name.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <p className="font-bold text-sm text-foreground">{review.name}</p>
+                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                        </div>
+                        <p className="text-[11px] text-muted-foreground">{review.role}</p>
+                      </div>
+                    </div>
+                    <span className="text-[11px] text-muted-foreground/80 font-medium">
+                      {review.time}
+                    </span>
                   </div>
-                  <span className="text-[11px] text-muted-foreground/80 font-medium">
-                    {review.time}
-                  </span>
-                </div>
-              </Card>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
     </section>
   );

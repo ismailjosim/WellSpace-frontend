@@ -23,7 +23,7 @@ const navMainItems = [
   },
 ];
 
-if (role === "ADMIN") {
+if (role === "ADMIN" || role === "SUPER_ADMIN") {
   navMainItems.push(
     {
       title: "Manage Doctors",
