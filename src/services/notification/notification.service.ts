@@ -2,11 +2,18 @@
 
 import { INotificationResponse } from "@/types/notification.interface";
 
-const BACKEND_API_URL = process.env.BACKEND_API_URL;
+const getApiBaseUrl = () => {
+  return (
+    process.env.NEXT_PUBLIC_BACKEND_API_URL ||
+    process.env.BACKEND_API_URL ||
+    "https://wellspace-backend-1.onrender.com/api/v1"
+  );
+};
 
 const getNotifications = async (): Promise<INotificationResponse> => {
+  const baseUrl = getApiBaseUrl();
   try {
-    const response = await fetch(`${BACKEND_API_URL}/notifications?limit=10`, {
+    const response = await fetch(`${baseUrl}/notifications?limit=10`, {
       credentials: "include",
       cache: "no-store",
       headers: {
@@ -43,7 +50,8 @@ const getNotifications = async (): Promise<INotificationResponse> => {
 };
 
 const markNotificationAsRead = async (id: string) => {
-  const response = await fetch(`${BACKEND_API_URL}/notifications/${id}/read`, {
+  const baseUrl = getApiBaseUrl();
+  const response = await fetch(`${baseUrl}/notifications/${id}/read`, {
     method: "PATCH",
     credentials: "include",
   });
@@ -58,7 +66,8 @@ const markNotificationAsRead = async (id: string) => {
 };
 
 const markAllNotificationsAsRead = async () => {
-  const response = await fetch(`${BACKEND_API_URL}/notifications/read-all`, {
+  const baseUrl = getApiBaseUrl();
+  const response = await fetch(`${baseUrl}/notifications/read-all`, {
     method: "PATCH",
     credentials: "include",
   });
@@ -73,7 +82,7 @@ const markAllNotificationsAsRead = async () => {
 };
 
 const getNotificationStreamUrl = () =>
-  `${BACKEND_API_URL}/notifications/stream`;
+  `${getApiBaseUrl()}/notifications/stream`;
 
 export const notificationService = {
   getNotifications,

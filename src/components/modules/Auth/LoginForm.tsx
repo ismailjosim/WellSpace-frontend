@@ -174,7 +174,6 @@ export function LoginForm({ redirect }: { redirect?: string }) {
         <Field>
           <FieldLabel htmlFor="email">Email Address</FieldLabel>
           <Input
-            defaultValue="jufanohime@mailinator.com"
             id="email"
             name="email"
             type="email"
@@ -196,7 +195,6 @@ export function LoginForm({ redirect }: { redirect?: string }) {
           </div>
           <div className="relative">
             <Input
-              defaultValue="Mdjasim99@"
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}

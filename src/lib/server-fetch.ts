@@ -25,15 +25,25 @@ const serverFetchHelper = async (
     await getNewAccessToken();
   }
 
+  const isFormData = typeof FormData !== "undefined" && options.body instanceof FormData;
+
+  const defaultHeaders: Record<string, string> = {
+    ...(accessToken
+      ? {
+          Authorization: `Bearer ${accessToken}`,
+          Cookie: `accessToken=${accessToken}`,
+        }
+      : {}),
+  };
+
+  // Only set Content-Type to application/json if body is NOT FormData
+  if (!isFormData) {
+    defaultHeaders["Content-Type"] = "application/json";
+  }
+
   const res = await fetch(`${BACKEND_API_URL}${endpoint}`, {
     headers: {
-      "Content-Type": "application/json",
-      ...(accessToken
-        ? {
-            Authorization: `Bearer ${accessToken}`,
-            Cookie: `accessToken=${accessToken}`,
-          }
-        : {}),
+      ...defaultHeaders,
       ...headers,
     },
     ...restOptions,

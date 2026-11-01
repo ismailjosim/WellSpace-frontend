@@ -14,11 +14,10 @@ export type AISuggestionResult = {
 };
 
 export async function fetchAIDoctorSuggestion(symptoms: string) {
-  const backendUrl = process.env.BACKEND_API_URL;
-
-  if (!backendUrl) {
-    throw new Error("BACKEND_API_URL is not configured");
-  }
+  const backendUrl =
+    process.env.NEXT_PUBLIC_BACKEND_API_URL ||
+    process.env.BACKEND_API_URL ||
+    "https://wellspace-backend-1.onrender.com/api/v1";
 
   const response = await fetch(`${backendUrl}/doctor/suggestion`, {
     method: "POST",
