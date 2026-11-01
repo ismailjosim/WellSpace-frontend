@@ -6,7 +6,6 @@ import { getIconComponent } from "@/lib/icon-mapper";
 import { cn } from "@/lib/utils";
 import { NavSection } from "@/types/dashboard.interface";
 import { UserInfo } from "@/types/user.interface";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,9 +25,9 @@ const DashboardSidebarContent = ({
   const pathname = usePathname();
 
   return (
-    <div className="hidden md:flex h-full w-64 flex-col border-r border-border/60 bg-sidebar text-sidebar-foreground">
+    <div className="hidden md:flex h-full w-64 flex-col border-r border-border/60 bg-sidebar text-sidebar-foreground min-h-0">
       {/* Brand Header */}
-      <div className="flex h-16 items-center border-b border-border/60 px-5">
+      <div className="flex h-16 shrink-0 items-center border-b border-border/60 px-5">
         <BrandLogo
           href={dashboardHome || "/"}
           textSize="md"
@@ -37,7 +36,7 @@ const DashboardSidebarContent = ({
       </div>
 
       {/* Navigation */}
-      <ScrollArea className="flex-1 px-3 py-4">
+      <div className="flex-1 min-h-0 overflow-y-auto px-3 py-4">
         <nav className="space-y-6">
           {navItems.map((section, sectionIdx) => (
             <div key={sectionIdx}>
@@ -94,10 +93,10 @@ const DashboardSidebarContent = ({
             </div>
           ))}
         </nav>
-      </ScrollArea>
+      </div>
 
       {/* User Info at Bottom */}
-      <div className="border-t border-border/60 p-4">
+      <div className="shrink-0 border-t border-border/60 p-4">
         <div className="flex items-center gap-3 p-2 rounded-xl bg-accent/40 border border-border/40">
           <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-primary/20 to-cyan-500/20 text-primary flex items-center justify-center font-bold text-sm border border-primary/30">
             {userInfo.name.charAt(0).toUpperCase()}

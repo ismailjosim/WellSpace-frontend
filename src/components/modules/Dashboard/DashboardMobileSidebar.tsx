@@ -1,7 +1,6 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -27,15 +26,15 @@ const DashboardMobileSidebar = ({
   const pathname = usePathname();
 
   return (
-    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
+    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground min-h-0">
       {/* Logo */}
-      <div className="flex h-16 items-center border-b border-border/60 px-5">
+      <div className="flex h-16 shrink-0 items-center border-b border-border/60 px-5">
         <BrandLogo href={dashboardHome || "/"} textSize="md" />
       </div>
       <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
 
       {/* Navigation */}
-      <ScrollArea className="flex-1 px-3 py-4">
+      <div className="flex-1 min-h-0 overflow-y-auto px-3 py-4">
         <nav className="space-y-6">
           {navItems.map((section, sectionIdx) => (
             <div key={sectionIdx}>
@@ -85,11 +84,11 @@ const DashboardMobileSidebar = ({
             </div>
           ))}
         </nav>
-      </ScrollArea>
+      </div>
 
       {/* User Info at Bottom */}
       {userInfo && (
-        <div className="border-t border-border/60 p-4">
+        <div className="shrink-0 border-t border-border/60 p-4">
           <div className="flex items-center gap-3 p-2 rounded-xl bg-accent/40 border border-border/40">
             <div className="h-9 w-9 rounded-xl bg-primary/20 text-primary flex items-center justify-center font-bold text-sm">
               {userInfo.name.charAt(0).toUpperCase()}

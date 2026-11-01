@@ -4,7 +4,7 @@ import DashboardNav from "@/components/modules/Dashboard/DashboardNav";
 
 const CommonDashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen max-h-screen h-dvh max-h-dvh overflow-hidden">
       <DashboardSidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <DashboardNav />
