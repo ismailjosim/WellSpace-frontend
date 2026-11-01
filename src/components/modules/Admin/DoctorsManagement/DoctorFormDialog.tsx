@@ -18,11 +18,12 @@ import {
 
 import { IDoctor } from "@/types/doctor.interface";
 import { ISpecialty } from "@/types/specialties.interface";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { createDoctor, updateDoctor } from "@/services/admin/doctorsManagement";
 import { toast } from "sonner";
 import { useSpecialtySelection } from "@/components/hooks/specialtyHooks/useSpecialtySelection";
 import SpecialtyMultiSelect from "./SpecialtyMultiSelect";
+import { Eye, EyeOff } from "lucide-react";
 
 interface IDoctorFormDialogInterface {
   open: boolean;
@@ -44,11 +45,14 @@ const DoctorFormDialog = ({
   const [gender, setGender] = useState<"MALE" | "FEMALE">(
     doctor?.gender || "MALE",
   );
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [state, formAction, pending] = useActionState(
     isEdit ? updateDoctor.bind(null, doctor.id!) : createDoctor,
     null,
   );
+  const hasNotifiedRef = useRef(false);
 
   const specialtySelection = useSpecialtySelection({
     doctor,
@@ -61,11 +65,13 @@ const DoctorFormDialog = ({
   };
 
   useEffect(() => {
-    if (state?.success) {
+    if (state?.success && !hasNotifiedRef.current) {
+      hasNotifiedRef.current = true;
       toast.success(state.message);
       onSuccess();
       onClose();
-    } else if (state && !state.success) {
+    } else if (state && !state.success && !hasNotifiedRef.current) {
+      hasNotifiedRef.current = true;
       toast.error(state.message);
     }
   }, [state, onClose, onSuccess]);
@@ -106,12 +112,27 @@ const DoctorFormDialog = ({
               <>
                 <Field>
                   <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Enter password"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter password"
+                      className="pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
                   <InputFieldError state={state} field="password" />
                 </Field>
 
@@ -119,12 +140,27 @@ const DoctorFormDialog = ({
                   <FieldLabel htmlFor="confirmPassword">
                     Confirm Password
                   </FieldLabel>
-                  <Input
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    type="password"
-                    placeholder="Confirm password"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Confirm password"
+                      className="pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                      aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
                   <InputFieldError state={state} field="confirmPassword" />
                 </Field>
               </>

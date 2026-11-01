@@ -38,6 +38,7 @@ const AdminFormDialog = ({
     null,
   );
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const hasNotifiedRef = useRef(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -46,14 +47,16 @@ const AdminFormDialog = ({
 
   // Handle success/error from server
   useEffect(() => {
-    if (state?.success) {
+    if (state?.success && !hasNotifiedRef.current) {
+      hasNotifiedRef.current = true;
       toast.success(state.message || "Operation successful");
       if (formRef.current) {
         formRef.current.reset();
       }
       onSuccess();
       onClose();
-    } else if (state?.message && !state.success) {
+    } else if (state?.message && !state.success && !hasNotifiedRef.current) {
+      hasNotifiedRef.current = true;
       toast.error(state.message);
 
       // Restore file to input after error

@@ -49,6 +49,37 @@ export async function createSpecialty(_prevState: any, formData: FormData) {
   }
 }
 
+export async function updateSpecialty(id: string, _prevState: any, formData: FormData) {
+  try {
+    const title = formData.get("title") as string;
+    const newFormData = new FormData();
+
+    if (title) {
+      newFormData.append("data", JSON.stringify({ title }));
+    }
+
+    const file = formData.get("file");
+    if (file && (file as Blob).size > 0) {
+      newFormData.append("file", file as Blob);
+    }
+
+    const res = await serverFetch.patch(`/specialties/${id}`, {
+      body: newFormData,
+    });
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Failed to update Specialty. Please try again.",
+    };
+  }
+}
+
 export async function getSpecialties(queryString?: string) {
   try {
     const res = await serverFetch.get(

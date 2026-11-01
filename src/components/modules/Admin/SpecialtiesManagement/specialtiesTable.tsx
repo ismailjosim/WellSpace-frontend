@@ -8,6 +8,7 @@ import { ISpecialty } from "@/types/specialties.interface";
 import { deleteSpecialty } from "@/services/admin/specialtiesManagement";
 import ManagementTable from "@/components/shared/ManagementTable";
 import { specialtiesColumns } from "./specialtiesColumns";
+import SpecialtiesFormDialog from "./SpecialtiesFormDialog";
 
 interface SpecialtyTableProps {
   specialties: ISpecialty[];
@@ -16,6 +17,9 @@ interface SpecialtyTableProps {
 const SpecialtiesTable = ({ specialties }: SpecialtyTableProps) => {
   const router = useRouter();
   const [, startTransition] = useTransition();
+  const [editingSpecialty, setEditingSpecialty] = useState<ISpecialty | null>(
+    null,
+  );
   const [deletingSpecialty, setDeletingSpecialty] = useState<ISpecialty | null>(
     null,
   );
@@ -25,6 +29,10 @@ const SpecialtiesTable = ({ specialties }: SpecialtyTableProps) => {
     startTransition(() => {
       router.refresh();
     });
+  };
+
+  const handleEdit = (specialty: ISpecialty) => {
+    setEditingSpecialty(specialty);
   };
 
   const handleDelete = (specialty: ISpecialty) => {
@@ -51,10 +59,21 @@ const SpecialtiesTable = ({ specialties }: SpecialtyTableProps) => {
       <ManagementTable
         data={specialties}
         columns={specialtiesColumns}
+        onEdit={handleEdit}
         onDelete={handleDelete}
         getRowKey={(specialty) => specialty.id}
         emptyMessage="No specialties found"
       />
+
+      {/* Edit Specialty Modal */}
+      {editingSpecialty && (
+        <SpecialtiesFormDialog
+          open={!!editingSpecialty}
+          onClose={() => setEditingSpecialty(null)}
+          onSuccess={handleRefresh}
+          specialty={editingSpecialty}
+        />
+      )}
 
       {/* Delete Confirmation Dialog */}
       <DeleteConfirmationDialog

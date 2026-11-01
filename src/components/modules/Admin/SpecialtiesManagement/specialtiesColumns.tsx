@@ -11,12 +11,36 @@ export const specialtiesColumns: Column<ISpecialty>[] = [
         alt={specialty.title}
         width={40}
         height={40}
-        className="rounded-full"
+        className="rounded-full object-cover"
       />
     ),
   },
   {
     header: "Title",
-    accessor: (specialty) => specialty.title,
+    accessor: (specialty) => (
+      <span className="font-medium text-foreground">{specialty.title}</span>
+    ),
+  },
+  {
+    header: "Created At",
+    accessor: (specialty) =>
+      specialty.createdAt
+        ? new Date(specialty.createdAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })
+        : "—",
+  },
+  {
+    header: "Updated At",
+    accessor: (specialty) =>
+      specialty.updatedAt
+        ? new Date(specialty.updatedAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })
+        : "—",
   },
 ];

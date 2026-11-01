@@ -33,17 +33,20 @@ const PatientFormDialog = ({
     updatePatient.bind(null, patient?.id as string),
     null,
   );
+  const hasNotifiedRef = useRef(false);
 
   // Handle success/error from server
   useEffect(() => {
-    if (state?.success) {
+    if (state?.success && !hasNotifiedRef.current) {
+      hasNotifiedRef.current = true;
       toast.success(state.message || "Operation successful");
       if (formRef.current) {
         formRef.current.reset();
       }
       onSuccess();
       onClose();
-    } else if (state?.message && !state.success) {
+    } else if (state?.message && !state.success && !hasNotifiedRef.current) {
+      hasNotifiedRef.current = true;
       toast.error(state.message);
     }
   }, [state, onSuccess, onClose]);
