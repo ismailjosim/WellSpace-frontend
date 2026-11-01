@@ -14,10 +14,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { createPrescription } from "@/services/patient/prescription.service";
 import { IAppointment } from "@/types/appointments.interface";
 import { format } from "date-fns";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Video } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import AppointmentCountdown from "../../Patient/PatientAppointment/AppointmentCountdown";
+import AppointmentChatDialog from "../../Chat/AppointmentChatDialog";
 
 interface DoctorAppointmentDetailDialogProps {
   appointment: IAppointment | null;
@@ -507,7 +509,27 @@ export default function DoctorAppointmentDetailDialog({
           </div>
         </div>
 
-        <div className="flex justify-end pt-4 border-t">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t">
+          <div className="flex items-center gap-2">
+            <AppointmentChatDialog
+              appointmentId={appointment.id}
+              counterpartName={appointment.patient?.name || "Patient"}
+              role="DOCTOR"
+            />
+            {appointment.status !== "CANCELED" && (
+              <Button
+                asChild
+                size="sm"
+                className="bg-primary hover:bg-primary/90 gap-1.5"
+              >
+                <Link href={`/consultation/room/${appointment.id}`}>
+                  <Video className="h-4 w-4" />
+                  <span>Join Video Room</span>
+                </Link>
+              </Button>
+            )}
+          </div>
+
           <Button variant="outline" onClick={handleClose}>
             Close
           </Button>

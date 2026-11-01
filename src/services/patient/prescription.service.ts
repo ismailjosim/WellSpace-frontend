@@ -65,3 +65,21 @@ export async function getAllPrescriptions(queryString?: string) {
     };
   }
 }
+
+export async function getPrescriptionById(id: string) {
+  try {
+    const response = await serverFetch.get(`/prescription/${id}`);
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.error("Error fetching prescription by id:", error);
+    return {
+      success: false,
+      data: null,
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Failed to fetch prescription details",
+    };
+  }
+}

@@ -18,12 +18,15 @@ import {
   Star,
   Stethoscope,
   User,
+  Video,
 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { changeAppointmentStatus } from "@/services/patient/appointment.service";
-// import { initiatePayment } from '@/services/payment/payment.service'
+import { initiatePayment } from "@/services/payment/payment.service";
+import AppointmentChatDialog from "@/components/modules/Chat/AppointmentChatDialog";
 import {
   AppointmentStatus,
   IAppointment,
@@ -57,23 +60,25 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
 
   const handlePayNow = async () => {
     setIsProcessingPayment(true);
-    // try {
-    // 	const result = await initiatePayment(appointment.id)
+    try {
+      const result = await initiatePayment(appointment.id);
 
-    // 	if (result.success && result.data?.paymentUrl) {
-    // 		toast.success('Redirecting to payment...')
-    // 		// Store return URL before redirecting to payment
-    // 		sessionStorage.setItem('paymentReturnUrl', '/dashboard/my-appointments')
-    // 		window.location.replace(result.data.paymentUrl)
-    // 	} else {
-    // 		toast.error(result.message || 'Failed to initiate payment')
-    // 		setIsProcessingPayment(false)
-    // 	}
-    // } catch (error) {
-    // 	toast.error('An error occurred while initiating payment')
-    // 	setIsProcessingPayment(false)
-    // 	console.error(error)
-    // }
+      if (result.success && result.data?.paymentUrl) {
+        toast.success("Redirecting to payment...");
+        sessionStorage.setItem(
+          "paymentReturnUrl",
+          "/dashboard/my-appointments",
+        );
+        window.location.replace(result.data.paymentUrl);
+      } else {
+        toast.error(result.message || "Failed to initiate payment");
+        setIsProcessingPayment(false);
+      }
+    } catch (error) {
+      toast.error("An error occurred while initiating payment");
+      setIsProcessingPayment(false);
+      console.error(error);
+    }
   };
 
   const handleCancelAppointment = async () => {
@@ -146,10 +151,30 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
             Complete information about your appointment
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2 items-center">
+          <AppointmentChatDialog
+            appointmentId={appointment.id}
+            counterpartName={appointment.doctor?.name || "Doctor"}
+            role="PATIENT"
+          />
+
+          {!isCanceled && (
+            <Button
+              asChild
+              size="sm"
+              className="bg-primary hover:bg-primary/90 gap-1.5"
+            >
+              <Link href={`/consultation/room/${appointment.id}`}>
+                <Video className="h-4 w-4" />
+                <span>Join Video Call</span>
+              </Link>
+            </Button>
+          )}
+
           {canCancel && (
             <Button
               variant="destructive"
+              size="sm"
               onClick={handleCancelAppointment}
               disabled={isCancelling}
             >
@@ -159,11 +184,11 @@ const AppointmentDetails = ({ appointment }: AppointmentDetailProps) => {
                   Cancelling...
                 </>
               ) : (
-                "Cancel Appointment"
+                "Cancel"
               )}
             </Button>
           )}
-          <Button variant="outline" onClick={() => router.back()}>
+          <Button variant="outline" size="sm" onClick={() => router.back()}>
             Back
           </Button>
         </div>

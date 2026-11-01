@@ -96,6 +96,38 @@ export const doctorsColumns: Column<IDoctor>[] = [
     ),
   },
   {
+    header: "Verification",
+    accessor: (doctor: any) => {
+      const status = doctor.verificationStatus || "PENDING";
+      const config: Record<string, { label: string; className: string }> = {
+        VERIFIED: {
+          label: "Verified",
+          className: "bg-emerald-100 text-emerald-800 border-emerald-200",
+        },
+        UNDER_REVIEW: {
+          label: "In Review",
+          className: "bg-blue-100 text-blue-800 border-blue-200",
+        },
+        PENDING: {
+          label: "Pending",
+          className: "bg-amber-100 text-amber-800 border-amber-200",
+        },
+        REJECTED: {
+          label: "Rejected",
+          className: "bg-rose-100 text-rose-800 border-rose-200",
+        },
+      };
+      const c = config[status] || config.PENDING;
+      return (
+        <span
+          className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold border ${c.className}`}
+        >
+          {c.label}
+        </span>
+      );
+    },
+  },
+  {
     header: "Status",
     accessor: (doctor) => <StatusBadgeCell isDeleted={doctor.isDeleted} />,
   },

@@ -10,8 +10,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Loader2, Sparkles } from "lucide-react";
+import { Loader2, Sparkles, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Textarea } from "../../ui/textarea";
 import {
@@ -20,6 +21,7 @@ import {
 } from "@/lib/ai-suggestion-client";
 
 export default function AIDoctorSuggestion() {
+  const router = useRouter();
   const [symptoms, setSymptoms] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [suggestion, setSuggestion] = useState<AISuggestionResult | null>(null);
@@ -112,14 +114,28 @@ export default function AIDoctorSuggestion() {
                     {suggestion.recommendedDoctors.slice(0, 3).map((doctor) => (
                       <div
                         key={doctor.id || doctor.name}
-                        className="rounded-md border bg-card p-3"
+                        onClick={() => {
+                          if (doctor.id) {
+                            router.push(`/consultation/doctor/${doctor.id}`);
+                          } else {
+                            router.push(
+                              `/consultation?searchTerm=${encodeURIComponent(doctor.name || "")}`,
+                            );
+                          }
+                        }}
+                        className="rounded-md border bg-card p-3 flex items-center justify-between cursor-pointer hover:border-primary/50 transition"
                       >
-                        <p className="font-medium">{doctor.name || "Doctor"}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {doctor.designation ||
-                            doctor.qualification ||
-                            "Specialist"}
-                        </p>
+                        <div>
+                          <p className="font-medium">
+                            {doctor.name || "Doctor"}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {doctor.designation ||
+                              doctor.qualification ||
+                              "Specialist"}
+                          </p>
+                        </div>
+                        <ArrowRight className="h-4 w-4 text-muted-foreground" />
                       </div>
                     ))}
                   </div>

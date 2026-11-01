@@ -74,6 +74,18 @@ export const loginUser = async (
       };
     }
 
+    // ✅ Handle 2FA / MFA challenge requirement
+    if (result.data?.mfaRequired) {
+      return {
+        ...responseTemplate,
+        success: true,
+        mfaRequired: true,
+        mfaToken: result.data.mfaToken,
+        user: result.data.user,
+        message: "Two-factor authentication code required",
+      };
+    }
+
     // ✅ Extract cookies from backend response
     const setCookieHeaders = res.headers.getSetCookie();
     if (setCookieHeaders && setCookieHeaders.length > 0) {

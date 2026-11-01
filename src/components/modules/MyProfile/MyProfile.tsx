@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { getInitials } from "../../../lib/formatters.ts";
 import { updateMyProfile } from "../../../services/auth/authService";
+import MfaSettingsCard from "@/components/modules/Auth/MfaSettingsCard";
 
 interface MyProfileProps {
   userInfo: UserInfo;
@@ -323,6 +324,11 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
           </Card>
         </div>
       </form>
+
+      {/* Security & 2FA Governance */}
+      <div className="max-w-6xl mx-auto mt-6">
+        <MfaSettingsCard />
+      </div>
     </div>
   );
 };

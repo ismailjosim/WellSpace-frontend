@@ -36,7 +36,7 @@ const getNotifications = async (): Promise<INotificationResponse> => {
     }
 
     return result.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Notifications Fetch Error]", error);
     throw error;
   }

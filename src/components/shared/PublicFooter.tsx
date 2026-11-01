@@ -19,7 +19,7 @@ const PublicFooter = () => {
   const legalLinks = [
     { name: "Terms of Service", href: "/terms" },
     { name: "Privacy Policy", href: "/privacy" },
-    { name: "Consent Forms", href: "/consent" },
+    { name: "Medical Disclaimer", href: "/disclaimer" },
   ];
 
   const socialLinks = [

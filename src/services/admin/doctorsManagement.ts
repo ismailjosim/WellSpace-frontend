@@ -186,13 +186,6 @@ export async function updateDoctor(
 
     if (!validation.success) return validation;
 
-    const newFormData = new FormData();
-    newFormData.append("data", JSON.stringify(validation.data));
-
-    if (formData.get("file")) {
-      newFormData.append("file", formData.get("file") as Blob);
-    }
-
     const res = await serverFetch.patch(`/doctor/${id}`, {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(validation.data),
@@ -245,6 +238,47 @@ export async function deleteDoctor(id: string) {
         process.env.NODE_ENV === "development"
           ? error.message
           : "Something went wrong!",
+    };
+  }
+}
+
+// ======================================================
+// UPDATE DOCTOR VERIFICATION STATUS (ADMIN)
+// ======================================================
+export async function updateDoctorVerificationStatus(
+  doctorId: string,
+  payload: { status: "VERIFIED" | "REJECTED"; rejectionReason?: string },
+) {
+  try {
+    const res = await serverFetch.patch(
+      `/doctor/${doctorId}/verification-status`,
+      {
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+    return await res.json();
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error?.message || "Failed to update doctor verification status",
+    };
+  }
+}
+
+// ======================================================
+// UPLOAD DOCTOR VERIFICATION DOCUMENTS (DOCTOR)
+// ======================================================
+export async function uploadDoctorVerificationDocuments(formData: FormData) {
+  try {
+    const res = await serverFetch.post(`/doctor/verification/documents`, {
+      body: formData,
+    });
+    return await res.json();
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error?.message || "Failed to upload verification documents",
     };
   }
 }

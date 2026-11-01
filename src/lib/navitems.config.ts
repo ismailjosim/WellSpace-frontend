@@ -146,6 +146,23 @@ export const adminNavItems: NavSection[] = [
       },
     ],
   },
+  {
+    title: "Operations & Governance",
+    items: [
+      {
+        title: "Audit Logs",
+        href: "/admin/dashboard/audit-logs",
+        icon: "ShieldAlert",
+        roles: ["ADMIN"],
+      },
+      {
+        title: "Platform Settings",
+        href: "/admin/dashboard/settings",
+        icon: "Settings",
+        roles: ["ADMIN"],
+      },
+    ],
+  },
 ];
 
 export const getNavItemsByRole = (role: UserRole): NavSection[] => {

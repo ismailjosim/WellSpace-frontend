@@ -1,5 +1,9 @@
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -20,14 +24,28 @@ import {
   Star,
   Stethoscope,
   User,
+  ShieldCheck,
+  FileText,
+  ExternalLink,
+  XCircle,
+  CheckCircle2,
+  Loader2,
 } from "lucide-react";
 import { formatDateTime, getInitials } from "@/lib/formatters.ts";
 import InfoRow from "@/components/shared/InoRow";
+import { updateDoctorVerificationStatus } from "@/services/admin/doctorsManagement";
+import { toast } from "sonner";
+
+interface IDoctorWithVerification extends IDoctor {
+  verificationStatus?: string;
+  licenseDocumentUrl?: string | null;
+  degreeDocumentUrl?: string | null;
+}
 
 interface IDoctorViewDialogProps {
   open: boolean;
   onClose: () => void;
-  doctor: IDoctor | null;
+  doctor: IDoctorWithVerification | null;
 }
 
 const DoctorViewDetailDialog = ({
@@ -35,9 +53,62 @@ const DoctorViewDetailDialog = ({
   onClose,
   doctor,
 }: IDoctorViewDialogProps) => {
+  const router = useRouter();
+  const [status, setStatus] = useState<string>(
+    doctor?.verificationStatus || "PENDING",
+  );
+  const [rejectionReasonInput, setRejectionReasonInput] = useState("");
+  const [showRejectInput, setShowRejectInput] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
   if (!doctor) {
     return null;
   }
+
+  const handleApprove = async () => {
+    if (!doctor?.id) return;
+    try {
+      setIsProcessing(true);
+      const res = await updateDoctorVerificationStatus(doctor.id, {
+        status: "VERIFIED",
+      });
+      if (res.success) {
+        setStatus("VERIFIED");
+        toast.success(`Dr. ${doctor.name} has been verified successfully!`);
+        router.refresh();
+      } else {
+        toast.error(res.message || "Failed to approve doctor");
+      }
+    } catch {
+      toast.error("Failed to approve doctor verification");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleReject = async () => {
+    if (!doctor?.id || !rejectionReasonInput.trim()) return;
+    try {
+      setIsProcessing(true);
+      const res = await updateDoctorVerificationStatus(doctor.id, {
+        status: "REJECTED",
+        rejectionReason: rejectionReasonInput.trim(),
+      });
+      if (res.success) {
+        setStatus("REJECTED");
+        setShowRejectInput(false);
+        toast.success(`Verification for Dr. ${doctor.name} has been rejected.`);
+        router.refresh();
+      } else {
+        toast.error(res.message || "Failed to reject doctor");
+      }
+    } catch {
+      toast.error("Failed to reject doctor verification");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="min-w-5xl max-h-[90vh] flex flex-col p-0">
@@ -244,6 +315,156 @@ const DoctorViewDetailDialog = ({
                       label="Average Rating"
                       value={`${doctor.averageRating.toFixed(1)} / 5.0`}
                     />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Credential Verification & Compliance Review Section */}
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-5 w-5 text-emerald-600" />
+                  <h3 className="font-semibold text-lg">
+                    Medical Credential Verification & Compliance
+                  </h3>
+                </div>
+                <Badge
+                  variant={
+                    status === "VERIFIED"
+                      ? "default"
+                      : status === "REJECTED"
+                        ? "destructive"
+                        : "secondary"
+                  }
+                >
+                  {status}
+                </Badge>
+              </div>
+
+              <div className="bg-muted/50 p-4 rounded-lg space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-start gap-3">
+                    <FileText className="h-4 w-4 mt-1 text-muted-foreground" />
+                    <div>
+                      <span className="text-xs text-muted-foreground block font-medium">
+                        BMDC / Medical Council Registration
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {doctor?.registrationNumber}
+                      </span>
+                      {doctor?.licenseDocumentUrl ? (
+                        <a
+                          href={doctor.licenseDocumentUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-1 flex items-center gap-1 text-xs text-primary hover:underline font-medium"
+                        >
+                          <ExternalLink className="h-3 w-3" /> View Uploaded
+                          License Certificate
+                        </a>
+                      ) : (
+                        <span className="text-xs text-muted-foreground block mt-0.5">
+                          No document certificate uploaded
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <GraduationCap className="h-4 w-4 mt-1 text-muted-foreground" />
+                    <div>
+                      <span className="text-xs text-muted-foreground block font-medium">
+                        Graduation Degree Proof
+                      </span>
+                      <span className="text-sm font-semibold">
+                        {doctor?.qualification}
+                      </span>
+                      {doctor?.degreeDocumentUrl ? (
+                        <a
+                          href={doctor.degreeDocumentUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-1 flex items-center gap-1 text-xs text-primary hover:underline font-medium"
+                        >
+                          <ExternalLink className="h-3 w-3" /> View Uploaded
+                          Degree Certificate
+                        </a>
+                      ) : (
+                        <span className="text-xs text-muted-foreground block mt-0.5">
+                          No degree certificate uploaded
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Admin Decision Controls */}
+                <div className="pt-2 border-t flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <span className="text-xs text-muted-foreground">
+                    Review official registration databases before granting
+                    clinical prescription authority.
+                  </span>
+
+                  <div className="flex items-center gap-2">
+                    {status !== "VERIFIED" && (
+                      <Button
+                        size="sm"
+                        disabled={isProcessing}
+                        onClick={handleApprove}
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs flex items-center gap-1.5"
+                      >
+                        {isProcessing ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          <CheckCircle2 className="h-3.5 w-3.5" />
+                        )}
+                        Approve & Verify
+                      </Button>
+                    )}
+
+                    {status !== "REJECTED" && (
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        disabled={isProcessing}
+                        onClick={() => setShowRejectInput(!showRejectInput)}
+                        className="text-xs flex items-center gap-1.5"
+                      >
+                        <XCircle className="h-3.5 w-3.5" />
+                        Reject...
+                      </Button>
+                    )}
+                  </div>
+                </div>
+
+                {showRejectInput && (
+                  <div className="pt-2 space-y-2">
+                    <Input
+                      placeholder="Specify reason for credential rejection (e.g. invalid BMDC number, blurry image)..."
+                      value={rejectionReasonInput}
+                      onChange={(e) => setRejectionReasonInput(e.target.value)}
+                      className="text-xs"
+                    />
+                    <div className="flex justify-end gap-2">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => setShowRejectInput(false)}
+                        className="text-xs"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        disabled={isProcessing || !rejectionReasonInput.trim()}
+                        onClick={handleReject}
+                        className="text-xs"
+                      >
+                        Confirm Rejection
+                      </Button>
+                    </div>
                   </div>
                 )}
               </div>
