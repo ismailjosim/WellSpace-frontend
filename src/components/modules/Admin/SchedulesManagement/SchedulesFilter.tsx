@@ -3,33 +3,44 @@
 import ClearFiltersButton from "@/components/shared/ClearFiltersButton";
 import RefreshButton from "@/components/shared/RefreshButton";
 import { Input } from "@/components/ui/input";
-
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { useDebounce } from "@/components/hooks/useDebounce";
 
 const SchedulesFilter = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  // Local state for inputs with debouncing - use lazy initialization
-  const [startDateInput, setStartDateInput] = useState(
-    () => searchParams.get("startDate") || "",
-  );
-  const [endDateInput, setEndDateInput] = useState(
-    () => searchParams.get("endDate") || "",
-  );
+  const urlStartDate = searchParams.get("startDate") || "";
+  const urlEndDate = searchParams.get("endDate") || "";
+
+  // Local state for inputs with debouncing
+  const [startDateInput, setStartDateInput] = useState(urlStartDate);
+  const [endDateInput, setEndDateInput] = useState(urlEndDate);
+
+  // Synchronize local input state whenever URL search params change externally (e.g. Clear Filters)
+  useEffect(() => {
+    setStartDateInput(urlStartDate);
+  }, [urlStartDate]);
+
+  useEffect(() => {
+    setEndDateInput(urlEndDate);
+  }, [urlEndDate]);
 
   // Debounced values
   const debouncedStartDate = useDebounce(startDateInput, 500);
   const debouncedEndDate = useDebounce(endDateInput, 500);
 
-  // Apply debounced filters to URL
+  // Apply debounced filters to URL only when different from current URL
   useEffect(() => {
+    if (debouncedStartDate === urlStartDate && debouncedEndDate === urlEndDate) {
+      return;
+    }
+
     const params = new URLSearchParams(searchParams.toString());
 
-    // Update debounced fields
     if (debouncedStartDate) {
       params.set("startDate", debouncedStartDate);
     } else {
@@ -42,22 +53,21 @@ const SchedulesFilter = () => {
       params.delete("endDate");
     }
 
-    // Reset to page 1 when filters change
-    params.set("page", "1");
+    params.delete("page");
 
     startTransition(() => {
-      router.push(`?${params.toString()}`);
+      const qs = params.toString();
+      router.push(qs ? `?${qs}` : pathname);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedStartDate, debouncedEndDate]);
+  }, [debouncedStartDate, debouncedEndDate, urlStartDate, urlEndDate, searchParams, router, pathname]);
 
   return (
     <div className="space-y-3">
       {/* Row 1: Filters and Refresh */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 flex-wrap">
         {/* Start Date Filter */}
         <div className="flex items-center gap-2">
-          <label htmlFor="startDate" className="text-sm font-medium">
+          <label htmlFor="startDate" className="text-sm font-medium text-muted-foreground">
             Start Date:
           </label>
           <Input
@@ -72,7 +82,7 @@ const SchedulesFilter = () => {
 
         {/* End Date Filter */}
         <div className="flex items-center gap-2">
-          <label htmlFor="endDate" className="text-sm font-medium">
+          <label htmlFor="endDate" className="text-sm font-medium text-muted-foreground">
             End Date:
           </label>
           <Input

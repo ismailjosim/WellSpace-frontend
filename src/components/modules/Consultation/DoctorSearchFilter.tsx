@@ -24,28 +24,20 @@ export default function DoctorSearchFilters({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [searchTerm, setSearchTerm] = useState(() => {
-    if (typeof window !== "undefined") {
-      return (
-        new URLSearchParams(window.location.search).get("searchTerm") || ""
-      );
-    }
-    return "";
-  });
+  const urlSearchTerm = searchParams.get("searchTerm") || "";
+  const urlMinFee = searchParams.get("minFee") || "";
+  const urlMaxFee = searchParams.get("maxFee") || "";
 
-  const [minFee, setMinFee] = useState(() => {
-    if (typeof window !== "undefined") {
-      return new URLSearchParams(window.location.search).get("minFee") || "";
-    }
-    return "";
-  });
+  const [searchTerm, setSearchTerm] = useState(urlSearchTerm);
+  const [minFee, setMinFee] = useState(urlMinFee);
+  const [maxFee, setMaxFee] = useState(urlMaxFee);
 
-  const [maxFee, setMaxFee] = useState(() => {
-    if (typeof window !== "undefined") {
-      return new URLSearchParams(window.location.search).get("maxFee") || "";
-    }
-    return "";
-  });
+  // Synchronize internal state whenever searchParams changes externally (e.g. Clear Filters)
+  useEffect(() => {
+    setSearchTerm(urlSearchTerm);
+    setMinFee(urlMinFee);
+    setMaxFee(urlMaxFee);
+  }, [urlSearchTerm, urlMinFee, urlMaxFee]);
 
   const [showAdvanced, setShowAdvanced] = useState(false);
 
@@ -53,7 +45,7 @@ export default function DoctorSearchFilters({
 
   const updateFilters = useCallback(
     (updates: Record<string, string | null>) => {
-      const params = new URLSearchParams(window.location.search);
+      const params = new URLSearchParams(searchParams.toString());
 
       Object.entries(updates).forEach(([key, value]) => {
         if (value && value !== "all") {
@@ -64,19 +56,17 @@ export default function DoctorSearchFilters({
       });
 
       params.delete("page");
-      router.push(`/consultation?${params.toString()}`);
+      const qs = params.toString();
+      router.push(qs ? `/consultation?${qs}` : "/consultation");
     },
-    [router],
+    [router, searchParams],
   );
 
   useEffect(() => {
-    const urlSearchTerm =
-      new URLSearchParams(window.location.search).get("searchTerm") || "";
     if (debouncedSearch !== urlSearchTerm) {
       updateFilters({ searchTerm: debouncedSearch });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedSearch]);
+  }, [debouncedSearch, urlSearchTerm, updateFilters]);
 
   const handleApplyFee = () => {
     updateFilters({

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 
 interface ClearFiltersButtonProps {
@@ -60,26 +60,6 @@ interface ClearFiltersButtonProps {
  *
  * Automatically counts active filters (excluding preserved params)
  * and clears all URL parameters when clicked.
- *
- * @example
- * // Basic usage
- * <ClearFiltersButton />
- *
- * @example
- * // Preserve page and limit params
- * <ClearFiltersButton preserveParams={['page', 'limit']} />
- *
- * @example
- * // With custom handlers
- * <ClearFiltersButton
- *   onBeforeClear={() => {
- *     console.log('Clearing filters...');
- *     return true; // proceed with clear
- *   }}
- *   onAfterClear={() => {
- *     console.log('Filters cleared!');
- *   }}
- * />
  */
 const ClearFiltersButton = ({
   preserveParams = [],
@@ -93,6 +73,7 @@ const ClearFiltersButton = ({
   showCount = true,
 }: ClearFiltersButtonProps) => {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
@@ -119,12 +100,8 @@ const ClearFiltersButton = ({
     });
 
     startTransition(() => {
-      // If no params to preserve, just go to base path
-      if (params.toString()) {
-        router.push(`?${params.toString()}`);
-      } else {
-        router.push(window.location.pathname);
-      }
+      const qs = params.toString();
+      router.push(qs ? `?${qs}` : pathname);
     });
 
     // Run after clear handler

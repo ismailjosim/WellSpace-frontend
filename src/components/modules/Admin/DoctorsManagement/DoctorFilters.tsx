@@ -1,4 +1,5 @@
 "use client";
+
 import RefreshButton from "@/components/shared/RefreshButton";
 import SearchFilter from "@/components/shared/SearchFilter";
 import { Badge } from "@/components/ui/badge";
@@ -27,7 +28,7 @@ import {
 } from "@/components/ui/select";
 
 import { Check, ChevronsUpDown, Filter, X } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { ISpecialty } from "@/types/specialties.interface";
 import { useDebounce } from "../../../hooks/useDebounce";
@@ -38,32 +39,48 @@ interface DoctorsFilterProps {
 
 const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
+
+  const urlGender = searchParams.get("gender") || "";
+  const urlEmail = searchParams.get("email") || "";
+  const urlContact = searchParams.get("contactNumber") || "";
+  const urlSearchTerm = searchParams.get("searchTerm") || "";
 
   // ?specialty=Cardiology&specialty=Dermatology
   const [localSpecialties, setLocalSpecialties] = useState<string[]>(
     () => searchParams.getAll("specialties") || [],
   );
-  const [genderInput, setGenderInput] = useState(
-    () => searchParams.get("gender") || "",
-  );
-  const [emailInput, setEmailInput] = useState(
-    () => searchParams.get("email") || "",
-  );
-  const [contactNumberInput, setContactNumberInput] = useState(
-    () => searchParams.get("contactNumber") || "",
-  );
+  const [genderInput, setGenderInput] = useState(urlGender);
+  const [emailInput, setEmailInput] = useState(urlEmail);
+  const [contactNumberInput, setContactNumberInput] = useState(urlContact);
+
+  // Synchronize local states when searchParams change externally (e.g. Clear Filters)
+  useEffect(() => {
+    setLocalSpecialties(searchParams.getAll("specialties") || []);
+    setGenderInput(urlGender);
+    setEmailInput(urlEmail);
+    setContactNumberInput(urlContact);
+  }, [searchParams, urlGender, urlEmail, urlContact]);
 
   const debouncedGender = useDebounce(genderInput, 300);
   const debouncedEmail = useDebounce(emailInput, 500);
   const debouncedContactNumber = useDebounce(contactNumberInput, 500);
 
+  // Update URL only when debounced inputs differ from URL params
   useEffect(() => {
+    if (
+      debouncedGender === urlGender &&
+      debouncedEmail === urlEmail &&
+      debouncedContactNumber === urlContact
+    ) {
+      return;
+    }
+
     const params = new URLSearchParams(searchParams.toString());
 
-    // Update debounced fields
     if (debouncedGender) {
       params.set("gender", debouncedGender);
     } else {
@@ -82,19 +99,18 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
       params.delete("contactNumber");
     }
 
-    // Reset to page 1 when filters change
-    params.set("page", "1");
+    params.delete("page");
 
     startTransition(() => {
-      router.push(`?${params.toString()}`);
+      const qs = params.toString();
+      router.push(qs ? `?${qs}` : pathname);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedGender, debouncedEmail, debouncedContactNumber]);
+  }, [debouncedGender, debouncedEmail, debouncedContactNumber, urlGender, urlEmail, urlContact, searchParams, router, pathname]);
 
-  const toggleSpecialty = (specialtyId: string) => {
-    const newSelection = localSpecialties.includes(specialtyId)
-      ? localSpecialties.filter((id) => id !== specialtyId)
-      : [...localSpecialties, specialtyId];
+  const toggleSpecialty = (specialtyTitle: string) => {
+    const newSelection = localSpecialties.includes(specialtyTitle)
+      ? localSpecialties.filter((id) => id !== specialtyTitle)
+      : [...localSpecialties, specialtyTitle];
 
     setLocalSpecialties(newSelection);
   };
@@ -105,10 +121,11 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
     if (localSpecialties.length > 0) {
       localSpecialties.forEach((val) => params.append("specialties", val));
     }
-    params.set("page", "1");
+    params.delete("page");
 
     startTransition(() => {
-      router.push(`?${params.toString()}`);
+      const qs = params.toString();
+      router.push(qs ? `?${qs}` : pathname);
     });
     setOpen(false);
   };
@@ -119,7 +136,7 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
     setContactNumberInput("");
     setLocalSpecialties([]);
     startTransition(() => {
-      router.push(window.location.pathname);
+      router.push(pathname);
     });
   };
 
@@ -127,7 +144,8 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
     localSpecialties.length +
     (genderInput ? 1 : 0) +
     (emailInput ? 1 : 0) +
-    (contactNumberInput ? 1 : 0);
+    (contactNumberInput ? 1 : 0) +
+    (urlSearchTerm ? 1 : 0);
 
   return (
     <div className="space-y-3">
@@ -138,7 +156,7 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
       </div>
 
       {/* Row 2: Filter Controls */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 flex-wrap">
         {/* Specialties Multi-Select */}
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -200,7 +218,7 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
 
         {/* Gender Filter */}
         <Select
-          value={genderInput}
+          value={genderInput || "all"}
           onValueChange={(value) =>
             setGenderInput(value === "all" ? "" : value)
           }
@@ -217,24 +235,48 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
         </Select>
 
         {/* Email Filter */}
-        <Input
-          type="email"
-          placeholder="Email"
-          value={emailInput}
-          onChange={(e) => setEmailInput(e.target.value)}
-          className="w-50 h-10"
-          disabled={isPending}
-        />
+        <div className="relative">
+          <Input
+            type="email"
+            placeholder="Email"
+            value={emailInput}
+            onChange={(e) => setEmailInput(e.target.value)}
+            className="w-50 h-10 pr-8"
+            disabled={isPending}
+          />
+          {emailInput && (
+            <button
+              type="button"
+              onClick={() => setEmailInput("")}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-0.5 rounded-full cursor-pointer"
+              aria-label="Clear email filter"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          )}
+        </div>
 
         {/* Contact Number Filter */}
-        <Input
-          type="text"
-          placeholder="Contact"
-          value={contactNumberInput}
-          onChange={(e) => setContactNumberInput(e.target.value)}
-          className="w-40 h-10"
-          disabled={isPending}
-        />
+        <div className="relative">
+          <Input
+            type="text"
+            placeholder="Contact"
+            value={contactNumberInput}
+            onChange={(e) => setContactNumberInput(e.target.value)}
+            className="w-40 h-10 pr-8"
+            disabled={isPending}
+          />
+          {contactNumberInput && (
+            <button
+              type="button"
+              onClick={() => setContactNumberInput("")}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-0.5 rounded-full cursor-pointer"
+              aria-label="Clear contact filter"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          )}
+        </div>
 
         {/* Clear Filters */}
         {activeFiltersCount > 0 && (
@@ -250,8 +292,7 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
         )}
       </div>
 
-      {/* Row 3: Active Specialty Badges - Fixed Height to Prevent Shift */}
-
+      {/* Row 3: Active Specialty Badges */}
       {localSpecialties.length > 0 && (
         <div className="min-h-8 flex items-center">
           <div className="flex flex-wrap gap-2">
@@ -264,8 +305,19 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
                 {specialtyTitle}
                 <Button
                   variant="ghost"
-                  onClick={() => toggleSpecialty(specialtyTitle)}
-                  className="ml-1.5 hover:text-destructive transition-colors"
+                  onClick={() => {
+                    const updated = localSpecialties.filter((t) => t !== specialtyTitle);
+                    setLocalSpecialties(updated);
+                    const params = new URLSearchParams(searchParams.toString());
+                    params.delete("specialties");
+                    updated.forEach((val) => params.append("specialties", val));
+                    params.delete("page");
+                    startTransition(() => {
+                      const qs = params.toString();
+                      router.push(qs ? `?${qs}` : pathname);
+                    });
+                  }}
+                  className="ml-1.5 hover:text-destructive transition-colors p-0 h-auto"
                   aria-label={`Remove ${specialtyTitle}`}
                 >
                   <X className="h-3 w-3" />
