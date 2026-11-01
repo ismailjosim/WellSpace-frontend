@@ -1,7 +1,7 @@
 const loginUser = async (email: string, password: string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/login`,
+      `${process.env.BACKEND_API_URL}/auth/login`,
       {
         method: "POST",
         headers: {

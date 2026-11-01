@@ -10,7 +10,8 @@ import { UserInfo } from "@/types/user.interface";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getIconComponent } from "../../../lib/icon-mapper";
-import { Stethoscope, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
+import { BrandLogo } from "@/components/shared/BrandLogo";
 
 interface DashboardMobileSidebarContentProps {
   userInfo: UserInfo | null;
@@ -29,14 +30,7 @@ const DashboardMobileSidebar = ({
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       {/* Logo */}
       <div className="flex h-16 items-center border-b border-border/60 px-5">
-        <Link href={dashboardHome || "/"} className="flex items-center space-x-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-cyan-500 text-primary-foreground shadow-sm shadow-primary/25">
-            <Stethoscope className="w-4 h-4" />
-          </div>
-          <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent">
-            WellSpace
-          </span>
-        </Link>
+        <BrandLogo href={dashboardHome || "/"} textSize="md" />
       </div>
       <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
 
@@ -71,7 +65,12 @@ const DashboardMobileSidebar = ({
                       {item.badge && (
                         <Badge
                           variant={isActive ? "secondary" : "default"}
-                          className={cn("text-xs", isActive ? "bg-white/20 text-white" : "bg-primary/10 text-primary")}
+                          className={cn(
+                            "text-xs",
+                            isActive
+                              ? "bg-white/20 text-white"
+                              : "bg-primary/10 text-primary",
+                          )}
                         >
                           {item.badge}
                         </Badge>
@@ -96,7 +95,9 @@ const DashboardMobileSidebar = ({
               {userInfo.name.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-foreground truncate">{userInfo.name}</p>
+              <p className="text-xs font-bold text-foreground truncate">
+                {userInfo.name}
+              </p>
               <div className="flex items-center gap-1">
                 <ShieldCheck className="h-3 w-3 text-primary shrink-0" />
                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider truncate">

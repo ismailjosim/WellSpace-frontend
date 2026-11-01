@@ -6,8 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Stethoscope } from "lucide-react";
-import Link from "next/link";
+import { BrandLogo } from "@/components/shared/BrandLogo";
 
 const LoginPage = async ({
   searchParams,
@@ -22,14 +21,9 @@ const LoginPage = async ({
 
       <Card className="relative w-full max-w-md rounded-3xl border border-border/60 bg-card/85 backdrop-blur-xl shadow-2xl p-2 sm:p-4">
         <CardHeader className="text-center space-y-4">
-          <Link href="/" className="inline-flex items-center justify-center space-x-2.5 mx-auto group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-primary to-cyan-500 text-primary-foreground shadow-md shadow-primary/25 transition-transform group-hover:scale-105">
-              <Stethoscope className="w-5 h-5" />
-            </div>
-            <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent">
-              WellSpace
-            </span>
-          </Link>
+          <div className="flex justify-center">
+            <BrandLogo href="/" textSize="xl" />
+          </div>
           <div className="space-y-1">
             <CardTitle className="text-2xl font-bold tracking-tight text-foreground">Welcome Back</CardTitle>
             <CardDescription className="text-sm text-muted-foreground">

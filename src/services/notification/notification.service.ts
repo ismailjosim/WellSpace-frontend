@@ -2,7 +2,7 @@
 
 import { INotificationResponse } from "@/types/notification.interface";
 
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
+const BACKEND_API_URL = process.env.BACKEND_API_URL;
 
 const getNotifications = async (): Promise<INotificationResponse> => {
   try {

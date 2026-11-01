@@ -14,10 +14,10 @@ export type AISuggestionResult = {
 };
 
 export async function fetchAIDoctorSuggestion(symptoms: string) {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL;
+  const backendUrl = process.env.BACKEND_API_URL;
 
   if (!backendUrl) {
-    throw new Error("NEXT_PUBLIC_BACKEND_API_URL is not configured");
+    throw new Error("BACKEND_API_URL is not configured");
   }
 
   const response = await fetch(`${backendUrl}/doctor/suggestion`, {

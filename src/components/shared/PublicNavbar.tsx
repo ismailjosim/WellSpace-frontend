@@ -1,10 +1,11 @@
 import { getCookie } from "@/services/auth/tokenHandlers";
-import { Menu, Stethoscope, Sparkles } from "lucide-react";
+import { Menu, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import UserLogout from "./UserLogout";
 import { ThemeToggle } from "../theme-toggle";
+import { BrandLogo } from "./BrandLogo";
 
 const PublicNavbar = async () => {
   const navItems = [
@@ -22,19 +23,7 @@ const PublicNavbar = async () => {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 transition-all">
       <div className="w-full max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
         {/* Brand Logo */}
-        <Link href="/" className="group flex items-center space-x-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary via-primary to-cyan-500 text-primary-foreground shadow-md shadow-primary/20 transition-transform duration-300 group-hover:scale-105">
-            <Stethoscope className="h-5 w-5" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground/90 to-primary bg-clip-text text-transparent">
-              WellSpace
-            </span>
-            <span className="text-[10px] font-medium tracking-widest uppercase text-muted-foreground -mt-1 hidden sm:block">
-              Clinical Care
-            </span>
-          </div>
-        </Link>
+        <BrandLogo href="/" textSize="lg" subtitle="Clinical Care" />
 
         {/* Desktop Nav Items */}
         <nav className="hidden md:flex items-center space-x-1 text-sm font-medium">
@@ -86,11 +75,8 @@ const PublicNavbar = async () => {
               side="right"
               className="w-[300px] sm:w-[380px] p-6 glass-panel border-l border-border/50"
             >
-              <SheetTitle className="text-lg font-bold flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <Stethoscope className="h-4 w-4" />
-                </div>
-                <span>WellSpace Menu</span>
+              <SheetTitle className="text-lg font-bold">
+                <BrandLogo href="/" textSize="md" />
               </SheetTitle>
               <nav className="flex flex-col space-y-2 mt-8">
                 {navItems.map((link) => (

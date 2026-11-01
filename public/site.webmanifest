@@ -1,0 +1,21 @@
+{
+  "name": "WellSpace - Modern Clinical Telehealth",
+  "short_name": "WellSpace",
+  "description": "Connecting Care, Anytime, Anywhere. Next-generation clinical telehealth platform.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

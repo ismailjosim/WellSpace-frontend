@@ -7,8 +7,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 FROM deps AS builder
-ARG NEXT_PUBLIC_BACKEND_API_URL=http://localhost:5000/api/v1
-ENV NEXT_PUBLIC_BACKEND_API_URL=$NEXT_PUBLIC_BACKEND_API_URL
+ARG BACKEND_API_URL=http://localhost:5000/api/v1
+ENV BACKEND_API_URL=$BACKEND_API_URL
 COPY . .
 RUN pnpm run build
 

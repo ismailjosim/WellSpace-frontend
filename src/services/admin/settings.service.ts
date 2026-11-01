@@ -23,7 +23,7 @@ export interface IAllSettingsResponse {
 
 export async function getPublicSettings(): Promise<Record<string, string>> {
   try {
-    const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
+    const BACKEND_API_URL = process.env.BACKEND_API_URL;
     const res = await fetch(`${BACKEND_API_URL}/settings/public`, {
       next: { revalidate: 60 },
     });

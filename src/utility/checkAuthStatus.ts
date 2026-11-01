@@ -2,7 +2,7 @@ const checkAuthStatus = async () => {
   let isAuthenticated = false;
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/me`,
+      `${process.env.BACKEND_API_URL}/auth/me`,
       {
         method: "GET",
         headers: {

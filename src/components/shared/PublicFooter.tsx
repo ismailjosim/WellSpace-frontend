@@ -1,7 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Stethoscope, Twitter, Linkedin, Facebook, ShieldCheck, Lock, Activity } from "lucide-react";
+import {
+  Twitter,
+  Linkedin,
+  Facebook,
+  ShieldCheck,
+  Lock,
+  Activity,
+} from "lucide-react";
+import { BrandLogo } from "./BrandLogo";
 
 const PublicFooter = () => {
   const companyLinks = [
@@ -41,16 +49,11 @@ const PublicFooter = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Brand & Mission */}
           <div className="space-y-4 md:col-span-2">
-            <Link href="/" className="inline-flex items-center space-x-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-cyan-500 text-primary-foreground shadow-md shadow-primary/20">
-                <Stethoscope className="h-5 w-5" />
-              </div>
-              <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent">
-                WellSpace
-              </span>
-            </Link>
+            <BrandLogo href="/" textSize="xl" />
             <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
-              Next-generation clinical telehealth platform connecting patients with certified medical specialists, powered by intelligent diagnostic matching.
+              Next-generation clinical telehealth platform connecting patients
+              with certified medical specialists, powered by intelligent
+              diagnostic matching.
             </p>
 
             {/* Live Telehealth Status Indicator */}
@@ -147,7 +150,10 @@ const PublicFooter = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-border/40 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-3">
-          <p>© {new Date().getFullYear()} WellSpace Health Technologies. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} WellSpace Health Technologies. All
+            rights reserved.
+          </p>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1 text-primary">
               <Activity className="h-3.5 w-3.5" />

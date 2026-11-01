@@ -1,7 +1,7 @@
 import { getCookie } from "@/services/auth/tokenHandlers";
 import { getNewAccessToken } from "../services/auth/authService";
 
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
+const BACKEND_API_URL = process.env.BACKEND_API_URL;
 const AUTH_REFRESH_EXCLUDED_ENDPOINTS = [
   "/auth/login",
   "/auth/register",
@@ -18,7 +18,7 @@ const serverFetchHelper = async (
   const accessToken = await getCookie("accessToken");
 
   if (!BACKEND_API_URL) {
-    throw new Error("NEXT_PUBLIC_BACKEND_API_URL is not configured");
+    throw new Error("BACKEND_API_URL is not configured");
   }
 
   if (!AUTH_REFRESH_EXCLUDED_ENDPOINTS.includes(endpoint)) {
