@@ -13,7 +13,6 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
@@ -29,9 +28,8 @@ import {
 
 import { Check, ChevronsUpDown, Filter, X } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { ISpecialty } from "@/types/specialties.interface";
-import { useDebounce } from "../../../hooks/useDebounce";
 
 interface DoctorsFilterProps {
   specialties: ISpecialty[];
@@ -44,68 +42,37 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
 
+  const urlSpecialties = searchParams.getAll("specialties") || [];
   const urlGender = searchParams.get("gender") || "";
   const urlEmail = searchParams.get("email") || "";
   const urlContact = searchParams.get("contactNumber") || "";
   const urlSearchTerm = searchParams.get("searchTerm") || "";
 
-  // ?specialty=Cardiology&specialty=Dermatology
-  const [localSpecialties, setLocalSpecialties] = useState<string[]>(
-    () => searchParams.getAll("specialties") || [],
-  );
-  const [genderInput, setGenderInput] = useState(urlGender);
-  const [emailInput, setEmailInput] = useState(urlEmail);
-  const [contactNumberInput, setContactNumberInput] = useState(urlContact);
+  // Local state for popover multi-select staging
+  const [localSpecialties, setLocalSpecialties] = useState<string[]>(urlSpecialties);
+  const [prevSpecialtiesKey, setPrevSpecialtiesKey] = useState(urlSpecialties.join(","));
 
-  // Synchronize local states when searchParams change externally (e.g. Clear Filters)
-  useEffect(() => {
-    setLocalSpecialties(searchParams.getAll("specialties") || []);
-    setGenderInput(urlGender);
-    setEmailInput(urlEmail);
-    setContactNumberInput(urlContact);
-  }, [searchParams, urlGender, urlEmail, urlContact]);
+  // Adjust state during render when URL specialties change (React-recommended pattern, no useEffect needed)
+  const currentSpecialtiesKey = urlSpecialties.join(",");
+  if (currentSpecialtiesKey !== prevSpecialtiesKey) {
+    setPrevSpecialtiesKey(currentSpecialtiesKey);
+    setLocalSpecialties(urlSpecialties);
+  }
 
-  const debouncedGender = useDebounce(genderInput, 300);
-  const debouncedEmail = useDebounce(emailInput, 500);
-  const debouncedContactNumber = useDebounce(contactNumberInput, 500);
-
-  // Update URL only when debounced inputs differ from URL params
-  useEffect(() => {
-    if (
-      debouncedGender === urlGender &&
-      debouncedEmail === urlEmail &&
-      debouncedContactNumber === urlContact
-    ) {
-      return;
-    }
-
+  const handleGenderChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
-
-    if (debouncedGender) {
-      params.set("gender", debouncedGender);
-    } else {
+    if (!value || value === "all") {
       params.delete("gender");
-    }
-
-    if (debouncedEmail) {
-      params.set("email", debouncedEmail);
     } else {
-      params.delete("email");
+      params.set("gender", value);
     }
-
-    if (debouncedContactNumber) {
-      params.set("contactNumber", debouncedContactNumber);
-    } else {
-      params.delete("contactNumber");
-    }
-
     params.delete("page");
 
     startTransition(() => {
       const qs = params.toString();
       router.push(qs ? `?${qs}` : pathname);
     });
-  }, [debouncedGender, debouncedEmail, debouncedContactNumber, urlGender, urlEmail, urlContact, searchParams, router, pathname]);
+  };
 
   const toggleSpecialty = (specialtyTitle: string) => {
     const newSelection = localSpecialties.includes(specialtyTitle)
@@ -130,10 +97,20 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
     setOpen(false);
   };
 
+  const removeSpecialtyBadge = (specialtyTitle: string) => {
+    const updated = urlSpecialties.filter((t) => t !== specialtyTitle);
+    setLocalSpecialties(updated);
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("specialties");
+    updated.forEach((val) => params.append("specialties", val));
+    params.delete("page");
+    startTransition(() => {
+      const qs = params.toString();
+      router.push(qs ? `?${qs}` : pathname);
+    });
+  };
+
   const clearAllFilters = () => {
-    setGenderInput("");
-    setEmailInput("");
-    setContactNumberInput("");
     setLocalSpecialties([]);
     startTransition(() => {
       router.push(pathname);
@@ -141,10 +118,10 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
   };
 
   const activeFiltersCount =
-    localSpecialties.length +
-    (genderInput ? 1 : 0) +
-    (emailInput ? 1 : 0) +
-    (contactNumberInput ? 1 : 0) +
+    urlSpecialties.length +
+    (urlGender ? 1 : 0) +
+    (urlEmail ? 1 : 0) +
+    (urlContact ? 1 : 0) +
     (urlSearchTerm ? 1 : 0);
 
   return (
@@ -167,8 +144,8 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
               className="w-60 justify-between h-10"
             >
               <Filter className="mr-2 h-4 w-4" />
-              {localSpecialties.length > 0
-                ? `${localSpecialties.length} selected`
+              {urlSpecialties.length > 0
+                ? `${urlSpecialties.length} selected`
                 : "Select specialties"}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -218,10 +195,8 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
 
         {/* Gender Filter */}
         <Select
-          value={genderInput || "all"}
-          onValueChange={(value) =>
-            setGenderInput(value === "all" ? "" : value)
-          }
+          value={urlGender || "all"}
+          onValueChange={handleGenderChange}
           disabled={isPending}
         >
           <SelectTrigger className="w-35 h-10">
@@ -235,48 +210,10 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
         </Select>
 
         {/* Email Filter */}
-        <div className="relative">
-          <Input
-            type="email"
-            placeholder="Email"
-            value={emailInput}
-            onChange={(e) => setEmailInput(e.target.value)}
-            className="w-50 h-10 pr-8"
-            disabled={isPending}
-          />
-          {emailInput && (
-            <button
-              type="button"
-              onClick={() => setEmailInput("")}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-0.5 rounded-full cursor-pointer"
-              aria-label="Clear email filter"
-            >
-              <X className="h-3.5 w-3.5" />
-            </button>
-          )}
-        </div>
+        <SearchFilter paramName="email" placeholder="Email" />
 
         {/* Contact Number Filter */}
-        <div className="relative">
-          <Input
-            type="text"
-            placeholder="Contact"
-            value={contactNumberInput}
-            onChange={(e) => setContactNumberInput(e.target.value)}
-            className="w-40 h-10 pr-8"
-            disabled={isPending}
-          />
-          {contactNumberInput && (
-            <button
-              type="button"
-              onClick={() => setContactNumberInput("")}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-0.5 rounded-full cursor-pointer"
-              aria-label="Clear contact filter"
-            >
-              <X className="h-3.5 w-3.5" />
-            </button>
-          )}
-        </div>
+        <SearchFilter paramName="contactNumber" placeholder="Contact" />
 
         {/* Clear Filters */}
         {activeFiltersCount > 0 && (
@@ -293,35 +230,24 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
       </div>
 
       {/* Row 3: Active Specialty Badges */}
-      {localSpecialties.length > 0 && (
+      {urlSpecialties.length > 0 && (
         <div className="min-h-8 flex items-center">
           <div className="flex flex-wrap gap-2">
-            {localSpecialties.map((specialtyTitle) => (
+            {urlSpecialties.map((specialtyTitle) => (
               <Badge
                 key={specialtyTitle}
                 variant="outline"
                 className="px-2.5 py-1 h-7"
               >
                 {specialtyTitle}
-                <Button
-                  variant="ghost"
-                  onClick={() => {
-                    const updated = localSpecialties.filter((t) => t !== specialtyTitle);
-                    setLocalSpecialties(updated);
-                    const params = new URLSearchParams(searchParams.toString());
-                    params.delete("specialties");
-                    updated.forEach((val) => params.append("specialties", val));
-                    params.delete("page");
-                    startTransition(() => {
-                      const qs = params.toString();
-                      router.push(qs ? `?${qs}` : pathname);
-                    });
-                  }}
-                  className="ml-1.5 hover:text-destructive transition-colors p-0 h-auto"
+                <button
+                  type="button"
+                  onClick={() => removeSpecialtyBadge(specialtyTitle)}
+                  className="ml-1.5 hover:text-destructive transition-colors p-0 h-auto cursor-pointer inline-flex items-center"
                   aria-label={`Remove ${specialtyTitle}`}
                 >
                   <X className="h-3 w-3" />
-                </Button>
+                </button>
               </Badge>
             ))}
           </div>

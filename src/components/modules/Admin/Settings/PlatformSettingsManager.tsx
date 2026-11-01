@@ -25,8 +25,24 @@ import {
   Loader2,
   CheckCircle2,
   AlertTriangle,
+  Check,
+  ChevronsUpDown,
 } from "lucide-react";
 import { toast } from "sonner";
+import { CURRENCIES } from "@/constants/currencies";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 
 interface PlatformSettingsManagerProps {
   initialSettings: ISettingItem[];
@@ -57,6 +73,16 @@ export default function PlatformSettingsManager({
   });
 
   const [isSaving, setIsSaving] = useState(false);
+  const [currencyOpen, setCurrencyOpen] = useState(false);
+
+  const selectedCurrency = CURRENCIES.find(
+    (c) => c.key.toUpperCase() === (formData.currency_symbol || "USD").toUpperCase(),
+  ) || {
+    key: formData.currency_symbol || "USD",
+    value: "US Dollar",
+    emoji: "💵",
+    symbol: "$",
+  };
 
   const handleChange = (key: string, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
@@ -218,20 +244,79 @@ export default function PlatformSettingsManager({
 
                 <div className="space-y-2">
                   <Label htmlFor="currency_symbol">Billing Currency Code</Label>
-                  <Input
-                    id="currency_symbol"
-                    value={formData.currency_symbol}
-                    onChange={(e) =>
-                      handleChange(
-                        "currency_symbol",
-                        e.target.value.toUpperCase(),
-                      )
-                    }
-                    placeholder="USD, EUR, GBP, BDT"
-                  />
+                  <Popover open={currencyOpen} onOpenChange={setCurrencyOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="currency_symbol"
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={currencyOpen}
+                        className="w-full justify-between h-10 font-normal bg-background"
+                      >
+                        <div className="flex items-center gap-2 truncate">
+                          {selectedCurrency.emoji && !selectedCurrency.emoji.startsWith(selectedCurrency.key) ? (
+                            <span className="text-base">{selectedCurrency.emoji}</span>
+                          ) : null}
+                          <span className="font-semibold text-foreground">{selectedCurrency.key}</span>
+                          {selectedCurrency.symbol ? (
+                            <span className="text-muted-foreground font-mono text-xs">
+                              ({selectedCurrency.symbol.trim()})
+                            </span>
+                          ) : null}
+                          <span className="text-muted-foreground text-xs truncate">
+                            — {selectedCurrency.value}
+                          </span>
+                        </div>
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[360px] sm:w-[420px] p-0" align="start">
+                      <Command>
+                        <CommandInput placeholder="Search currency by code (USD, BDT), name, or symbol..." />
+                        <CommandList className="max-h-64">
+                          <CommandEmpty>No currency found.</CommandEmpty>
+                          <CommandGroup>
+                            {CURRENCIES.map((currency) => {
+                              const isSelected =
+                                (formData.currency_symbol || "USD").toUpperCase() ===
+                                currency.key.toUpperCase();
+                              return (
+                                <CommandItem
+                                  key={currency.key}
+                                  value={`${currency.key} ${currency.value} ${currency.symbol}`}
+                                  onSelect={() => {
+                                    handleChange("currency_symbol", currency.key);
+                                    setCurrencyOpen(false);
+                                  }}
+                                  className="flex items-center justify-between cursor-pointer"
+                                >
+                                  <div className="flex items-center gap-2 truncate">
+                                    {currency.emoji && !currency.emoji.startsWith(currency.key) ? (
+                                      <span className="text-sm">{currency.emoji}</span>
+                                    ) : null}
+                                    <span className="font-semibold">{currency.key}</span>
+                                    {currency.symbol ? (
+                                      <span className="text-xs font-mono text-muted-foreground">
+                                        ({currency.symbol.trim()})
+                                      </span>
+                                    ) : null}
+                                    <span className="text-xs text-muted-foreground truncate">
+                                      — {currency.value}
+                                    </span>
+                                  </div>
+                                  {isSelected && (
+                                    <Check className="h-4 w-4 text-primary shrink-0 ml-2" />
+                                  )}
+                                </CommandItem>
+                              );
+                            })}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <p className="text-[11px] text-muted-foreground">
-                    Standard ISO 3-letter currency code printed on patient
-                    invoices and receipts.
+                    Selected: {selectedCurrency.value} ({selectedCurrency.key} - {selectedCurrency.symbol || selectedCurrency.key}). Standard ISO 3-letter currency code printed on patient invoices and receipts.
                   </p>
                 </div>
               </div>

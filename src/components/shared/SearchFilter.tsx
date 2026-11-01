@@ -22,14 +22,18 @@ const SearchFilter = ({
   const urlParamValue = searchParams.get(paramName) || "";
 
   const [value, setValue] = useState(urlParamValue);
+  const [prevUrlValue, setPrevUrlValue] = useState(urlParamValue);
+
+  // Synchronize internal state when URL search param changes externally (e.g. Clear Filters)
+  // Recommended React pattern: update during render instead of inside an effect to prevent cascading renders
+  if (urlParamValue !== prevUrlValue) {
+    setPrevUrlValue(urlParamValue);
+    setValue(urlParamValue);
+  }
+
   const debouncedValue = useDebounce(value, 500);
 
-  // Synchronize internal state when URL search param changes externally (e.g. Clear button clicked)
-  useEffect(() => {
-    setValue(urlParamValue);
-  }, [urlParamValue]);
-
-  // Push to URL only when debouncedValue actually differs from the URL param
+  // Push to URL only when debouncedValue differs from what is in the URL
   useEffect(() => {
     if (debouncedValue === urlParamValue) {
       return;

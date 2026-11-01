@@ -29,15 +29,28 @@ export default function DoctorSearchFilters({
   const urlMaxFee = searchParams.get("maxFee") || "";
 
   const [searchTerm, setSearchTerm] = useState(urlSearchTerm);
-  const [minFee, setMinFee] = useState(urlMinFee);
-  const [maxFee, setMaxFee] = useState(urlMaxFee);
+  const [prevUrlSearchTerm, setPrevUrlSearchTerm] = useState(urlSearchTerm);
 
-  // Synchronize internal state whenever searchParams changes externally (e.g. Clear Filters)
-  useEffect(() => {
+  if (urlSearchTerm !== prevUrlSearchTerm) {
+    setPrevUrlSearchTerm(urlSearchTerm);
     setSearchTerm(urlSearchTerm);
+  }
+
+  const [minFee, setMinFee] = useState(urlMinFee);
+  const [prevUrlMinFee, setPrevUrlMinFee] = useState(urlMinFee);
+
+  if (urlMinFee !== prevUrlMinFee) {
+    setPrevUrlMinFee(urlMinFee);
     setMinFee(urlMinFee);
+  }
+
+  const [maxFee, setMaxFee] = useState(urlMaxFee);
+  const [prevUrlMaxFee, setPrevUrlMaxFee] = useState(urlMaxFee);
+
+  if (urlMaxFee !== prevUrlMaxFee) {
+    setPrevUrlMaxFee(urlMaxFee);
     setMaxFee(urlMaxFee);
-  }, [urlSearchTerm, urlMinFee, urlMaxFee]);
+  }
 
   const [showAdvanced, setShowAdvanced] = useState(false);
 

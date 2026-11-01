@@ -18,16 +18,20 @@ const SchedulesFilter = () => {
 
   // Local state for inputs with debouncing
   const [startDateInput, setStartDateInput] = useState(urlStartDate);
-  const [endDateInput, setEndDateInput] = useState(urlEndDate);
+  const [prevUrlStartDate, setPrevUrlStartDate] = useState(urlStartDate);
 
-  // Synchronize local input state whenever URL search params change externally (e.g. Clear Filters)
-  useEffect(() => {
+  if (urlStartDate !== prevUrlStartDate) {
+    setPrevUrlStartDate(urlStartDate);
     setStartDateInput(urlStartDate);
-  }, [urlStartDate]);
+  }
 
-  useEffect(() => {
+  const [endDateInput, setEndDateInput] = useState(urlEndDate);
+  const [prevUrlEndDate, setPrevUrlEndDate] = useState(urlEndDate);
+
+  if (urlEndDate !== prevUrlEndDate) {
+    setPrevUrlEndDate(urlEndDate);
     setEndDateInput(urlEndDate);
-  }, [urlEndDate]);
+  }
 
   // Debounced values
   const debouncedStartDate = useDebounce(startDateInput, 500);
