@@ -8,8 +8,28 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { serverFetch } from "../../lib/server-fetch";
 
 export const getUserInfo = async (): Promise<UserInfo | any> => {
-  let userInfo: UserInfo | any;
   try {
+    const accessToken = await getCookie("accessToken");
+
+    if (!accessToken) {
+      return {
+        id: "",
+        name: "Unknown User",
+        email: "",
+        role: "PATIENT",
+      };
+    }
+
+    let tokenPayload: JwtPayload | null = null;
+    try {
+      tokenPayload = jwt.verify(
+        accessToken,
+        process.env.ACCESS_TOKEN_SECRET as string,
+      ) as JwtPayload;
+    } catch {
+      // Token expired or invalid
+    }
+
     const response = await serverFetch.get("/auth/me", {
       cache: "force-cache",
       next: { tags: ["user-info"] },
@@ -17,37 +37,59 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
 
     const result = await response.json();
 
-    if (result.success) {
-      const accessToken = await getCookie("accessToken");
-
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
-
-      const verifiedToken = jwt.verify(
-        accessToken,
-        process.env.ACCESS_TOKEN_SECRET as string,
-      ) as JwtPayload;
-
-      userInfo = {
-        name: verifiedToken.name || "Unknown User",
-        email: verifiedToken.email,
-        role: verifiedToken.role,
+    if (result.success && result.data) {
+      return {
+        name:
+          result.data.admin?.name ||
+          result.data.doctor?.name ||
+          result.data.patient?.name ||
+          result.data.name ||
+          tokenPayload?.name ||
+          "Unknown User",
+        role: tokenPayload?.role || result.data.role,
+        ...result.data,
       };
     }
 
-    userInfo = {
-      name:
-        result.data.admin?.name ||
-        result.data.doctor?.name ||
-        result.data.patient?.name ||
-        result.data.name ||
-        "Unknown User",
-      ...result.data,
-    };
+    // Fallback using decoded token payload if /auth/me returns error
+    if (tokenPayload) {
+      return {
+        id: tokenPayload.userId || tokenPayload.id || "",
+        name: tokenPayload.name || "Unknown User",
+        email: tokenPayload.email || "",
+        role: tokenPayload.role || "PATIENT",
+        needPasswordChange: tokenPayload.needPasswordChange || false,
+      };
+    }
 
-    return userInfo;
+    return {
+      id: "",
+      name: "Unknown User",
+      email: "",
+      role: "PATIENT",
+    };
   } catch {
+    // Ultimate fallback if fetch threw
+    const accessToken = await getCookie("accessToken");
+    if (accessToken) {
+      try {
+        const verifiedToken = jwt.verify(
+          accessToken,
+          process.env.ACCESS_TOKEN_SECRET as string,
+        ) as JwtPayload;
+
+        return {
+          id: verifiedToken.userId || verifiedToken.id || "",
+          name: verifiedToken.name || "Unknown User",
+          email: verifiedToken.email || "",
+          role: verifiedToken.role || "PATIENT",
+          needPasswordChange: verifiedToken.needPasswordChange || false,
+        };
+      } catch {
+        // ignore
+      }
+    }
+
     return {
       id: "",
       name: "Unknown User",

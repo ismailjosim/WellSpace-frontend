@@ -25,7 +25,6 @@ export async function proxy(request: NextRequest) {
   }
 
   const tokenRefreshResult = await getNewAccessToken();
-  // console.log({ tokenRefreshResult })
 
   // If token was refreshed, redirect to same page to fetch with new token
   if (tokenRefreshResult?.tokenRefreshed) {
@@ -38,50 +37,56 @@ export async function proxy(request: NextRequest) {
   let userRole: UserRole | null = null;
 
   if (accessToken) {
-    const verifiedToken: JwtPayload | string = jwt.verify(
-      accessToken,
-      process.env.ACCESS_TOKEN_SECRET as string,
-    );
-    if (typeof verifiedToken === "string") {
+    try {
+      const verifiedToken = jwt.verify(
+        accessToken,
+        process.env.ACCESS_TOKEN_SECRET as string,
+      ) as JwtPayload;
+
+      if (!verifiedToken || typeof verifiedToken === "string") {
+        await deleteCookie("accessToken");
+        await deleteCookie("refreshToken");
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+      userRole = verifiedToken.role as UserRole;
+    } catch {
       await deleteCookie("accessToken");
       await deleteCookie("refreshToken");
-      return NextResponse.redirect(new URL("/", request.url));
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(loginUrl);
     }
-    userRole = verifiedToken.role;
   }
 
   // find route owner
   const routerOwner = getRouteOwner(pathname);
-  // path = /doctor/appointments => routeOwner = DOCTOR
-  // path = /my-profile => routeOwner = COMMON
-  // path - /login => routeOwner = null
-
-  // if routeOwner is null => public route => allow
   const isAuth = isAuthRoute(pathname);
 
   // * Rule 01: if user is logged in and trying to access auth route => redirect to dashboard
-  if (accessToken && isAuth) {
-    return NextResponse.redirect(
-      new URL(getDefaultDashboardRoutes(userRole as UserRole), request.url),
-    );
+  if (accessToken && isAuth && userRole) {
+    const defaultRoute = getDefaultDashboardRoutes(userRole);
+    if (pathname !== defaultRoute) {
+      return NextResponse.redirect(new URL(defaultRoute, request.url));
+    }
+    return NextResponse.next();
   }
+
   //* Rule 2 : User is trying to access open public route
   if (routerOwner === null) {
     return NextResponse.next();
   }
 
-  //* Rule 1 & 2 for open public routes and auth routes
-
+  //* Rule 3 : Protected route requires authentication
   if (!accessToken) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(loginUrl);
   }
-  // * rule 3: user need password change
-  if (accessToken) {
+
+  // * Rule 4: User needs password change
+  if (accessToken && userRole) {
     const userInfo = await getUserInfo();
     if (userInfo?.needPasswordChange) {
-      // check user into the reset password route
       if (pathname !== "/reset-password") {
         const resetPasswordUrl = new URL("/reset-password", request.url);
         resetPasswordUrl.searchParams.set("redirect", pathname);
@@ -89,30 +94,35 @@ export async function proxy(request: NextRequest) {
       }
       return NextResponse.next();
     }
-    // if user is in reset password route and doesn't need password change, redirect to default dashboard
     if (pathname === "/reset-password" && !userInfo?.needPasswordChange) {
-      return NextResponse.redirect(
-        new URL(getDefaultDashboardRoutes(userRole as UserRole), request.url),
-      );
+      const defaultRoute = getDefaultDashboardRoutes(userRole);
+      return NextResponse.redirect(new URL(defaultRoute, request.url));
     }
   }
-  //* Rule 4 : User is trying to access common protected route
+
+  //* Rule 5 : Common protected route
   if (routerOwner === "COMMON") {
     return NextResponse.next();
   }
 
-  //* Rule 5 : User is trying to access role based protected route
+  //* Rule 6 : Role-based protected route
   if (
     routerOwner === "ADMIN" ||
     routerOwner === "DOCTOR" ||
     routerOwner === "PATIENT"
   ) {
-    if (userRole !== routerOwner) {
-      return NextResponse.redirect(
-        new URL(getDefaultDashboardRoutes(userRole as UserRole), request.url),
-      );
+    const hasAccess =
+      (routerOwner === "ADMIN" && (userRole === "ADMIN" || userRole === "SUPER_ADMIN")) ||
+      userRole === routerOwner;
+
+    if (!hasAccess && userRole) {
+      const defaultRoute = getDefaultDashboardRoutes(userRole);
+      if (pathname !== defaultRoute) {
+        return NextResponse.redirect(new URL(defaultRoute, request.url));
+      }
     }
   }
+
   return NextResponse.next();
 }
 

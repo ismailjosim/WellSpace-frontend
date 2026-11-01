@@ -86,6 +86,10 @@ export const isValidRedirectForRole = (
     return true;
   }
 
+  if (routeOwner === "ADMIN" && (role === "ADMIN" || role === "SUPER_ADMIN")) {
+    return true;
+  }
+
   if (routeOwner === role) {
     return true;
   }
