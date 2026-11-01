@@ -8,7 +8,7 @@ const CommonDashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <DashboardSidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <DashboardNav />
-        <main className="flex-1 overflow-y-auto bg-muted/10 p-4 md:p-6">
+        <main className="flex-1 overflow-y-auto bg-accent/25 dark:bg-background/90 p-4 md:p-8">
           <div>{children}</div>
         </main>
       </div>

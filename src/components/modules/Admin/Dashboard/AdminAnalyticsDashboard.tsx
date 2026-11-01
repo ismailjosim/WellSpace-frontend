@@ -91,25 +91,25 @@ interface AdminAnalyticsDashboardProps {
 const appointmentChartConfig = {
   count: {
     label: "Appointments",
-    color: "#2563eb",
+    color: "#0ea5e9",
   },
 } satisfies ChartConfig;
 
 const statusChartConfig = {
   count: {
     label: "Appointments",
-    color: "#0f766e",
+    color: "#0d9488",
   },
 } satisfies ChartConfig;
 
 const roleChartConfig = {
   count: {
     label: "Users",
-    color: "#7c3aed",
+    color: "#6366f1",
   },
 } satisfies ChartConfig;
 
-const pieColors = ["#2563eb", "#0f766e", "#f59e0b", "#dc2626", "#7c3aed"];
+const pieColors = ["#0ea5e9", "#0d9488", "#6366f1", "#f59e0b", "#ec4899", "#8b5cf6"];
 
 const formatEnum = (value?: string) =>
   value ? value.replaceAll("_", " ") : "Unknown";
@@ -141,20 +141,20 @@ function MetricCard({
   icon: React.ComponentType<{ className?: string }>;
 }) {
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0">
+    <Card className="rounded-2xl border border-border/60 bg-card hover:border-primary/40 hover:shadow-md transition-all">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
-          <CardDescription>{title}</CardDescription>
-          <CardTitle className="mt-2 text-2xl font-semibold tabular-nums">
+          <CardDescription className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</CardDescription>
+          <CardTitle className="mt-2 text-2xl sm:text-3xl font-extrabold tabular-nums text-foreground">
             {value}
           </CardTitle>
         </div>
-        <div className="rounded-md border bg-muted p-2">
-          <Icon className="h-5 w-5 text-muted-foreground" />
+        <div className="rounded-xl bg-primary/10 p-2.5 text-primary border border-primary/20">
+          <Icon className="h-5 w-5" />
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-xs text-muted-foreground font-medium">{description}</p>
       </CardContent>
     </Card>
   );
@@ -162,9 +162,9 @@ function MetricCard({
 
 function ProgressBar({ value }: { value: number }) {
   return (
-    <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+    <div className="h-2 w-full overflow-hidden rounded-full bg-accent/50">
       <div
-        className="h-full rounded-full bg-primary transition-all"
+        className="h-full rounded-full bg-gradient-to-r from-primary to-cyan-500 transition-all duration-500"
         style={{ width: `${Math.min(Math.max(value, 0), 100)}%` }}
       />
     </div>

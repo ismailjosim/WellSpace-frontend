@@ -1,156 +1,182 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
-  ArrowBigLeft,
-  ArrowBigRight,
-  LucideLinkedin,
-  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  Star,
+  Quote,
+  ShieldCheck,
 } from "lucide-react";
 
 const reviews = [
   {
     id: 1,
     name: "Alice Johnson",
-    text: "Great service! The doctors were very professional and caring. Highly satisfied with my experience.",
+    role: "Verified Patient",
+    text: "The instant video consultation was remarkably smooth. Dr. Chen accurately diagnosed my symptoms and sent a digital prescription right to my dashboard.",
     avatarUrl: "https://i.pravatar.cc/150?img=1",
     rating: 5,
-    platform: "facebook",
     time: "2 days ago",
   },
   {
     id: 2,
-    name: "Bob Smith",
-    text: "Very professional staff and excellent facilities. Would definitely recommend to friends and family.",
-    avatarUrl: "https://i.pravatar.cc/150?img=2",
+    name: "Michael Smith",
+    role: "Verified Patient",
+    text: "The AI doctor recommendation matched me with an endocrinologist within seconds. Truly the modern benchmark for telemedicine.",
+    avatarUrl: "https://i.pravatar.cc/150?img=12",
     rating: 5,
-    platform: "google",
-    time: "6 days ago",
+    time: "4 days ago",
   },
   {
     id: 3,
-    name: "Charlie Davis",
-    text: "Highly recommend! The AI-powered doctor matching was incredibly accurate and saved me so much time.",
-    avatarUrl: "https://i.pravatar.cc/150?img=3",
+    name: "Sarah Davis",
+    role: "Family Care Patient",
+    text: "Booking pediatric consultations for my children used to take days of clinic waiting. WellSpace solved that completely in one intuitive app.",
+    avatarUrl: "https://i.pravatar.cc/150?img=9",
     rating: 5,
-    platform: "facebook",
-    time: "3 days ago",
+    time: "1 week ago",
   },
   {
     id: 4,
     name: "Diana Lee",
-    text: "Amazing experience from start to finish. The booking process was seamless and the care was exceptional.",
+    role: "Verified Patient",
+    text: "End-to-end encrypted consultations with downloadable PDF prescriptions and instant billing. The level of polish in 2026 is phenomenal.",
     avatarUrl: "https://i.pravatar.cc/150?img=4",
     rating: 5,
-    platform: "amazon",
-    time: "5 days ago",
+    time: "1 week ago",
   },
   {
     id: 5,
     name: "Edward Chen",
-    text: "The AI doctor finder is revolutionary! Found the perfect specialist for my needs in minutes.",
-    avatarUrl: "https://i.pravatar.cc/150?img=5",
+    role: "Verified Patient",
+    text: "Saved hours of commute time. The doctor was attentive, thorough, and followed up via the integrated chat. Highly recommended!",
+    avatarUrl: "https://i.pravatar.cc/150?img=15",
     rating: 5,
-    platform: "google",
-    time: "1 week ago",
-  },
-  {
-    id: 6,
-    name: "Fiona Martinez",
-    text: "Outstanding healthcare service. The staff was attentive and the facilities were top-notch.",
-    avatarUrl: "https://i.pravatar.cc/150?img=6",
-    rating: 5,
-    platform: "facebook",
-    time: "4 days ago",
+    time: "2 weeks ago",
   },
 ];
 
 export default function PatientReviews() {
-  const swiperRef = useRef<any>(null);
+  const swiperRef = useRef<SwiperType | null>(null);
 
   return (
-    <div className="relative container mx-auto py-20">
-      {/* Navigation Buttons */}
-      <button
-        onClick={() => swiperRef.current?.slidePrev()}
-        className="absolute left-0 top-1/2 -translate-y-1/2 bg-primary text-white p-2 rounded-full z-10 shadow-md"
-      >
-        <ArrowBigLeft />
-      </button>
-      <button
-        onClick={() => swiperRef.current?.slideNext()}
-        className="absolute right-0 top-1/2 -translate-y-1/2 bg-primary text-white p-2 rounded-full z-10 shadow-md"
-      >
-        <ArrowBigRight />
-      </button>
+    <section className="py-24 bg-gradient-to-b from-background via-accent/20 to-background overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6">
+        {/* Section Header with Controls */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+          <div className="space-y-4 max-w-xl">
+            <Badge
+              variant="outline"
+              className="rounded-full px-4 py-1 text-primary border-primary/30 bg-primary/5 font-semibold uppercase tracking-wider text-[11px]"
+            >
+              Patient Testimonials
+            </Badge>
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
+              Loved by <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">Thousands</span>
+            </h2>
+            <p className="text-muted-foreground text-base leading-relaxed">
+              Read verified feedback from patients who experience compassionate, prompt, and secure digital healthcare on WellSpace.
+            </p>
+          </div>
 
-      <Swiper
-        onSwiper={(swiper) => (swiperRef.current = swiper)}
-        modules={[Navigation, Autoplay]}
-        slidesPerView={3}
-        spaceBetween={20}
-        loop={true}
-        autoplay={{ delay: 5000 }}
-        speed={600}
-        slidesPerGroup={1}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-        }}
-      >
-        {reviews.map((review) => (
-          <SwiperSlide key={review.id}>
-            <Card className="p-5 rounded-xl shadow-md bg-card h-full flex flex-col justify-between">
-              {/* Header */}
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center">
-                  <Avatar className="w-10 h-10">
-                    <AvatarImage src={review.avatarUrl} alt={review.name} />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <div className="ml-3">
-                    <p className="font-semibold text-md">{review.name}</p>
-                    <div className="flex text-yellow-400 ">
+          {/* Navigation Controls */}
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => swiperRef.current?.slidePrev()}
+              className="rounded-full h-11 w-11 border-border/70 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all cursor-pointer shadow-xs"
+              aria-label="Previous review"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => swiperRef.current?.slideNext()}
+              className="rounded-full h-11 w-11 border-border/70 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all cursor-pointer shadow-xs"
+              aria-label="Next review"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Reviews Slider */}
+        <Swiper
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          modules={[Navigation, Autoplay]}
+          slidesPerView={3}
+          spaceBetween={24}
+          loop={true}
+          autoplay={{ delay: 6000, disableOnInteraction: false }}
+          speed={600}
+          slidesPerGroup={1}
+          breakpoints={{
+            0: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
+          className="pb-4"
+        >
+          {reviews.map((review) => (
+            <SwiperSlide key={review.id} className="h-auto">
+              <Card className="h-full rounded-2xl border border-border/60 bg-card/80 backdrop-blur-md p-6 sm:p-7 flex flex-col justify-between hover:border-primary/40 hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-0 space-y-4">
+                  {/* Rating Stars & Quote Icon */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex text-amber-400 gap-0.5">
                       {Array.from({ length: review.rating }).map((_, idx) => (
-                        <Sparkles
-                          className="transform rotate-45"
-                          key={idx}
-                          size={20}
-                        />
+                        <Star key={idx} className="w-4 h-4 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
+                    <Quote className="h-6 w-6 text-primary/30" />
                   </div>
+
+                  {/* Review Text */}
+                  <p className="text-sm text-foreground/90 leading-relaxed italic">
+                    &ldquo;{review.text}&rdquo;
+                  </p>
+                </CardContent>
+
+                {/* Patient Author Info */}
+                <div className="pt-6 mt-4 border-t border-border/40 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Avatar className="w-10 h-10 border border-primary/20">
+                      <AvatarImage src={review.avatarUrl} alt={review.name} />
+                      <AvatarFallback className="text-xs bg-primary/10 text-primary font-bold">
+                        {review.name.slice(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <p className="font-bold text-sm text-foreground">{review.name}</p>
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                      </div>
+                      <p className="text-[11px] text-muted-foreground">{review.role}</p>
+                    </div>
+                  </div>
+                  <span className="text-[11px] text-muted-foreground/80 font-medium">
+                    {review.time}
+                  </span>
                 </div>
-                <span className="text-xs text-muted-foreground">
-                  {review.time}
-                </span>
-              </div>
-
-              {/* Review Text */}
-              <CardContent className="p-0">
-                <p className="text-sm text-muted-foreground mb-4">
-                  {review.text}
-                </p>
-              </CardContent>
-
-              {/* Platform */}
-              <div>
-                <span className="bg-primary inline-block p-1 rounded-full">
-                  <LucideLinkedin className="text-white" size={20} />
-                </span>
-              </div>
-            </Card>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+              </Card>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </section>
   );
 }

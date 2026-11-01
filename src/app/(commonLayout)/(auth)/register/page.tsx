@@ -1,5 +1,4 @@
 import RegisterForm from "@/components/modules/Auth/RegisterForm";
-
 import {
   Card,
   CardContent,
@@ -7,36 +6,39 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import { HeartHandshake } from "lucide-react";
+import { Stethoscope } from "lucide-react";
+import Link from "next/link";
 
 const RegisterPage = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary p-4">
-      <Card className="w-full max-w-md shadow-2xl">
+    <div className="relative min-h-[90vh] flex items-center justify-center p-4 bg-gradient-to-b from-background via-accent/20 to-background overflow-hidden">
+      {/* Ambient decorative glow */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+
+      <Card className="relative w-full max-w-md rounded-3xl border border-border/60 bg-card/85 backdrop-blur-xl shadow-2xl p-2 sm:p-4">
         <CardHeader className="text-center space-y-4">
-          <div className="flex items-center justify-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-              <HeartHandshake className="w-5 h-5 text-primary-foreground" />
+          <Link href="/" className="inline-flex items-center justify-center space-x-2.5 mx-auto group">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-primary to-cyan-500 text-primary-foreground shadow-md shadow-primary/25 transition-transform group-hover:scale-105">
+              <Stethoscope className="w-5 h-5" />
             </div>
-            <CardTitle className="text-3xl font-extrabold text-secondary">
+            <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent">
               WellSpace
-            </CardTitle>
-          </div>
-          <div>
-            <CardTitle className="text-xl">Create Your Account</CardTitle>
-            <CardDescription className="mt-1">
-              Join WellSpace and start your wellness journey today.
+            </span>
+          </Link>
+          <div className="space-y-1">
+            <CardTitle className="text-2xl font-bold tracking-tight text-foreground">Create Your Account</CardTitle>
+            <CardDescription className="text-sm text-muted-foreground">
+              Join WellSpace to access verified clinicians and telehealth tools
             </CardDescription>
           </div>
         </CardHeader>
 
         <CardContent>
-          {/* Register Form */}
           <RegisterForm />
         </CardContent>
       </Card>
     </div>
   );
 };
+
 export default RegisterPage;

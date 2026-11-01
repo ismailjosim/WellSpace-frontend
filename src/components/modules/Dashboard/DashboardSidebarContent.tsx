@@ -6,9 +6,8 @@ import { getIconComponent } from "@/lib/icon-mapper";
 import { cn } from "@/lib/utils";
 import { NavSection } from "@/types/dashboard.interface";
 import { UserInfo } from "@/types/user.interface";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import clsx from "clsx";
-import { Stethoscope } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Stethoscope, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -21,19 +20,26 @@ interface DashboardSidebarContentProps {
 const DashboardSidebarContent = ({
   userInfo,
   navItems,
+  dashboardHome,
 }: DashboardSidebarContentProps) => {
   const pathname = usePathname();
+
   return (
-    <div className="hidden md:flex h-full w-64 flex-col border-r bg-card">
-      {/* Logo/Brand */}
-      <div className="flex h-16 items-center border-b px-6">
-        <Link href={"/"} className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-            <Stethoscope className="w-4 h-4 text-primary-foreground" />
+    <div className="hidden md:flex h-full w-64 flex-col border-r border-border/60 bg-sidebar text-sidebar-foreground">
+      {/* Brand Header */}
+      <div className="flex h-16 items-center border-b border-border/60 px-5">
+        <Link href={dashboardHome || "/"} className="flex items-center space-x-2.5 group">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-cyan-500 text-primary-foreground shadow-sm shadow-primary/25 transition-transform group-hover:scale-105">
+            <Stethoscope className="w-4 h-4" />
           </div>
-          <span className={clsx("text-2xl font-extrabold text-secondary")}>
-            WellSpace
-          </span>
+          <div className="flex flex-col">
+            <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent">
+              WellSpace
+            </span>
+            <span className="text-[10px] font-semibold tracking-wider uppercase text-muted-foreground -mt-1">
+              Workspace
+            </span>
+          </div>
         </Link>
       </div>
 
@@ -43,7 +49,7 @@ const DashboardSidebarContent = ({
           {navItems.map((section, sectionIdx) => (
             <div key={sectionIdx}>
               {section.title && (
-                <h4 className="mb-2 px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                <h4 className="mb-2 px-3 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
                   {section.title}
                 </h4>
               )}
@@ -57,18 +63,18 @@ const DashboardSidebarContent = ({
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all",
+                        "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                         isActive
-                          ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                          ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20 font-semibold"
+                          : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                       )}
                     >
-                      <Icon className="h-4 w-4" />
-                      <span className="flex-1">{item.title}</span>
+                      <Icon className={cn("h-4 w-4 shrink-0", isActive ? "text-primary-foreground" : "text-muted-foreground")} />
+                      <span className="flex-1 truncate">{item.title}</span>
                       {item.badge && (
                         <Badge
                           variant={isActive ? "secondary" : "default"}
-                          className="ml-auto text-white "
+                          className={cn("ml-auto text-xs px-2 py-0.5", isActive ? "bg-white/20 text-white" : "bg-primary/10 text-primary")}
                         >
                           {item.badge}
                         </Badge>
@@ -78,7 +84,7 @@ const DashboardSidebarContent = ({
                 })}
               </div>
               {sectionIdx < navItems.length - 1 && (
-                <Separator className="my-4" />
+                <Separator className="my-4 opacity-50" />
               )}
             </div>
           ))}
@@ -86,18 +92,19 @@ const DashboardSidebarContent = ({
       </ScrollArea>
 
       {/* User Info at Bottom */}
-      <div className="border-t p-4">
-        <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-sm font-semibold text-primary">
-              {userInfo.name.charAt(0).toUpperCase()}
-            </span>
+      <div className="border-t border-border/60 p-4">
+        <div className="flex items-center gap-3 p-2 rounded-xl bg-accent/40 border border-border/40">
+          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-primary/20 to-cyan-500/20 text-primary flex items-center justify-center font-bold text-sm border border-primary/30">
+            {userInfo.name.charAt(0).toUpperCase()}
           </div>
-          <div className="flex-1 overflow-hidden">
-            <p className="text-sm font-medium truncate">{userInfo.name}</p>
-            <p className="text-xs text-muted-foreground capitalize">
-              {userInfo.role.toLowerCase()}
-            </p>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold text-foreground truncate">{userInfo.name}</p>
+            <div className="flex items-center gap-1 mt-0.5">
+              <ShieldCheck className="h-3 w-3 text-primary shrink-0" />
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider truncate">
+                {userInfo.role.toLowerCase()}
+              </p>
+            </div>
           </div>
         </div>
       </div>

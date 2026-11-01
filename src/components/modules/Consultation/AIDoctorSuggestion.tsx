@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Loader2, Sparkles, ArrowRight } from "lucide-react";
+import { Loader2, Sparkles, ArrowRight, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -52,41 +52,53 @@ export default function AIDoctorSuggestion() {
   };
 
   return (
-    <Card className="bg-linear-to-br from-primary/10 to-secondary/10 border-primary/20">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-primary" />
-          <CardTitle>AI Doctor Suggestion</CardTitle>
+    <Card className="rounded-3xl border border-primary/25 bg-gradient-to-br from-primary/5 via-card to-cyan-500/5 shadow-lg overflow-hidden">
+      <CardHeader className="pb-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div>
+              <CardTitle className="text-xl font-bold text-foreground">
+                AI Diagnostic Specialist Matcher
+              </CardTitle>
+              <CardDescription className="text-xs text-muted-foreground">
+                Describe your symptoms in plain language to get intelligent doctor recommendations
+              </CardDescription>
+            </div>
+          </div>
+          <Badge variant="outline" className="hidden sm:inline-flex rounded-full text-[11px] font-semibold text-primary border-primary/30 bg-primary/5">
+            MedMatch™ AI
+          </Badge>
         </div>
-        <CardDescription>
-          Describe your symptoms and get AI-powered doctor specialty
-          recommendations
-        </CardDescription>
       </CardHeader>
+
       <CardContent className="space-y-4">
-        <div>
+        <div className="space-y-1.5">
           <Textarea
-            placeholder="Describe your symptoms in detail (e.g., headache, fever, cough, etc.)..."
+            placeholder="e.g. sharp knee pain after jogging, accompanied by slight swelling and stiffness in mornings..."
             value={symptoms}
             onChange={(e) => setSymptoms(e.target.value)}
-            rows={4}
-            className="resize-none bg-background"
+            rows={3}
+            className="resize-none rounded-2xl border-border/80 bg-background/80 text-foreground placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
             disabled={isLoading}
           />
-          <p className="text-xs text-muted-foreground mt-1">
-            {symptoms.length} characters
-          </p>
+          <div className="flex justify-between items-center text-[11px] text-muted-foreground px-1">
+            <span>Minimum 5 characters for clinical relevance</span>
+            <span>{symptoms.length} characters</span>
+          </div>
         </div>
 
         <Button
           onClick={handleGetSuggestion}
           disabled={isLoading || symptoms.trim().length < 5}
-          className="w-full"
+          className="w-full rounded-xl py-5 font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm transition-all"
         >
           {isLoading ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Getting AI Suggestion...
+              Analyzing Symptoms...
             </>
           ) : (
             <>
@@ -97,19 +109,28 @@ export default function AIDoctorSuggestion() {
         </Button>
 
         {showSuggestion && suggestion && (
-          <div className="space-y-3 p-4 bg-background rounded-lg border">
-            <div className="flex items-center gap-2">
-              <Badge variant="outline" className="bg-primary/10 text-primary">
-                AI Recommendation
-              </Badge>
+          <div className="space-y-3.5 p-5 bg-card/90 rounded-2xl border border-primary/30 shadow-md">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="rounded-full bg-primary/10 text-primary border-primary/25 font-semibold text-xs">
+                  <ShieldCheck className="h-3 w-3 mr-1" />
+                  AI Clinical Insights
+                </Badge>
+              </div>
+              <span className="text-[11px] text-muted-foreground">High Confidence Match</span>
             </div>
-            <div className="space-y-3">
-              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                {suggestion.reasoning ||
-                  "Recommended doctors based on your symptoms."}
-              </p>
-              {suggestion.recommendedDoctors &&
-                suggestion.recommendedDoctors.length > 0 && (
+
+            <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed bg-accent/30 p-3.5 rounded-xl border border-border/40">
+              {suggestion.reasoning ||
+                "Based on the reported symptoms, these specialized doctors match your care requirements."}
+            </p>
+
+            {suggestion.recommendedDoctors &&
+              suggestion.recommendedDoctors.length > 0 && (
+                <div className="space-y-2 pt-1">
+                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                    Recommended Specialists:
+                  </p>
                   <div className="grid gap-2">
                     {suggestion.recommendedDoctors.slice(0, 3).map((doctor) => (
                       <div
@@ -123,24 +144,27 @@ export default function AIDoctorSuggestion() {
                             );
                           }
                         }}
-                        className="rounded-md border bg-card p-3 flex items-center justify-between cursor-pointer hover:border-primary/50 transition"
+                        className="rounded-xl border border-border/70 bg-card p-3 flex items-center justify-between cursor-pointer hover:border-primary/50 hover:bg-primary/5 hover:shadow-xs transition-all group"
                       >
-                        <div>
-                          <p className="font-medium">
+                        <div className="space-y-0.5">
+                          <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">
                             {doctor.name || "Doctor"}
                           </p>
                           <p className="text-xs text-muted-foreground">
                             {doctor.designation ||
                               doctor.qualification ||
-                              "Specialist"}
+                              "Medical Specialist"}
                           </p>
                         </div>
-                        <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                        <div className="flex items-center gap-1.5 text-xs font-semibold text-primary">
+                          <span>View Profile</span>
+                          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                        </div>
                       </div>
                     ))}
                   </div>
-                )}
-            </div>
+                </div>
+              )}
           </div>
         )}
       </CardContent>

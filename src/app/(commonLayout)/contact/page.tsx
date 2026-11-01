@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -11,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 
 export default function ContactPage() {
@@ -32,72 +33,86 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12 space-y-12 max-w-5xl">
-      <div className="text-center space-y-3">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-          Contact WellSpace Support
+    <div className="container mx-auto px-4 sm:px-6 py-16 space-y-12 max-w-5xl">
+      <div className="text-center space-y-4">
+        <Badge
+          variant="outline"
+          className="rounded-full px-4 py-1 text-primary border-primary/30 bg-primary/5 font-semibold uppercase tracking-wider text-[11px]"
+        >
+          <MessageSquare className="w-3 h-3 mr-1" />
+          24/7 Support Desk
+        </Badge>
+        <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
+          Contact <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">WellSpace</span> Support
         </h1>
-        <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-          Have a question about appointment bookings, doctor onboarding, or
-          telehealth services? We are here to assist you 24/7.
+        <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto">
+          Have a question about appointment bookings, doctor onboarding, or telehealth services? Our clinical coordinators are here to assist you.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Contact Info Cards */}
         <div className="space-y-4">
-          <Card>
-            <CardContent className="pt-6 flex items-start gap-3">
-              <Phone className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+          <Card className="rounded-2xl border border-border/60 bg-card hover:border-primary/40 transition-all">
+            <CardContent className="pt-6 flex items-start gap-3.5">
+              <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20 shrink-0">
+                <Phone className="h-5 w-5" />
+              </div>
               <div>
-                <p className="font-semibold text-sm">Emergency & Helpline</p>
+                <p className="font-bold text-sm text-foreground">Emergency & Helpline</p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   +880 1700-000000
                 </p>
-                <p className="text-[11px] text-muted-foreground">
+                <span className="inline-block mt-1 text-[10px] font-semibold text-emerald-500 uppercase tracking-wider">
                   Toll-free 24/7
-                </p>
+                </span>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="pt-6 flex items-start gap-3">
-              <Mail className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+          <Card className="rounded-2xl border border-border/60 bg-card hover:border-primary/40 transition-all">
+            <CardContent className="pt-6 flex items-start gap-3.5">
+              <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20 shrink-0">
+                <Mail className="h-5 w-5" />
+              </div>
               <div>
-                <p className="font-semibold text-sm">Email Inquiries</p>
+                <p className="font-bold text-sm text-foreground">Email Support</p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   support@wellspace.health
                 </p>
-                <p className="text-[11px] text-muted-foreground">
-                  Typical response within 2 hours
-                </p>
+                <span className="inline-block mt-1 text-[10px] text-muted-foreground">
+                  Response within 2 hours
+                </span>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="pt-6 flex items-start gap-3">
-              <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+          <Card className="rounded-2xl border border-border/60 bg-card hover:border-primary/40 transition-all">
+            <CardContent className="pt-6 flex items-start gap-3.5">
+              <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20 shrink-0">
+                <MapPin className="h-5 w-5" />
+              </div>
               <div>
-                <p className="font-semibold text-sm">Headquarters</p>
-                <p className="text-xs text-muted-foreground mt-0.5">
+                <p className="font-bold text-sm text-foreground">Global Operations</p>
+                <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
                   WellSpace Health Tower, Gulshan-2, Dhaka, Bangladesh
                 </p>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="pt-6 flex items-start gap-3">
-              <Clock className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+          <Card className="rounded-2xl border border-border/60 bg-card hover:border-primary/40 transition-all">
+            <CardContent className="pt-6 flex items-start gap-3.5">
+              <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20 shrink-0">
+                <Clock className="h-5 w-5" />
+              </div>
               <div>
-                <p className="font-semibold text-sm">Operational Hours</p>
+                <p className="font-bold text-sm text-foreground">Operating Schedule</p>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Virtual Consultations: 24/7
+                  Telehealth Consults: 24/7
                 </p>
                 <p className="text-[11px] text-muted-foreground">
-                  Support Desk: Monday - Saturday (8:00 AM - 10:00 PM)
+                  Support Desk: Mon - Sat (8 AM - 10 PM)
                 </p>
               </div>
             </CardContent>
@@ -105,28 +120,30 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form */}
-        <Card className="md:col-span-2">
+        <Card className="md:col-span-2 rounded-3xl border border-border/60 bg-card shadow-lg p-2 sm:p-4">
           <CardHeader>
-            <CardTitle>Send Us a Message</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-xl font-bold text-foreground">Send Us a Direct Message</CardTitle>
+            <CardDescription className="text-xs text-muted-foreground">
               Fill out the form below and an agent will follow up promptly.
             </CardDescription>
           </CardHeader>
           <CardContent>
             {submitted ? (
               <div className="text-center py-12 space-y-4">
-                <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto" />
-                <h3 className="text-lg font-semibold">
+                <div className="w-14 h-14 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto border border-emerald-500/20">
+                  <CheckCircle2 className="h-8 w-8" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground">
                   Message Delivered Successfully
                 </h3>
-                <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                  Our clinical care coordinator has received your message and
-                  will contact you via email shortly.
+                <p className="text-xs text-muted-foreground max-w-md mx-auto leading-relaxed">
+                  Our clinical care coordinator has received your message and will contact you via email shortly.
                 </p>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setSubmitted(false)}
+                  className="rounded-full px-5"
                 >
                   Send Another Message
                 </Button>
@@ -135,44 +152,46 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium">Your Name</label>
-                    <Input required placeholder="John Doe" />
+                    <label className="text-xs font-semibold text-foreground">Your Name</label>
+                    <Input required placeholder="John Doe" className="rounded-xl h-11" />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium">Email Address</label>
+                    <label className="text-xs font-semibold text-foreground">Email Address</label>
                     <Input
                       required
                       type="email"
                       placeholder="john@example.com"
+                      className="rounded-xl h-11"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium">Subject</label>
+                  <label className="text-xs font-semibold text-foreground">Subject</label>
                   <Input
                     required
                     placeholder="Appointment inquiry, feedback, or technical help"
+                    className="rounded-xl h-11"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium">Message</label>
+                  <label className="text-xs font-semibold text-foreground">Message</label>
                   <Textarea
                     required
                     rows={5}
                     placeholder="Provide details about how we can help you..."
-                    className="resize-none"
+                    className="resize-none rounded-2xl"
                   />
                 </div>
 
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto"
+                  className="rounded-xl px-7 py-5 font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm transition-all"
                 >
                   {isSubmitting ? (
-                    "Sending..."
+                    "Sending Message..."
                   ) : (
                     <>
                       <Send className="mr-2 h-4 w-4" />

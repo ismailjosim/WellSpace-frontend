@@ -4,62 +4,71 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.975 0.007 259.03);
-  --foreground: oklch(0.145 0 0);
-  --card: var(--background);
-  --card-foreground: var(--foreground);
-  --popover: var(--background);
-  --popover-foreground: var(--foreground);
-  --primary: oklch(0.612 0.169 154.51);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.264 0.125 277.63);
-  --secondary-foreground: oklab(37.907000000000004% -0.01073 -0.1374);
-  --primary-dark: oklch(0.537 0.147 154.51);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --sidebar: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(240 5.3% 26.1%);
-  --sidebar-primary: hsl(240 5.9% 10%);
-  --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(240 4.8% 95.9%);
-  --sidebar-accent-foreground: hsl(240 5.9% 10%);
-  --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  /* 2026 Modern Health-Tech Design System (Vitality Azure & Clean Slate) */
+  --background: oklch(0.985 0.005 230);
+  --foreground: oklch(0.18 0.03 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.03 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.03 250);
+  --primary: oklch(0.56 0.175 198);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.24 0.045 250);
+  --secondary-foreground: oklch(0.98 0 0);
+  --primary-dark: oklch(0.48 0.185 198);
+  --muted: oklch(0.96 0.008 230);
+  --muted-foreground: oklch(0.50 0.03 245);
+  --accent: oklch(0.95 0.02 198);
+  --accent-foreground: oklch(0.22 0.08 198);
+  --border: oklch(0.915 0.01 230);
+  --input: oklch(0.915 0.01 230);
+  --ring: oklch(0.56 0.175 198);
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  /* Sidebar Tokens Harmonized with Vitality Theme */
+  --sidebar: oklch(0.99 0.004 230);
+  --sidebar-foreground: oklch(0.24 0.045 250);
+  --sidebar-primary: oklch(0.56 0.175 198);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.95 0.015 198);
+  --sidebar-accent-foreground: oklch(0.22 0.08 198);
+  --sidebar-border: oklch(0.92 0.01 230);
+  --sidebar-ring: oklch(0.56 0.175 198);
 }
 
 .dark {
-  --background: oklch(0.16 0.005 259.03);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: var(--foreground);
-  --popover: var(--card);
-  --popover-foreground: var(--foreground);
-  --primary: oklch(0.812 0.12 154.51);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.66 0.08 277.63);
-  --secondary-foreground: var(--foreground);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --sidebar: hsl(240 5.9% 10%);
-  --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-primary: hsl(224.3 76.3% 48%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 3.7% 15.9%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-border: hsl(240 3.7% 15.9%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  /* 2026 Deep Obsidian Slate with Luminous Cyan Accents */
+  --background: oklch(0.13 0.018 245);
+  --foreground: oklch(0.97 0.008 230);
+  --card: oklch(0.17 0.022 245);
+  --card-foreground: oklch(0.97 0.008 230);
+  --popover: oklch(0.17 0.022 245);
+  --popover-foreground: oklch(0.97 0.008 230);
+  --primary: oklch(0.72 0.16 195);
+  --primary-foreground: oklch(0.12 0.02 245);
+  --secondary: oklch(0.28 0.04 245);
+  --secondary-foreground: oklch(0.97 0.008 230);
+  --primary-dark: oklch(0.62 0.17 195);
+  --muted: oklch(0.21 0.025 245);
+  --muted-foreground: oklch(0.68 0.02 230);
+  --accent: oklch(0.22 0.035 198);
+  --accent-foreground: oklch(0.85 0.12 195);
+  --border: oklch(0.25 0.025 245 / 75%);
+  --input: oklch(0.25 0.025 245 / 75%);
+  --ring: oklch(0.72 0.16 195);
+  --destructive: oklch(0.65 0.20 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  /* Dark Sidebar Tokens */
+  --sidebar: oklch(0.145 0.02 245);
+  --sidebar-foreground: oklch(0.95 0.01 230);
+  --sidebar-primary: oklch(0.72 0.16 195);
+  --sidebar-primary-foreground: oklch(0.12 0.02 245);
+  --sidebar-accent: oklch(0.20 0.025 245);
+  --sidebar-accent-foreground: oklch(0.95 0.01 230);
+  --sidebar-border: oklch(0.24 0.025 245 / 70%);
+  --sidebar-ring: oklch(0.72 0.16 195);
 }
 
 @theme inline {
@@ -81,6 +90,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-primary-dark: var(--primary-dark);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -98,8 +108,33 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground selection:bg-primary/20 selection:text-primary min-h-screen antialiased;
   }
+}
+
+/* 2026 Modern Health-Tech Glassmorphism & UI Accents */
+.glass-panel {
+  background: color-mix(in oklch, var(--card) 85%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid color-mix(in oklch, var(--border) 70%, transparent);
+}
+
+.glass-nav {
+  background: color-mix(in oklch, var(--background) 82%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid color-mix(in oklch, var(--border) 60%, transparent);
+}
+
+.gradient-vitality-text {
+  background: linear-gradient(135deg, var(--primary) 0%, oklch(0.68 0.16 220) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-teal {
+  box-shadow: 0 0 25px -5px color-mix(in oklch, var(--primary) 35%, transparent);
 }
 
 @media print {
