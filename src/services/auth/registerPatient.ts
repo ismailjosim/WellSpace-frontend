@@ -9,6 +9,7 @@ import { setCookie } from "./tokenHandlers";
 import { serverFetch } from "../../lib/server-fetch";
 import { zodValidator } from "../../lib/zodValidator";
 import { responseTemplate } from "../../lib/responseTemplate";
+import { sanitizeErrorMessage } from "@/lib/normalizeServerError";
 
 export const registerUser = async (
   _currentState: any,
@@ -60,7 +61,7 @@ export const registerUser = async (
       return responseTemplate({
         success: false,
         type: "server",
-        message: result.message,
+        message: sanitizeErrorMessage(result.message),
         code: result.error?.cause || null,
       });
     }

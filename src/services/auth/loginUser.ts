@@ -12,6 +12,7 @@ import {
 import { loginValidationSchema } from "@/schema/authSchema";
 import { serverFetch } from "@/lib/server-fetch";
 import { redirect } from "next/navigation";
+import { sanitizeErrorMessage } from "@/lib/normalizeServerError";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -69,7 +70,9 @@ export const loginUser = async (
         ...responseTemplate,
         success: false,
         type: "server",
-        message: result.message || "Login failed. Please try again.",
+        message: sanitizeErrorMessage(
+          result.message || "Invalid credentials or service temporarily unavailable."
+        ),
         code: result.error?.cause || null,
       };
     }
