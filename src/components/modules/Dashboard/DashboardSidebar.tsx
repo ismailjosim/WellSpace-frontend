@@ -4,7 +4,7 @@ import { UserInfo } from "@/types/user.interface";
 import { getDefaultDashboardRoutes } from "../../../lib/auth-utils";
 
 import DashboardSidebarContent from "./DashboardSidebarContent";
-import { getNavItemsByRole } from "@/lib/navItems.config";
+import { getNavItemsByRole } from "@/lib/navitems.config";
 
 const DashboardSidebar = async () => {
   const userInfo = (await getUserInfo()) as UserInfo;

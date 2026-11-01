@@ -3,7 +3,7 @@ import DashboardNavbarContent from "./DashboardNavbarContent";
 
 import { getDefaultDashboardRoutes } from "@/lib/auth-utils";
 import { UserInfo } from "@/types/user.interface";
-import { getNavItemsByRole } from "@/lib/navItems.config";
+import { getNavItemsByRole } from "@/lib/navitems.config";
 
 const DashboardNav = async () => {
   const userInfo = (await getUserInfo()) as UserInfo;
