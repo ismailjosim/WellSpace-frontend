@@ -62,10 +62,11 @@ export const getRouteOwner = (
   }
   return null;
 };
-export const getDefaultDashboardRoutes = (role: UserRole) => {
-  switch (role) {
+export const getDefaultDashboardRoutes = (role: UserRole | string) => {
+  const normalized = (role || "").toString().toUpperCase();
+  switch (normalized) {
     case "SUPER_ADMIN":
-      return "/admin/dashboard";
+    case "SUPERADMIN":
     case "ADMIN":
       return "/admin/dashboard";
     case "DOCTOR":
@@ -78,7 +79,7 @@ export const getDefaultDashboardRoutes = (role: UserRole) => {
 };
 export const isValidRedirectForRole = (
   redirectPath: string,
-  role: UserRole,
+  role: UserRole | string,
 ): boolean => {
   const routeOwner = getRouteOwner(redirectPath);
 
@@ -86,11 +87,15 @@ export const isValidRedirectForRole = (
     return true;
   }
 
-  if (routeOwner === "ADMIN" && (role === "ADMIN" || role === "SUPER_ADMIN")) {
+  const normalized = (role || "").toString().toUpperCase();
+  if (
+    routeOwner === "ADMIN" &&
+    (normalized === "ADMIN" || normalized === "SUPER_ADMIN" || normalized === "SUPERADMIN")
+  ) {
     return true;
   }
 
-  if (routeOwner === role) {
+  if (routeOwner === normalized) {
     return true;
   }
 
