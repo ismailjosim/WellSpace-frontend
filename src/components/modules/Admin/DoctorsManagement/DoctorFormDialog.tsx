@@ -53,7 +53,7 @@ const DoctorFormDialog = ({
     isEdit ? updateDoctor.bind(null, doctor.id!) : createDoctor,
     null,
   );
-  const prevStateRef = useRef<any>(null);
+  const prevStateRef = useRef<unknown>(null);
 
   const specialtySelection = useSpecialtySelection({
     doctor,
@@ -131,7 +131,9 @@ const DoctorFormDialog = ({
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
                     >
                       {showPassword ? (
                         <EyeOff className="h-4 w-4" />
@@ -157,9 +159,13 @@ const DoctorFormDialog = ({
                     />
                     <button
                       type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                      aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                      aria-label={
+                        showConfirmPassword ? "Hide password" : "Show password"
+                      }
                     >
                       {showConfirmPassword ? (
                         <EyeOff className="h-4 w-4" />
