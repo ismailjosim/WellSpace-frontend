@@ -1,10 +1,14 @@
-export function getInitials(name: string): string {
-  return name
-    .split(" ")
+export function getInitials(name?: string | null): string {
+  if (!name || typeof name !== "string") return "U";
+  const initials = name
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
     .map((n) => n[0])
     .join("")
     .toUpperCase()
     .slice(0, 2);
+  return initials || "U";
 }
 
 export function formatDateTime(date: string | Date): string {

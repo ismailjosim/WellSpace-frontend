@@ -24,23 +24,23 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
   const [success, setSuccess] = useState<string | null>(null);
 
   const getProfilePhoto = () => {
-    if (userInfo.role === "ADMIN" || userInfo.role === "SUPER_ADMIN") {
+    if (userInfo?.role === "ADMIN" || userInfo?.role === "SUPER_ADMIN") {
       return userInfo?.admin?.profilePhoto;
-    } else if (userInfo.role === "DOCTOR") {
-      return userInfo.doctor?.profilePhoto;
-    } else if (userInfo.role === "PATIENT") {
-      return userInfo.patient?.profilePhoto;
+    } else if (userInfo?.role === "DOCTOR") {
+      return userInfo?.doctor?.profilePhoto;
+    } else if (userInfo?.role === "PATIENT") {
+      return userInfo?.patient?.profilePhoto;
     }
     return null;
   };
 
   const getProfileData = () => {
-    if (userInfo.role === "ADMIN" || userInfo.role === "SUPER_ADMIN") {
-      return userInfo.admin;
-    } else if (userInfo.role === "DOCTOR") {
-      return userInfo.doctor;
-    } else if (userInfo.role === "PATIENT") {
-      return userInfo.patient;
+    if (userInfo?.role === "ADMIN" || userInfo?.role === "SUPER_ADMIN") {
+      return userInfo?.admin;
+    } else if (userInfo?.role === "DOCTOR") {
+      return userInfo?.doctor;
+    } else if (userInfo?.role === "PATIENT") {
+      return userInfo?.patient;
     }
     return null;
   };
@@ -101,11 +101,11 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                   {previewImage || profilePhoto ? (
                     <AvatarImage
                       src={previewImage || (profilePhoto as string)}
-                      alt={userInfo.name}
+                      alt={userInfo?.name || "User"}
                     />
                   ) : (
                     <AvatarFallback className="text-3xl">
-                      {getInitials(userInfo.name)}
+                      {getInitials(userInfo?.name)}
                     </AvatarFallback>
                   )}
                 </Avatar>
@@ -127,12 +127,12 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
               </div>
 
               <div className="text-center">
-                <p className="font-semibold text-lg">{userInfo.name}</p>
+                <p className="font-semibold text-lg">{userInfo?.name || "User"}</p>
                 <p className="text-sm text-muted-foreground">
-                  {userInfo.email}
+                  {userInfo?.email || ""}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1 capitalize">
-                  {userInfo.role.replace("_", " ")}
+                  {(userInfo?.role || "PATIENT").replace("_", " ")}
                 </p>
               </div>
             </CardContent>

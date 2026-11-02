@@ -99,7 +99,7 @@ export default async function PatientDashboardPage() {
               Securely upload and manage diagnostic lab reports and medical
               imaging.
             </p>
-            <Link href="/dashboard/my-reports" className="block">
+            <Link href="/dashboard/health-records" className="block">
               <Button size="sm" variant="outline" className="w-full text-xs">
                 Medical Records
               </Button>

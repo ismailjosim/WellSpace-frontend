@@ -50,7 +50,19 @@ export async function updateMyProfile(formData: FormData) {
 
     const result = await response.json();
 
-    revalidateTag("user-info", { expire: 0 });
+    if (!response.ok || !result.success) {
+      return {
+        success: false,
+        message: result?.message || "Failed to update profile",
+      };
+    }
+
+    try {
+      (revalidateTag as any)("user-info", { expire: 0 });
+    } catch {
+      // ignore
+    }
+
     return result;
   } catch (error: any) {
     console.log(error);

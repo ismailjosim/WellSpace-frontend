@@ -1,5 +1,15 @@
-const MyProfilePage = () => {
-  return <div>My Profile Page</div>;
+import MyProfile from "@/components/modules/MyProfile/MyProfile";
+import { getUserInfo } from "@/services/auth/getUserInfo";
+import { redirect } from "next/navigation";
+
+const AdminMyProfilePage = async () => {
+  const userInfo = await getUserInfo();
+
+  if (!userInfo || !userInfo.email) {
+    redirect("/login");
+  }
+
+  return <MyProfile userInfo={userInfo} />;
 };
 
-export default MyProfilePage;
+export default AdminMyProfilePage;
