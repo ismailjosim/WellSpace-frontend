@@ -20,10 +20,12 @@ import {
   resetPasswordSchema,
 } from "../../schema/authSchema";
 import { verifyAccessToken } from "../../lib/JWTHandlers";
+import { normalizeFormData } from "@/lib/formDataHelper";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export async function updateMyProfile(formData: FormData) {
+export async function updateMyProfile(rawFormData: FormData) {
   try {
+    const formData = normalizeFormData(rawFormData);
     // Create a new FormData with the data property
     const uploadFormData = new FormData();
 

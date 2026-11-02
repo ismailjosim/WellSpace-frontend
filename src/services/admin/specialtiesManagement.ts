@@ -2,14 +2,16 @@
 import z from "zod";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
+import { normalizeFormData } from "@/lib/formDataHelper";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const createSpecialtyValidationSchema = z.object({
   title: z.string().min(3, "title must be at least 3 characters long"),
 });
 
-export async function createSpecialty(_prevState: any, formData: FormData) {
+export async function createSpecialty(_prevState: any, rawFormData: FormData) {
   try {
+    const formData = normalizeFormData(rawFormData);
     const payload = {
       title: formData.get("title") as string,
     };
@@ -28,8 +30,9 @@ export async function createSpecialty(_prevState: any, formData: FormData) {
     const newFormData = new FormData();
     newFormData.append("data", JSON.stringify(validatedPayload));
 
-    if (formData.get("file")) {
-      newFormData.append("file", formData.get("file") as Blob);
+    const file = formData.get("file");
+    if (file && typeof file === "object" && "size" in file && (file as Blob).size > 0) {
+      newFormData.append("file", file as Blob);
     }
 
     const res = await serverFetch.post("/specialties", {
@@ -49,8 +52,9 @@ export async function createSpecialty(_prevState: any, formData: FormData) {
   }
 }
 
-export async function updateSpecialty(id: string, _prevState: any, formData: FormData) {
+export async function updateSpecialty(id: string, _prevState: any, rawFormData: FormData) {
   try {
+    const formData = normalizeFormData(rawFormData);
     const title = formData.get("title") as string;
     const newFormData = new FormData();
 

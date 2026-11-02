@@ -3,6 +3,7 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
+import { normalizeFormData } from "@/lib/formDataHelper";
 import { updatePatientZodSchema } from "../../schema/patient.validation";
 
 // ======================================================
@@ -55,8 +56,9 @@ export async function getPatientById(id: string) {
 export async function updatePatient(
   id: string,
   _prevState: any,
-  formData: FormData,
+  rawFormData: FormData,
 ) {
+  const formData = normalizeFormData(rawFormData);
   const payload = {
     name: formData.get("name") as string,
     contactNumber: formData.get("contactNumber") as string,

@@ -3,6 +3,7 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
+import { normalizeFormData } from "@/lib/formDataHelper";
 import { IDoctor } from "@/types/doctor.interface";
 import {
   createDoctorZodSchema,
@@ -12,8 +13,9 @@ import {
 // ======================================================
 //* CREATE DOCTOR
 // ======================================================
-export async function createDoctor(_prevState: any, formData: FormData) {
+export async function createDoctor(_prevState: any, rawFormData: FormData) {
   try {
+    const formData = normalizeFormData(rawFormData);
     const specialtiesString = formData.get("specialties") as string;
     const specialties: string[] = [];
 
@@ -152,9 +154,10 @@ export async function getDoctorById(id: string): Promise<any> {
 export async function updateDoctor(
   id: string,
   _prevState: any,
-  formData: FormData,
+  rawFormData: FormData,
 ) {
   try {
+    const formData = normalizeFormData(rawFormData);
     const payload: Partial<IDoctor> = {
       name: formData.get("name") as string,
       contactNumber: formData.get("contactNumber") as string,

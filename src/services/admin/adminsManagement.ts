@@ -3,6 +3,7 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
+import { normalizeFormData } from "@/lib/formDataHelper";
 import {
   createAdminZodSchema,
   updateAdminZodSchema,
@@ -11,8 +12,9 @@ import {
 // ======================================================
 //* CREATE ADMIN
 // ======================================================
-export async function createAdmin(_prevState: any, formData: FormData) {
+export async function createAdmin(_prevState: any, rawFormData: FormData) {
   try {
+    const formData = normalizeFormData(rawFormData);
     const payload = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
@@ -109,9 +111,10 @@ export async function getAdminById(id: string) {
 export async function updateAdmin(
   id: string,
   _prevState: any,
-  formData: FormData,
+  rawFormData: FormData,
 ) {
   try {
+    const formData = normalizeFormData(rawFormData);
     const payload = {
       name: formData.get("name") as string,
       contactNumber: formData.get("contactNumber") as string,
