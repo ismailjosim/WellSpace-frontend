@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 
 interface DoctorSearchFiltersProps {
@@ -31,9 +31,12 @@ export default function DoctorSearchFilters({
   const [searchTerm, setSearchTerm] = useState(urlSearchTerm);
   const [prevUrlSearchTerm, setPrevUrlSearchTerm] = useState(urlSearchTerm);
 
+  const isUserTypingRef = useRef(false);
+
   if (urlSearchTerm !== prevUrlSearchTerm) {
     setPrevUrlSearchTerm(urlSearchTerm);
     setSearchTerm(urlSearchTerm);
+    isUserTypingRef.current = false;
   }
 
   const [minFee, setMinFee] = useState(urlMinFee);
@@ -76,6 +79,8 @@ export default function DoctorSearchFilters({
   );
 
   useEffect(() => {
+    if (!isUserTypingRef.current) return;
+    isUserTypingRef.current = false;
     if (debouncedSearch !== urlSearchTerm) {
       updateFilters({ searchTerm: debouncedSearch });
     }
@@ -95,6 +100,7 @@ export default function DoctorSearchFilters({
   };
 
   const handleClearFilters = () => {
+    isUserTypingRef.current = false;
     setSearchTerm("");
     setMinFee("");
     setMaxFee("");
@@ -122,7 +128,10 @@ export default function DoctorSearchFilters({
           <Input
             placeholder="Search doctors by name, qualification, or hospital..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              isUserTypingRef.current = true;
+              setSearchTerm(e.target.value);
+            }}
             className="pl-10"
           />
         </div>

@@ -2,7 +2,7 @@
 
 import { Search, X } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { Input } from "../ui/input";
 import { useDebounce } from "../hooks/useDebounce";
 
@@ -23,27 +23,34 @@ const SearchFilter = ({
 
   const [value, setValue] = useState(urlParamValue);
   const [prevUrlValue, setPrevUrlValue] = useState(urlParamValue);
+  const isUserTypingRef = useRef(false);
 
   // Synchronize internal state when URL search param changes externally (e.g. Clear Filters)
-  // Recommended React pattern: update during render instead of inside an effect to prevent cascading renders
   if (urlParamValue !== prevUrlValue) {
     setPrevUrlValue(urlParamValue);
     setValue(urlParamValue);
+    isUserTypingRef.current = false;
   }
 
-  const debouncedValue = useDebounce(value, 500);
+  const debouncedValue = useDebounce(value, 400);
 
-  // Push to URL only when debouncedValue differs from what is in the URL
+  // Push to URL ONLY when the change originated from the user typing in this input
   useEffect(() => {
+    if (!isUserTypingRef.current) {
+      return;
+    }
+
+    isUserTypingRef.current = false;
+
     if (debouncedValue === urlParamValue) {
       return;
     }
 
     const params = new URLSearchParams(searchParams.toString());
 
-    if (debouncedValue) {
-      params.set(paramName, debouncedValue);
-      params.set("page", "1");
+    if (debouncedValue.trim()) {
+      params.set(paramName, debouncedValue.trim());
+      params.delete("page");
     } else {
       params.delete(paramName);
       params.delete("page");
@@ -55,7 +62,13 @@ const SearchFilter = ({
     });
   }, [debouncedValue, paramName, router, searchParams, urlParamValue, pathname]);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    isUserTypingRef.current = true;
+    setValue(e.target.value);
+  };
+
   const handleClearSingle = () => {
+    isUserTypingRef.current = false;
     setValue("");
     const params = new URLSearchParams(searchParams.toString());
     params.delete(paramName);
@@ -73,7 +86,7 @@ const SearchFilter = ({
         placeholder={placeholder}
         className="pl-10 pr-8"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={handleInputChange}
         disabled={isPending}
       />
       {value && (
