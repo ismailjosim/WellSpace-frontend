@@ -5,7 +5,7 @@ export interface IInputErrorState {
 
 export const getInputFieldError = (
   fieldName: string,
-  state: IInputErrorState,
+  state: IInputErrorState | null | undefined,
 ) => {
   if (state && state.errors) {
     const error = state.errors.find((err) => err.field === fieldName);
