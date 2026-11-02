@@ -19,8 +19,10 @@ const DoctorsManagementPage = async ({
 
   const specialties = await getSpecialties();
 
-  // calculate pagination
-  const totalPages = Math.ceil(doctors?.meta?.total / doctors?.meta?.limit);
+  // calculate pagination safely
+  const total = Number(doctors?.meta?.total ?? 0);
+  const limit = Number(doctors?.meta?.limit ?? 10) || 10;
+  const totalPages = Math.max(1, Math.ceil(total / limit));
 
   return (
     <div className="space-y-6">
@@ -28,11 +30,11 @@ const DoctorsManagementPage = async ({
       <DoctorFilters specialties={specialties?.data || []} />
       <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
         <DoctorsTable
-          doctors={doctors?.data || []}
+          doctors={Array.isArray(doctors?.data) ? doctors.data : []}
           specialties={specialties?.data || []}
         />
         <TablePagination
-          currentPage={doctors?.meta?.page}
+          currentPage={Number(doctors?.meta?.page ?? 1) || 1}
           totalPages={totalPages}
         />
       </Suspense>

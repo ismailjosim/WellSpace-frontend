@@ -138,13 +138,13 @@ const DoctorViewDetailDialog = ({
                 >
                   {doctor?.isDeleted ? "Inactive" : "Active"}
                 </Badge>
-                {doctor?.averageRating !== undefined && (
+                {doctor?.averageRating !== undefined && doctor?.averageRating !== null && (
                   <Badge
                     variant="default"
                     className="text-sm bg-accent-foreground"
                   >
                     <Star className="h-3 w-3 mr-1 fill-yellow-400 text-yellow-400" />
-                    {doctor.averageRating.toFixed(1)} Rating
+                    {Number(doctor.averageRating ?? 0).toFixed(1)} Rating
                   </Badge>
                 )}
               </div>

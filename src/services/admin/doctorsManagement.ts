@@ -28,6 +28,17 @@ export async function createDoctor(_prevState: any, formData: FormData) {
       }
     }
 
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+
+    if (confirmPassword && password !== confirmPassword) {
+      return {
+        success: false,
+        message: "Passwords do not match",
+        errors: [{ field: "confirmPassword", message: "Passwords do not match" }],
+      };
+    }
+
     const payload: IDoctor = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
@@ -40,7 +51,7 @@ export async function createDoctor(_prevState: any, formData: FormData) {
       qualification: formData.get("qualification") as string,
       currentWorkingPlace: formData.get("currentWorkingPlace") as string,
       designation: formData.get("designation") as string,
-      password: formData.get("password") as string,
+      password: password,
       specialties: specialties,
     };
 
@@ -71,8 +82,9 @@ export async function createDoctor(_prevState: any, formData: FormData) {
     const newFormData = new FormData();
     newFormData.append("data", JSON.stringify(finalPayload));
 
-    if (formData.get("file")) {
-      newFormData.append("file", formData.get("file") as Blob);
+    const file = formData.get("file");
+    if (file && typeof file === "object" && "size" in file && (file as Blob).size > 0) {
+      newFormData.append("file", file as Blob);
     }
 
     const res = await serverFetch.post("/user/create-doctor", {

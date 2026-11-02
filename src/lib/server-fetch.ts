@@ -15,7 +15,6 @@ const serverFetchHelper = async (
   options: RequestInit,
 ): Promise<Response> => {
   const { headers, ...restOptions } = options;
-  const accessToken = await getCookie("accessToken");
 
   if (!BACKEND_API_URL) {
     throw new Error("BACKEND_API_URL is not configured");
@@ -24,6 +23,8 @@ const serverFetchHelper = async (
   if (!AUTH_REFRESH_EXCLUDED_ENDPOINTS.includes(endpoint)) {
     await getNewAccessToken();
   }
+
+  const accessToken = await getCookie("accessToken");
 
   const isFormData = typeof FormData !== "undefined" && options.body instanceof FormData;
 

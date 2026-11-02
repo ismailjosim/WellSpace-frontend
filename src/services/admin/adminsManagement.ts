@@ -40,8 +40,9 @@ export async function createAdmin(_prevState: any, formData: FormData) {
     const newFormData = new FormData();
     newFormData.append("data", JSON.stringify(finalPayload));
 
-    if (formData.get("file")) {
-      newFormData.append("file", formData.get("file") as Blob);
+    const file = formData.get("file");
+    if (file && typeof file === "object" && "size" in file && (file as Blob).size > 0) {
+      newFormData.append("file", file as Blob);
     }
 
     const res = await serverFetch.post("/user/create-admin", {

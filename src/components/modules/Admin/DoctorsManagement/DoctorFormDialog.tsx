@@ -53,7 +53,7 @@ const DoctorFormDialog = ({
     isEdit ? updateDoctor.bind(null, doctor.id!) : createDoctor,
     null,
   );
-  const hasNotifiedRef = useRef(false);
+  const prevStateRef = useRef<any>(null);
 
   const specialtySelection = useSpecialtySelection({
     doctor,
@@ -66,16 +66,22 @@ const DoctorFormDialog = ({
   };
 
   useEffect(() => {
-    if (state?.success && !hasNotifiedRef.current) {
-      hasNotifiedRef.current = true;
-      toast.success(state.message);
+    if (!state || state === prevStateRef.current) return;
+    prevStateRef.current = state;
+
+    if (state.success) {
+      toast.success(
+        state.message ||
+          (isEdit
+            ? "Doctor updated successfully"
+            : "Doctor created successfully"),
+      );
       onSuccess();
       onClose();
-    } else if (state && !state.success && !hasNotifiedRef.current) {
-      hasNotifiedRef.current = true;
-      toast.error(state.message);
+    } else {
+      toast.error(state.message || "Failed to save doctor");
     }
-  }, [state, onClose, onSuccess]);
+  }, [state, isEdit, onClose, onSuccess]);
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-h-[90vh] flex flex-col p-0">
