@@ -72,16 +72,18 @@ const DoctorsTable = ({ doctors, specialties }: DoctorsTableProps) => {
         emptyMessage="No doctors found"
       />
       {/* Edit Doctor Form Dialog */}
-      <DoctorFormDialog
-        open={!!editingDoctor}
-        onClose={() => setEditingDoctor(null)}
-        doctor={editingDoctor!}
-        specialties={specialties}
-        onSuccess={() => {
-          setEditingDoctor(null);
-          handleRefresh();
-        }}
-      />
+      {editingDoctor && (
+        <DoctorFormDialog
+          open={!!editingDoctor}
+          onClose={() => setEditingDoctor(null)}
+          doctor={editingDoctor}
+          specialties={specialties}
+          onSuccess={() => {
+            setEditingDoctor(null);
+            handleRefresh();
+          }}
+        />
+      )}
 
       {/* View Doctor Detail Dialog */}
       <DoctorViewDetailDialog

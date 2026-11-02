@@ -50,14 +50,6 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
 
   // Local state for popover multi-select staging
   const [localSpecialties, setLocalSpecialties] = useState<string[]>(urlSpecialties);
-  const [prevSpecialtiesKey, setPrevSpecialtiesKey] = useState(urlSpecialties.join(","));
-
-  // Adjust state during render when URL specialties change (React-recommended pattern, no useEffect needed)
-  const currentSpecialtiesKey = urlSpecialties.join(",");
-  if (currentSpecialtiesKey !== prevSpecialtiesKey) {
-    setPrevSpecialtiesKey(currentSpecialtiesKey);
-    setLocalSpecialties(urlSpecialties);
-  }
 
   const handleGenderChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -135,7 +127,15 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
       {/* Row 2: Filter Controls */}
       <div className="flex items-center gap-3 flex-wrap">
         {/* Specialties Multi-Select */}
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover
+          open={open}
+          onOpenChange={(newOpen) => {
+            if (newOpen) {
+              setLocalSpecialties(urlSpecialties);
+            }
+            setOpen(newOpen);
+          }}
+        >
           <PopoverTrigger asChild>
             <Button
               variant="outline"

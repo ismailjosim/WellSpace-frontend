@@ -28,13 +28,15 @@ const DoctorsManagementHeader = ({
   };
   return (
     <>
-      <DoctorFormDialog
-        open={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-        onSuccess={handleSuccess}
-        doctor={doctor}
-        specialties={specialties}
-      />
+      {isDialogOpen && (
+        <DoctorFormDialog
+          open={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          onSuccess={handleSuccess}
+          doctor={doctor}
+          specialties={specialties}
+        />
+      )}
 
       <ManagementPageHeader
         title="Doctors Management"

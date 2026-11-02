@@ -1,3 +1,5 @@
+"use client";
+
 import InputFieldError from "@/components/shared/InputFieldError";
 import { Button } from "@/components/ui/button";
 import {
@@ -253,7 +255,8 @@ const DoctorFormDialog = ({
                 id="gender"
                 name="gender"
                 placeholder="Select gender"
-                defaultValue={gender}
+                value={gender}
+                readOnly
                 type="hidden"
               />
               <Select
