@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
 import { serverFetch } from "@/lib/server-fetch";
 import { setCookie } from "./tokenHandlers";
 import { parse } from "cookie";
@@ -42,7 +43,15 @@ export async function verifyMfaSetup(
       body: JSON.stringify({ token }),
       headers: { "Content-Type": "application/json" },
     });
-    return await res.json();
+    const result = await res.json();
+    if (result.success) {
+      try {
+        (revalidateTag as any)("user-info", { expire: 0 });
+      } catch {
+        // ignore
+      }
+    }
+    return result;
   } catch (error: unknown) {
     console.error("MFA verify setup error:", error);
     return { success: false, message: "Failed to verify MFA setup" };
@@ -57,7 +66,15 @@ export async function disableMfa(
       body: JSON.stringify({ token }),
       headers: { "Content-Type": "application/json" },
     });
-    return await res.json();
+    const result = await res.json();
+    if (result.success) {
+      try {
+        (revalidateTag as any)("user-info", { expire: 0 });
+      } catch {
+        // ignore
+      }
+    }
+    return result;
   } catch (error: unknown) {
     console.error("MFA disable error:", error);
     return { success: false, message: "Failed to disable MFA" };

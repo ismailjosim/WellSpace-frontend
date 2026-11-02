@@ -31,12 +31,14 @@ const SchedulesManagementHeader = () => {
 
   return (
     <>
-      <ScheduleFormDialog
-        key={dialogKey}
-        open={isDialogOpen}
-        onClose={handleCloseDialog}
-        onSuccess={handleSuccess}
-      />
+      {isDialogOpen && (
+        <ScheduleFormDialog
+          key={dialogKey}
+          open={isDialogOpen}
+          onClose={handleCloseDialog}
+          onSuccess={handleSuccess}
+        />
+      )}
 
       <ManagementPageHeader
         title="Schedules Management"

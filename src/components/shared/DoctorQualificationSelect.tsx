@@ -41,15 +41,16 @@ export default function DoctorQualificationSelect({
   const [selectedOptions, setSelectedOptions] = useState<QualificationOption[]>(
     () => parseDefault(defaultValue),
   );
+  const [prevDefaultValue, setPrevDefaultValue] = useState(defaultValue);
+
+  if (defaultValue !== prevDefaultValue) {
+    setPrevDefaultValue(defaultValue);
+    setSelectedOptions(parseDefault(defaultValue));
+  }
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // Update when defaultValue changes externally (e.g. editing different doctors)
-  useEffect(() => {
-    setSelectedOptions(parseDefault(defaultValue));
-  }, [defaultValue]);
 
   const serializedValue = selectedOptions.map((opt) => opt.value).join(", ");
 

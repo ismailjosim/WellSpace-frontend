@@ -70,15 +70,17 @@ const AdminsTable = ({ admins }: AdminsTableProps) => {
       />
 
       {/* Edit Admin Form Dialog */}
-      <AdminFormDialog
-        open={!!editingAdmin}
-        onClose={() => setEditingAdmin(null)}
-        admin={editingAdmin!}
-        onSuccess={() => {
-          setEditingAdmin(null);
-          handleRefresh();
-        }}
-      />
+      {editingAdmin && (
+        <AdminFormDialog
+          open={!!editingAdmin}
+          onClose={() => setEditingAdmin(null)}
+          admin={editingAdmin}
+          onSuccess={() => {
+            setEditingAdmin(null);
+            handleRefresh();
+          }}
+        />
+      )}
 
       {/* View Admin Detail Dialog */}
       <AdminViewDetailDialog

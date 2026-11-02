@@ -71,15 +71,17 @@ const PatientsTable = ({ patients }: PatientsTableProps) => {
       />
 
       {/* Edit Patient Form Dialog */}
-      <PatientFormDialog
-        open={!!editingPatient}
-        onClose={() => setEditingPatient(null)}
-        patient={editingPatient!}
-        onSuccess={() => {
-          setEditingPatient(null);
-          handleRefresh();
-        }}
-      />
+      {editingPatient && (
+        <PatientFormDialog
+          open={!!editingPatient}
+          onClose={() => setEditingPatient(null)}
+          patient={editingPatient}
+          onSuccess={() => {
+            setEditingPatient(null);
+            handleRefresh();
+          }}
+        />
+      )}
 
       {/* View Patient Detail Dialog */}
       <PatientViewDetailDialog

@@ -31,12 +31,14 @@ const AdminsManagementHeader = () => {
 
   return (
     <>
-      <AdminFormDialog
-        key={dialogKey}
-        open={isDialogOpen}
-        onClose={handleCloseDialog}
-        onSuccess={handleSuccess}
-      />
+      {isDialogOpen && (
+        <AdminFormDialog
+          key={dialogKey}
+          open={isDialogOpen}
+          onClose={handleCloseDialog}
+          onSuccess={handleSuccess}
+        />
+      )}
 
       <ManagementPageHeader
         title="Admins Management"

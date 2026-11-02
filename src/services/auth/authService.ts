@@ -80,7 +80,8 @@ export async function updateMyProfile(rawFormData: FormData) {
 }
 
 // Reset Password
-export async function resetPassword(_prevState: any, formData: FormData) {
+export async function resetPassword(_prevState: any, rawFormData: FormData) {
+  const formData = normalizeFormData(rawFormData);
   const redirectTo = formData.get("redirect") || null;
 
   // Build validation payload
@@ -280,7 +281,8 @@ export async function getNewAccessToken() {
   }
 }
 
-export async function forgotPassword(_prevState: any, formData: FormData) {
+export async function forgotPassword(_prevState: any, rawFormData: FormData) {
+  const formData = normalizeFormData(rawFormData);
   // Build validation payload
   const validationPayload = {
     email: formData.get("email") as string,
@@ -331,7 +333,8 @@ export async function forgotPassword(_prevState: any, formData: FormData) {
   }
 }
 
-export async function changePassword(_prevState: any, formData: FormData) {
+export async function changePassword(_prevState: any, rawFormData: FormData) {
+  const formData = normalizeFormData(rawFormData);
   // Build validation payload
   const validationPayload = {
     oldPassword: formData.get("oldPassword") as string,

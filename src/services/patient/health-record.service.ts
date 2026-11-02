@@ -2,6 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { serverFetch } from "@/lib/server-fetch";
+import { normalizeFormData } from "@/lib/formDataHelper";
 
 export async function getMyHealthRecord() {
   try {
@@ -40,8 +41,9 @@ export async function updateMyHealthData(data: Record<string, unknown>) {
   }
 }
 
-export async function uploadMedicalReport(formData: FormData) {
+export async function uploadMedicalReport(rawFormData: FormData) {
   try {
+    const formData = normalizeFormData(rawFormData);
     const response = await serverFetch.post("/patient/me/medical-reports", {
       body: formData,
     });

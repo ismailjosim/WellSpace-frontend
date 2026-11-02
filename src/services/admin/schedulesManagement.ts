@@ -4,12 +4,14 @@
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { createScheduleZodSchema } from "../../schema/schedule.validation";
+import { normalizeFormData } from "@/lib/formDataHelper";
 
 // ======================================================
 // CREATE SCHEDULE
 // API: POST /schedule
 // ======================================================
-export async function createSchedule(_prevState: any, formData: FormData) {
+export async function createSchedule(_prevState: any, rawFormData: FormData) {
+  const formData = normalizeFormData(rawFormData);
   const payload = {
     startDate: formData.get("startDate") as string,
     endDate: formData.get("endDate") as string,

@@ -284,8 +284,9 @@ export async function updateDoctorVerificationStatus(
 // ======================================================
 // UPLOAD DOCTOR VERIFICATION DOCUMENTS (DOCTOR)
 // ======================================================
-export async function uploadDoctorVerificationDocuments(formData: FormData) {
+export async function uploadDoctorVerificationDocuments(rawFormData: FormData) {
   try {
+    const formData = normalizeFormData(rawFormData);
     const res = await serverFetch.post(`/doctor/verification/documents`, {
       body: formData,
     });

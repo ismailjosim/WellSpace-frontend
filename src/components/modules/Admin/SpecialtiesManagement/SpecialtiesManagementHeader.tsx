@@ -18,11 +18,13 @@ const SpecialtiesManagementHeader = () => {
   };
   return (
     <>
-      <SpecialtiesFormDialog
-        open={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-        onSuccess={handleSuccess}
-      />
+      {isDialogOpen && (
+        <SpecialtiesFormDialog
+          open={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          onSuccess={handleSuccess}
+        />
+      )}
 
       <ManagementPageHeader
         title="Specialties Management"

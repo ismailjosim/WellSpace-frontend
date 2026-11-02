@@ -1,3 +1,5 @@
+"use client";
+
 import InputFieldError from "@/components/shared/InputFieldError";
 import { Button } from "@/components/ui/button";
 import {
@@ -151,7 +153,8 @@ const AdminFormDialog = ({
                       alt="Profile Photo Preview"
                       width={50}
                       height={50}
-                      className="rounded-full"
+                      className="rounded-full object-cover"
+                      unoptimized
                     />
                   </div>
                 )}

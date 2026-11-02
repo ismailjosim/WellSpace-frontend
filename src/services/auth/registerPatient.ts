@@ -10,11 +10,13 @@ import { serverFetch } from "../../lib/server-fetch";
 import { zodValidator } from "../../lib/zodValidator";
 import { responseTemplate } from "../../lib/responseTemplate";
 import { sanitizeErrorMessage } from "@/lib/normalizeServerError";
+import { normalizeFormData } from "@/lib/formDataHelper";
 
 export const registerUser = async (
   _currentState: any,
-  formData: FormData,
+  rawFormData: FormData,
 ): Promise<any> => {
+  const formData = normalizeFormData(rawFormData);
   try {
     // -----------------------------
     // 🔹 1. Extract form data

@@ -13,13 +13,15 @@ import { loginValidationSchema } from "@/schema/authSchema";
 import { serverFetch } from "@/lib/server-fetch";
 import { redirect } from "next/navigation";
 import { sanitizeErrorMessage } from "@/lib/normalizeServerError";
+import { normalizeFormData } from "@/lib/formDataHelper";
 
 const isProduction = process.env.NODE_ENV === "production";
 
 export const loginUser = async (
   _currentState: any,
-  formData: FormData,
+  rawFormData: FormData,
 ): Promise<any> => {
+  const formData = normalizeFormData(rawFormData);
   const responseTemplate = {
     success: false,
     type: null as "validation" | "server" | "exception" | null,

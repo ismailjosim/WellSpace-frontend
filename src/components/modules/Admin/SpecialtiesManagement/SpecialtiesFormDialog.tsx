@@ -1,3 +1,5 @@
+"use client";
+
 import { useActionState, useEffect, useRef } from "react";
 import InputFieldError from "@/components/shared/InputFieldError";
 import { Button } from "@/components/ui/button";
@@ -93,6 +95,7 @@ const SpecialtiesFormDialog = ({
                   width={36}
                   height={36}
                   className="rounded-full object-cover"
+                  unoptimized
                 />
                 <span className="text-xs text-muted-foreground">
                   Current icon. Select a new file below to replace it.
