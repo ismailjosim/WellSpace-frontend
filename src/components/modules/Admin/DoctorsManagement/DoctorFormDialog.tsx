@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import { useSpecialtySelection } from "@/components/hooks/specialtyHooks/useSpecialtySelection";
 import SpecialtyMultiSelect from "./SpecialtyMultiSelect";
 import { Eye, EyeOff } from "lucide-react";
+import DoctorQualificationSelect from "@/components/shared/DoctorQualificationSelect";
 
 interface IDoctorFormDialogInterface {
   open: boolean;
@@ -273,11 +274,12 @@ const DoctorFormDialog = ({
 
             <Field>
               <FieldLabel htmlFor="qualification">Qualification</FieldLabel>
-              <Input
+              <DoctorQualificationSelect
                 id="qualification"
                 name="qualification"
-                placeholder="MBBS, MD"
-                defaultValue={isEdit ? doctor?.qualification : undefined}
+                defaultValue={isEdit ? doctor?.qualification : ""}
+                disabled={pending}
+                placeholder="Select or type qualifications (e.g. MBBS, MD)..."
               />
               <InputFieldError state={state} field="qualification" />
             </Field>

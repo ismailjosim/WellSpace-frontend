@@ -11,6 +11,7 @@ import { useState, useTransition } from "react";
 import { getInitials } from "../../../lib/formatters.ts";
 import { updateMyProfile } from "../../../services/auth/authService";
 import MfaSettingsCard from "@/components/modules/Auth/MfaSettingsCard";
+import DoctorQualificationSelect from "@/components/shared/DoctorQualificationSelect";
 
 interface MyProfileProps {
   userInfo: UserInfo;
@@ -242,12 +243,12 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
 
                     <div className="space-y-2">
                       <Label htmlFor="qualification">Qualification</Label>
-                      <Input
+                      <DoctorQualificationSelect
                         id="qualification"
                         name="qualification"
                         defaultValue={userInfo.doctor.qualification || ""}
-                        required
                         disabled={isPending}
+                        placeholder="Select or type qualifications (e.g. MBBS, MD)..."
                       />
                     </div>
 
