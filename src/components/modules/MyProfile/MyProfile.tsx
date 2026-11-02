@@ -327,7 +327,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
 
       {/* Security & 2FA Governance */}
       <div className="max-w-6xl mx-auto mt-6">
-        <MfaSettingsCard />
+        <MfaSettingsCard isMfaInitiallyEnabled={!!userInfo?.isMfaEnabled} />
       </div>
     </div>
   );

@@ -10,6 +10,8 @@ export interface UserInfo {
   role: UserRole;
   needPasswordChange: boolean;
   status: "ACTIVE" | "BLOCKED" | "DELETED";
+  isMfaEnabled?: boolean;
+  mfaMethod?: string;
   admin?: IAdmin;
   patient?: IPatient;
   doctor?: IDoctor;

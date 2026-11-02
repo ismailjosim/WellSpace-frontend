@@ -44,6 +44,12 @@ export default function MfaSettingsCard({
   isMfaInitiallyEnabled = false,
 }: MfaSettingsCardProps) {
   const [isMfaEnabled, setIsMfaEnabled] = useState(isMfaInitiallyEnabled);
+  const [prevInitial, setPrevInitial] = useState(isMfaInitiallyEnabled);
+
+  if (isMfaInitiallyEnabled !== prevInitial) {
+    setPrevInitial(isMfaInitiallyEnabled);
+    setIsMfaEnabled(isMfaInitiallyEnabled);
+  }
   const [setupModalOpen, setSetupModalOpen] = useState(false);
   const [disableModalOpen, setDisableModalOpen] = useState(false);
   const [setupData, setSetupData] = useState<IMfaSetupResponse["data"] | null>(
