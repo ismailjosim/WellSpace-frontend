@@ -34,7 +34,6 @@ export async function createAdmin(_prevState: any, rawFormData: FormData) {
     if (!validation.success) return validation;
 
     const validatedPayload = validation?.data;
-    console.log({ validatedPayload });
 
     const finalPayload = {
       password: validatedPayload.password,

@@ -82,6 +82,20 @@ export async function getMyAppointments(queryString?: string) {
   }
 }
 
+export async function getMyAppointmentCount(): Promise<number | undefined> {
+  try {
+    const response = await serverFetch.get(
+      "/appointment/my-appointment?limit=1",
+    );
+    const result = await response.json();
+    const total = Number(result?.meta?.total);
+    return result?.success && Number.isFinite(total) ? total : undefined;
+  } catch (error) {
+    console.error("Error fetching appointment count:", error);
+    return undefined;
+  }
+}
+
 export async function getAppointmentById(appointmentId: string) {
   try {
     const response = await serverFetch.get("/appointment/my-appointment");

@@ -41,9 +41,16 @@ export default function BookAppointmentDialog({
 
   const groupSchedulesByDate = () => {
     const grouped: Record<string, IDoctorSchedule[]> = {};
+    const now = new Date();
 
     doctorSchedules.forEach((schedule) => {
-      if (!schedule.schedule?.startDateTime) return;
+      if (
+        schedule.isBooked ||
+        !schedule.schedule?.startDateTime ||
+        new Date(schedule.schedule.startDateTime) <= now
+      ) {
+        return;
+      }
 
       const startDate = new Date(schedule.schedule.startDateTime)
         .toISOString()
@@ -57,7 +64,19 @@ export default function BookAppointmentDialog({
       }
     });
 
-    return Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b));
+    return Object.entries(grouped)
+      .map(
+        ([date, schedules]) =>
+          [
+            date,
+            schedules.sort(
+              (first, second) =>
+                new Date(first.schedule!.startDateTime).getTime() -
+                new Date(second.schedule!.startDateTime).getTime(),
+            ),
+          ] as [string, IDoctorSchedule[]],
+      )
+      .sort(([a], [b]) => a.localeCompare(b));
   };
 
   const groupedSchedules = groupSchedulesByDate();

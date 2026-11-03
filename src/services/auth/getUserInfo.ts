@@ -56,7 +56,8 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
           result.data.admin ||
           (role === "ADMIN" || role === "SUPER_ADMIN" ? profile : undefined),
         doctor: result.data.doctor || (role === "DOCTOR" ? profile : undefined),
-        patient: result.data.patient || (role === "PATIENT" ? profile : undefined),
+        patient:
+          result.data.patient || (role === "PATIENT" ? profile : undefined),
       };
     }
 

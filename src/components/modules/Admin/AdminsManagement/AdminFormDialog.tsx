@@ -44,14 +44,16 @@ const AdminFormDialog = ({
     null,
   );
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const hasNotifiedRef = useRef(false);
+  const lastHandledStateRef = useRef<typeof state>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (isUploadFileTooLarge(file || null)) {
       e.currentTarget.value = "";
       setSelectedFile(null);
-      toast.error(`Profile photo must be ${MAX_UPLOAD_FILE_SIZE_LABEL} or smaller.`);
+      toast.error(
+        `Profile photo must be ${MAX_UPLOAD_FILE_SIZE_LABEL} or smaller.`,
+      );
       return;
     }
 
@@ -60,16 +62,17 @@ const AdminFormDialog = ({
 
   // Handle success/error from server
   useEffect(() => {
-    if (state?.success && !hasNotifiedRef.current) {
-      hasNotifiedRef.current = true;
+    if (!state || state === lastHandledStateRef.current) return;
+    lastHandledStateRef.current = state;
+
+    if (state.success) {
       toast.success(state.message || "Operation successful");
       if (formRef.current) {
         formRef.current.reset();
       }
       onSuccess();
       onClose();
-    } else if (state?.message && !state.success && !hasNotifiedRef.current) {
-      hasNotifiedRef.current = true;
+    } else if (state.message) {
       toast.error(state.message);
 
       // Restore file to input after error

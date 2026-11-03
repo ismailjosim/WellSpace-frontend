@@ -154,7 +154,10 @@ export const adminNavItems: NavSection[] = [
   },
 ];
 
-export const getNavItemsByRole = (role: UserRole): NavSection[] => {
+export const getNavItemsByRole = (
+  role: UserRole,
+  appointmentCount?: number,
+): NavSection[] => {
   const commonNavItems = getCommonNavItems(role);
 
   switch (role) {
@@ -162,7 +165,18 @@ export const getNavItemsByRole = (role: UserRole): NavSection[] => {
     case "ADMIN":
       return [...commonNavItems, ...adminNavItems];
     case "DOCTOR":
-      return [...commonNavItems, ...doctorNavItems];
+      return [
+        ...commonNavItems,
+        {
+          ...doctorNavItems[0],
+          items: doctorNavItems[0].items.map((item) =>
+            item.href === "/doctor/dashboard/appointments" &&
+            appointmentCount !== undefined
+              ? { ...item, badge: appointmentCount }
+              : item,
+          ),
+        },
+      ];
     case "PATIENT":
       return [...commonNavItems, ...patientNavItems];
     default:

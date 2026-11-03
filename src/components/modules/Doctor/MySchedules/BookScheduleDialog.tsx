@@ -108,9 +108,11 @@ export default function BookScheduleDialog({
 
   const groupSchedulesByDate = () => {
     const grouped: Record<string, ISchedule[]> = {};
+    const now = new Date();
 
     if (availableSchedules.length > 0) {
       availableSchedules.forEach((schedule) => {
+        if (new Date(schedule.startDateTime) <= now) return;
         const date = format(new Date(schedule.startDateTime), "yyyy-MM-dd");
         if (!grouped[date]) {
           grouped[date] = [];
@@ -119,15 +121,22 @@ export default function BookScheduleDialog({
       });
     }
 
-    return Object.entries(grouped).sort(
-      ([dateA], [dateB]) =>
-        new Date(dateA).getTime() - new Date(dateB).getTime(),
-    );
+    return Object.entries(grouped)
+      .map(
+        ([date, schedules]) =>
+          [
+            date,
+            schedules.sort(
+              (first, second) =>
+                new Date(first.startDateTime).getTime() -
+                new Date(second.startDateTime).getTime(),
+            ),
+          ] as [string, ISchedule[]],
+      )
+      .sort(([dateA], [dateB]) => dateA.localeCompare(dateB));
   };
 
   const groupedSchedules = groupSchedulesByDate();
-
-  console.log({ availableSchedules, groupedSchedules });
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>

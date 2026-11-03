@@ -61,7 +61,8 @@ export async function updatePatient(
   if (!id) {
     return {
       success: false,
-      message: "Patient record ID is missing. Refresh the patient list and try again.",
+      message:
+        "Patient record ID is missing. Refresh the patient list and try again.",
     };
   }
 

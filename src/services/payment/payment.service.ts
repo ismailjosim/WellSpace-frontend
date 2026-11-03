@@ -211,3 +211,31 @@ export async function initiatePayment(appointmentId: string) {
     };
   }
 }
+
+export async function verifyAppointmentPayment(sessionId: string) {
+  try {
+    const response = await serverFetch.get(
+      `/appointment/payment-status?sessionId=${encodeURIComponent(sessionId)}`,
+      { cache: "no-store" },
+    );
+    const result = await response.json();
+
+    if (result.success && result.data?.paymentStatus === "PAID") {
+      revalidateTag("my-appointments", { expire: 0 });
+      revalidateTag("patient-dashboard-meta", { expire: 0 });
+      revalidateTag("admin-dashboard-meta", { expire: 0 });
+      revalidateTag("doctor-dashboard-meta", { expire: 0 });
+    }
+
+    return result;
+  } catch (error: any) {
+    console.error("Error verifying appointment payment:", error);
+    return {
+      success: false,
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Unable to verify payment status",
+    };
+  }
+}

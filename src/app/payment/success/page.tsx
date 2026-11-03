@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { verifyAppointmentPayment } from "@/services/payment/payment.service";
 
 interface PaymentSuccessPageProps {
   searchParams: Promise<{
@@ -22,6 +23,11 @@ export default async function PaymentSuccessPage({
 }: PaymentSuccessPageProps) {
   const params = await searchParams;
   const appointmentId = params.appointmentId;
+  const verification = params.session_id
+    ? await verifyAppointmentPayment(params.session_id)
+    : null;
+  const paymentConfirmed =
+    verification?.success && verification.data?.paymentStatus === "PAID";
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center p-4 bg-muted/20">
@@ -32,11 +38,12 @@ export default async function PaymentSuccessPage({
           </div>
           <div>
             <CardTitle className="text-2xl font-bold tracking-tight text-foreground">
-              Payment Successful!
+              {paymentConfirmed ? "Payment Successful!" : "Payment Processing"}
             </CardTitle>
             <CardDescription className="text-muted-foreground mt-1.5">
-              Your consultation booking has been confirmed and registered with
-              the doctor.
+              {paymentConfirmed
+                ? "Your consultation booking has been confirmed and registered with the doctor."
+                : "We are verifying your payment. Your appointment status will update as soon as Stripe confirms it."}
             </CardDescription>
           </div>
         </CardHeader>
@@ -46,7 +53,7 @@ export default async function PaymentSuccessPage({
             <div className="flex justify-between items-center text-muted-foreground">
               <span>Status</span>
               <span className="font-semibold text-green-600 dark:text-green-400 uppercase text-xs tracking-wider bg-green-100 dark:bg-green-950/50 px-2 py-0.5 rounded-full">
-                PAID & CONFIRMED
+                {paymentConfirmed ? "PAID & CONFIRMED" : "CONFIRMATION PENDING"}
               </span>
             </div>
 
