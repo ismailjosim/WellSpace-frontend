@@ -27,30 +27,29 @@ export default function DoctorReviews({ doctorId }: DoctorReviewsProps) {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ averageRating: 0, totalReviews: 0 });
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const loadReviews = async () => {
       try {
         setLoading(true);
+        setError("");
         const response = await getReviews(`?doctorId=${doctorId}&limit=10`);
 
         if (response.success && response.data) {
           setReviews(response.data);
-
-          // Calculate stats
-          if (response.data.length > 0) {
-            const total = response.data.reduce(
-              (sum: number, review: Review) => sum + review.rating,
-              0,
-            );
-            setStats({
-              averageRating: total / response.data.length,
-              totalReviews: response.data.length,
-            });
-          }
+          setStats({
+            averageRating: response.meta?.averageRating ?? 0,
+            totalReviews: response.meta?.total ?? response.data.length,
+          });
+        } else {
+          setReviews([]);
+          setStats({ averageRating: 0, totalReviews: 0 });
+          setError(response.message || "Unable to load reviews right now.");
         }
       } catch (error) {
         console.error("Error loading reviews:", error);
+        setError("Unable to load reviews right now.");
       } finally {
         setLoading(false);
       }
@@ -104,7 +103,9 @@ export default function DoctorReviews({ doctorId }: DoctorReviewsProps) {
         </div>
       </CardHeader>
       <CardContent>
-        {reviews.length === 0 ? (
+        {error ? (
+          <p className="text-destructive text-center py-8">{error}</p>
+        ) : reviews.length === 0 ? (
           <p className="text-muted-foreground text-center py-8">
             No reviews yet. Be the first to review this doctor!
           </p>

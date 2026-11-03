@@ -55,7 +55,7 @@ export default async function ConsultationRoomPage({
   }
 
   return (
-    <div className="container max-w-6xl mx-auto py-6 px-4">
+    <div className="container max-w-7xl mx-auto py-6 px-4">
       <LiveConsultationRoom initialData={res.data} userRole={userRole} />
     </div>
   );

@@ -9,8 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { createPrescription } from "@/services/patient/prescription.service";
 import { IAppointment } from "@/types/appointments.interface";
-import { Video } from "lucide-react";
-import Link from "next/link";
+import JoinConsultationButton from "@/components/modules/Consultation/JoinConsultationButton";
 import { useState } from "react";
 import { toast } from "sonner";
 import AppointmentChatDialog from "../../Chat/AppointmentChatDialog";
@@ -119,16 +118,10 @@ export default function DoctorAppointmentDetailDialog({
               role="DOCTOR"
             />
             {appointment.status !== "CANCELED" && (
-              <Button
-                asChild
-                size="sm"
-                className="bg-primary hover:bg-primary/90 gap-1.5"
-              >
-                <Link href={`/consultation/room/${appointment.id}`}>
-                  <Video className="h-4 w-4" />
-                  <span>Join Video Room</span>
-                </Link>
-              </Button>
+              <JoinConsultationButton
+                appointmentId={appointment.id}
+                label="Join Video Room"
+              />
             )}
           </div>
 

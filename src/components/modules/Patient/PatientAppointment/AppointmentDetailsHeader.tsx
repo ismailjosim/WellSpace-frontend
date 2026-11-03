@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { IAppointment } from "@/types/appointments.interface";
 import AppointmentChatDialog from "@/components/modules/Chat/AppointmentChatDialog";
-import { Loader2, Video } from "lucide-react";
-import Link from "next/link";
+import JoinConsultationButton from "@/components/modules/Consultation/JoinConsultationButton";
+import { Loader2 } from "lucide-react";
 
 interface AppointmentDetailsHeaderProps {
   appointment: IAppointment;
@@ -36,16 +36,10 @@ const AppointmentDetailsHeader = ({
       />
 
       {!isCanceled && (
-        <Button
-          asChild
-          size="sm"
-          className="bg-primary hover:bg-primary/90 gap-1.5"
-        >
-          <Link href={`/consultation/room/${appointment.id}`}>
-            <Video className="h-4 w-4" />
-            <span>Join Video Call</span>
-          </Link>
-        </Button>
+        <JoinConsultationButton
+          appointmentId={appointment.id}
+          label="Join Video Call"
+        />
       )}
 
       {canCancel && (
