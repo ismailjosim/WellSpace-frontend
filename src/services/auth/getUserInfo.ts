@@ -38,16 +38,25 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
     const result = await response.json();
 
     if (result.success && result.data) {
+      const role = tokenPayload?.role || result.data.role;
+      const profile = result.data.profile;
+
       return {
+        ...result.data,
         name:
           result.data.admin?.name ||
           result.data.doctor?.name ||
           result.data.patient?.name ||
+          profile?.name ||
           result.data.name ||
           tokenPayload?.name ||
           "Unknown User",
-        role: tokenPayload?.role || result.data.role,
-        ...result.data,
+        role,
+        admin:
+          result.data.admin ||
+          (role === "ADMIN" || role === "SUPER_ADMIN" ? profile : undefined),
+        doctor: result.data.doctor || (role === "DOCTOR" ? profile : undefined),
+        patient: result.data.patient || (role === "PATIENT" ? profile : undefined),
       };
     }
 

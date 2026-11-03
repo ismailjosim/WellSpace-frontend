@@ -46,7 +46,7 @@ const PatientsTable = ({ patients }: PatientsTableProps) => {
     if (!deletingPatient) return;
 
     setIsDeleting(true);
-    const result = await softDeletePatient(deletingPatient.id!);
+    const result = await softDeletePatient(deletingPatient.id);
     setIsDeleting(false);
 
     if (result.success) {
@@ -66,7 +66,7 @@ const PatientsTable = ({ patients }: PatientsTableProps) => {
         onView={handleView}
         onEdit={handleEdit}
         onDelete={handleDelete}
-        getRowKey={(patient) => patient.id!}
+        getRowKey={(patient) => patient.id}
         emptyMessage="No patients found"
       />
 

@@ -12,6 +12,10 @@ import { getInitials } from "../../../lib/formatters.ts";
 import { updateMyProfile } from "../../../services/auth/authService";
 import MfaSettingsCard from "@/components/modules/Auth/MfaSettingsCard";
 import DoctorQualificationSelect from "@/components/shared/DoctorQualificationSelect";
+import {
+  isUploadFileTooLarge,
+  MAX_UPLOAD_FILE_SIZE_LABEL,
+} from "@/lib/formDataHelper";
 
 interface MyProfileProps {
   userInfo: UserInfo;
@@ -51,7 +55,15 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    if (isUploadFileTooLarge(file || null)) {
+      e.currentTarget.value = "";
+      setPreviewImage(null);
+      setError(`Profile photo must be ${MAX_UPLOAD_FILE_SIZE_LABEL} or smaller.`);
+      return;
+    }
+
     if (file) {
+      setError(null);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewImage(reader.result as string);

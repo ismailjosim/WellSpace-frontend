@@ -16,6 +16,10 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { IAdmin } from "@/types/admin.interface";
 import { createAdmin, updateAdmin } from "@/services/admin/adminsManagement";
+import {
+  isUploadFileTooLarge,
+  MAX_UPLOAD_FILE_SIZE_LABEL,
+} from "@/lib/formDataHelper";
 
 interface IAdminFormDialogProps {
   open: boolean;
@@ -44,6 +48,13 @@ const AdminFormDialog = ({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    if (isUploadFileTooLarge(file || null)) {
+      e.currentTarget.value = "";
+      setSelectedFile(null);
+      toast.error(`Profile photo must be ${MAX_UPLOAD_FILE_SIZE_LABEL} or smaller.`);
+      return;
+    }
+
     setSelectedFile(file || null);
   };
 
@@ -99,6 +110,7 @@ const AdminFormDialog = ({
                 name="name"
                 placeholder="John Doe"
                 defaultValue={state?.formData?.name || admin?.name || ""}
+                required
               />
               <InputFieldError field="name" state={state} />
             </Field>
@@ -114,6 +126,7 @@ const AdminFormDialog = ({
                 placeholder="admin@example.com"
                 defaultValue={state?.formData?.email || admin?.email || ""}
                 disabled={isEdit}
+                required
               />
               <InputFieldError field="email" state={state} />
             </Field>
@@ -129,6 +142,7 @@ const AdminFormDialog = ({
                 defaultValue={
                   state?.formData?.contactNumber || admin?.contactNumber || ""
                 }
+                required
               />
               <InputFieldError field="contactNumber" state={state} />
             </Field>
@@ -145,6 +159,7 @@ const AdminFormDialog = ({
                   type="password"
                   placeholder="Enter password"
                   defaultValue={state?.formData?.password || ""}
+                  required
                 />
                 <InputFieldError field="password" state={state} />
               </Field>

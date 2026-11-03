@@ -18,6 +18,10 @@ import {
 import { toast } from "sonner";
 import { ISpecialty } from "@/types/specialties.interface";
 import Image from "next/image";
+import {
+  isUploadFileTooLarge,
+  MAX_UPLOAD_FILE_SIZE_LABEL,
+} from "@/lib/formDataHelper";
 
 interface SpecialtiesFormDialogProps {
   open: boolean;
@@ -105,7 +109,21 @@ const SpecialtiesFormDialog = ({
               </div>
             )}
 
-            <Input id="file" name="file" type="file" accept="image/*" />
+            <Input
+              id="file"
+              name="file"
+              type="file"
+              accept="image/*"
+              required={!isEdit}
+              onChange={(event) => {
+                if (isUploadFileTooLarge(event.target.files?.[0] || null)) {
+                  event.currentTarget.value = "";
+                  toast.error(
+                    `Specialty icon must be ${MAX_UPLOAD_FILE_SIZE_LABEL} or smaller.`,
+                  );
+                }
+              }}
+            />
             <InputFieldError field="file" state={state} />
           </Field>
 

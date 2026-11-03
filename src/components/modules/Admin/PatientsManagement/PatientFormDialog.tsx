@@ -20,7 +20,7 @@ interface IPatientFormDialogProps {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
-  patient?: IPatient;
+  patient: IPatient;
 }
 
 const PatientFormDialog = ({
@@ -32,7 +32,7 @@ const PatientFormDialog = ({
   const formRef = useRef<HTMLFormElement>(null);
 
   const [state, formAction, isPending] = useActionState(
-    updatePatient.bind(null, patient?.id as string),
+    updatePatient.bind(null, patient.id),
     null,
   );
   const hasNotifiedRef = useRef(false);
@@ -81,6 +81,7 @@ const PatientFormDialog = ({
                 name="name"
                 placeholder="John Doe"
                 defaultValue={state?.formData?.name || patient?.name || ""}
+                required
               />
               <InputFieldError field="name" state={state} />
             </Field>

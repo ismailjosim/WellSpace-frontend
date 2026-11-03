@@ -7,6 +7,8 @@ import {
   normalizeFormData,
   getFormFile,
   appendFormFile,
+  isUploadFileTooLarge,
+  MAX_UPLOAD_FILE_SIZE_LABEL,
 } from "@/lib/formDataHelper";
 import { IDoctor } from "@/types/doctor.interface";
 import {
@@ -91,6 +93,12 @@ export async function createDoctor(_prevState: any, rawFormData: FormData) {
     newFormData.append("data", JSON.stringify(finalPayload));
 
     const file = getFormFile(formData, "file");
+    if (isUploadFileTooLarge(file)) {
+      return {
+        success: false,
+        message: `Profile photo must be ${MAX_UPLOAD_FILE_SIZE_LABEL} or smaller.`,
+      };
+    }
     appendFormFile(newFormData, "file", file, "profile.jpg");
 
     const res = await serverFetch.post("/user/create-doctor", {

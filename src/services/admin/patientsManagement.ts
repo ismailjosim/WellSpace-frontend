@@ -58,6 +58,13 @@ export async function updatePatient(
   _prevState: any,
   rawFormData: FormData,
 ) {
+  if (!id) {
+    return {
+      success: false,
+      message: "Patient record ID is missing. Refresh the patient list and try again.",
+    };
+  }
+
   const formData = normalizeFormData(rawFormData);
   const payload = {
     name: formData.get("name") as string,

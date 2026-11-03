@@ -24,6 +24,8 @@ import {
   normalizeFormData,
   getFormFile,
   appendFormFile,
+  isUploadFileTooLarge,
+  MAX_UPLOAD_FILE_SIZE_LABEL,
 } from "@/lib/formDataHelper";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -46,6 +48,12 @@ export async function updateMyProfile(rawFormData: FormData) {
 
     // Add the file if it exists
     const file = getFormFile(formData, "file");
+    if (isUploadFileTooLarge(file)) {
+      return {
+        success: false,
+        message: `Profile photo must be ${MAX_UPLOAD_FILE_SIZE_LABEL} or smaller.`,
+      };
+    }
     appendFormFile(uploadFormData, "file", file, "profile.jpg");
 
     const response = await serverFetch.patch(`/user/update-my-profile`, {

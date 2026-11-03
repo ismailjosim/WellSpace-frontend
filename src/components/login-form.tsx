@@ -32,7 +32,9 @@ export function LoginForm({
           <form>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email" required>
+                  Email
+                </FieldLabel>
                 <Input
                   id="email"
                   type="email"
@@ -42,7 +44,9 @@ export function LoginForm({
               </Field>
               <Field>
                 <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <FieldLabel htmlFor="password" required>
+                    Password
+                  </FieldLabel>
                   <a
                     href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"

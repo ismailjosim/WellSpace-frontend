@@ -6,6 +6,8 @@ import {
   normalizeFormData,
   getFormFile,
   appendFormFile,
+  isUploadFileTooLarge,
+  MAX_UPLOAD_FILE_SIZE_LABEL,
 } from "@/lib/formDataHelper";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -35,6 +37,12 @@ export async function createSpecialty(_prevState: any, rawFormData: FormData) {
     newFormData.append("data", JSON.stringify(validatedPayload));
 
     const file = getFormFile(formData, "file");
+    if (isUploadFileTooLarge(file)) {
+      return {
+        success: false,
+        message: `Specialty icon must be ${MAX_UPLOAD_FILE_SIZE_LABEL} or smaller.`,
+      };
+    }
     appendFormFile(newFormData, "file", file, "specialty.png");
 
     const res = await serverFetch.post("/specialties", {
@@ -63,14 +71,21 @@ export async function updateSpecialty(
     const formData = normalizeFormData(rawFormData);
     const title = formData.get("title") as string;
     const newFormData = new FormData();
+    const file = getFormFile(formData, "file");
+
+    if (isUploadFileTooLarge(file)) {
+      return {
+        success: false,
+        message: `Specialty icon must be ${MAX_UPLOAD_FILE_SIZE_LABEL} or smaller.`,
+      };
+    }
 
     if (title) {
       newFormData.append("data", JSON.stringify({ title }));
     }
 
-    const file = formData.get("file");
-    if (file && (file as Blob).size > 0) {
-      newFormData.append("file", file as Blob);
+    if (file) {
+      newFormData.append("file", file);
     }
 
     const res = await serverFetch.patch(`/specialties/${id}`, {

@@ -16,6 +16,7 @@ interface DoctorQualificationSelectProps {
   defaultValue?: string;
   disabled?: boolean;
   placeholder?: string;
+  required?: boolean;
   onChange?: (value: string) => void;
 }
 
@@ -25,6 +26,7 @@ export default function DoctorQualificationSelect({
   defaultValue = "",
   disabled = false,
   placeholder = "Select or type qualifications (e.g. MBBS, MD)...",
+  required = false,
   onChange,
 }: DoctorQualificationSelectProps) {
   const mounted = useSyncExternalStore(
@@ -160,6 +162,7 @@ export default function DoctorQualificationSelect({
           value={selectedOptions}
           onChange={handleChange}
           isDisabled={disabled}
+          required={required}
           placeholder={placeholder}
           formatCreateLabel={(inputValue) => `+ Add "${inputValue}"`}
           styles={customStyles}

@@ -5,6 +5,13 @@
  * prefix field names with `_1_<name>` or `_0_<name>` due to bound argument indexing.
  */
 
+export const MAX_UPLOAD_FILE_SIZE_BYTES = 4 * 1024 * 1024;
+export const MAX_UPLOAD_FILE_SIZE_LABEL = "4 MB";
+
+export function isUploadFileTooLarge(file: File | Blob | null): boolean {
+  return Boolean(file && file.size > MAX_UPLOAD_FILE_SIZE_BYTES);
+}
+
 export function normalizeFormData(formData: FormData): FormData {
   const normalized = new FormData();
   for (const [key, value] of formData.entries()) {

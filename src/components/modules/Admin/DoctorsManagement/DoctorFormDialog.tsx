@@ -27,6 +27,10 @@ import { useSpecialtySelection } from "@/components/hooks/specialtyHooks/useSpec
 import SpecialtyMultiSelect from "./SpecialtyMultiSelect";
 import { Eye, EyeOff } from "lucide-react";
 import DoctorQualificationSelect from "@/components/shared/DoctorQualificationSelect";
+import {
+  isUploadFileTooLarge,
+  MAX_UPLOAD_FILE_SIZE_LABEL,
+} from "@/lib/formDataHelper";
 
 interface IDoctorFormDialogInterface {
   open: boolean;
@@ -102,6 +106,7 @@ const DoctorFormDialog = ({
                 name="name"
                 placeholder="Dr. John Doe"
                 defaultValue={isEdit ? doctor?.name : undefined}
+                required
               />
               <InputFieldError state={state} field="name" />
             </Field>
@@ -117,6 +122,7 @@ const DoctorFormDialog = ({
                 placeholder="doctor@example.com"
                 defaultValue={isEdit ? doctor?.email : undefined}
                 disabled={isEdit}
+                required
               />
               <InputFieldError state={state} field="email" />
             </Field>
@@ -134,6 +140,7 @@ const DoctorFormDialog = ({
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter password"
                       className="pr-10"
+                      required
                     />
                     <button
                       type="button"
@@ -164,6 +171,7 @@ const DoctorFormDialog = ({
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm password"
                       className="pr-10"
+                      required
                     />
                     <button
                       type="button"
@@ -214,6 +222,7 @@ const DoctorFormDialog = ({
                 name="contactNumber"
                 placeholder="+1234567890"
                 defaultValue={doctor?.contactNumber}
+                required
               />
               <InputFieldError state={state} field="contactNumber" />
             </Field>
@@ -227,6 +236,7 @@ const DoctorFormDialog = ({
                 name="address"
                 placeholder="123 Main St, City, Country"
                 defaultValue={isEdit ? doctor?.address : undefined}
+                required
               />
               <InputFieldError state={state} field="address" />
             </Field>
@@ -240,6 +250,7 @@ const DoctorFormDialog = ({
                 name="registrationNumber"
                 placeholder="REG123456"
                 defaultValue={isEdit ? doctor?.registrationNumber : undefined}
+                required
               />
               <InputFieldError state={state} field="registrationNumber" />
             </Field>
@@ -255,6 +266,7 @@ const DoctorFormDialog = ({
                 placeholder="5"
                 defaultValue={isEdit ? doctor?.experience : undefined}
                 min="0"
+                required
               />
               <InputFieldError state={state} field="experience" />
             </Field>
@@ -297,6 +309,7 @@ const DoctorFormDialog = ({
                 placeholder="100"
                 defaultValue={isEdit ? doctor?.appointmentFee : undefined}
                 min="0"
+                required
               />
               <InputFieldError state={state} field="appointmentFee" />
             </Field>
@@ -311,6 +324,7 @@ const DoctorFormDialog = ({
                 defaultValue={isEdit ? doctor?.qualification : ""}
                 disabled={pending}
                 placeholder="Select or type qualifications (e.g. MBBS, MD)..."
+                required
               />
               <InputFieldError state={state} field="qualification" />
             </Field>
@@ -324,6 +338,7 @@ const DoctorFormDialog = ({
                 name="currentWorkingPlace"
                 placeholder="City Hospital"
                 defaultValue={isEdit ? doctor?.currentWorkingPlace : undefined}
+                required
               />
               <InputFieldError state={state} field="currentWorkingPlace" />
             </Field>
@@ -337,6 +352,7 @@ const DoctorFormDialog = ({
                 name="designation"
                 placeholder="Senior Consultant"
                 defaultValue={isEdit ? doctor?.designation : undefined}
+                required
               />
               <InputFieldError state={state} field="designation" />
             </Field>
@@ -344,7 +360,20 @@ const DoctorFormDialog = ({
             {!isEdit && (
               <Field>
                 <FieldLabel htmlFor="file">Profile Photo</FieldLabel>
-                <Input id="file" name="file" type="file" accept="image/*" />
+                <Input
+                  id="file"
+                  name="file"
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => {
+                    if (isUploadFileTooLarge(event.target.files?.[0] || null)) {
+                      event.currentTarget.value = "";
+                      toast.error(
+                        `Profile photo must be ${MAX_UPLOAD_FILE_SIZE_LABEL} or smaller.`,
+                      );
+                    }
+                  }}
+                />
                 <p className="text-xs text-muted-foreground mt-1">
                   Upload a profile photo for the doctor
                 </p>

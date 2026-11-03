@@ -11,12 +11,18 @@ export const createDoctorZodSchema = z.object({
   registrationNumber: z
     .string()
     .min(3, "Registration Number must be at least 3 characters long"),
-  experience: z.number().min(0, "Experience cannot be negative").optional(),
+  experience: z
+    .number()
+    .int("Experience must be a whole number")
+    .min(0, "Experience cannot be negative"),
   gender: z.enum(
     ["MALE", "FEMALE"],
     "Gender must be either 'MALE' or 'FEMALE'",
   ),
-  appointmentFee: z.number().min(0, "Appointment Fee cannot be negative"),
+  appointmentFee: z
+    .number()
+    .int("Appointment Fee must be a whole number")
+    .min(0, "Appointment Fee cannot be negative"),
   qualification: z
     .string()
     .min(3, "Qualification must be at least 3 characters long"),
@@ -28,7 +34,7 @@ export const createDoctorZodSchema = z.object({
     .min(2, "Designation must be at least 2 characters long"),
   specialties: z
     .array(z.uuid("Each specialty must be a valid UUID"))
-    .optional(),
+    .min(1, "Select at least one specialty"),
   removeSpecialties: z
     .array(z.uuid("Each specialty to remove must be a valid UUID"))
     .optional(),
