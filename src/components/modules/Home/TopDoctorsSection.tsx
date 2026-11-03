@@ -66,10 +66,14 @@ export default function TopDoctorsSection() {
               Certified Specialists
             </Badge>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
-              Meet Our <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">Top Doctors</span>
+              Meet Our{" "}
+              <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">
+                Top Doctors
+              </span>
             </h2>
             <p className="text-muted-foreground text-base leading-relaxed">
-              Consult with board-certified practitioners who consistently receive outstanding patient satisfaction ratings.
+              Consult with board-certified practitioners who consistently
+              receive outstanding patient satisfaction ratings.
             </p>
           </div>
 
@@ -119,7 +123,9 @@ export default function TopDoctorsSection() {
                   <div className="flex items-center gap-3 text-xs text-muted-foreground pt-1">
                     <span>{doctor.experience}</span>
                     <span>•</span>
-                    <span className="font-semibold text-foreground">{doctor.fee}</span>
+                    <span className="font-semibold text-foreground">
+                      {doctor.fee}
+                    </span>
                   </div>
                 </div>
 
@@ -137,15 +143,17 @@ export default function TopDoctorsSection() {
                       />
                     ))}
                   </div>
-                  <span className="font-bold text-foreground ml-1">{doctor.rating}</span>
-                  <span className="text-muted-foreground">({doctor.reviews})</span>
+                  <span className="font-bold text-foreground ml-1">
+                    {doctor.rating}
+                  </span>
+                  <span className="text-muted-foreground">
+                    ({doctor.reviews})
+                  </span>
                 </div>
 
                 {/* Action CTA */}
                 <Link href="/consultation" className="block w-full pt-1">
-                  <Button
-                    className="w-full rounded-xl py-5 font-semibold bg-primary hover:bg-primary/90 text-primary-foreground transition-all shadow-xs"
-                  >
+                  <Button className="w-full rounded-xl py-5 font-semibold bg-primary hover:bg-primary/90 text-primary-foreground transition-all shadow-xs">
                     <Calendar className="w-4 h-4 mr-1.5" />
                     Book Consult
                   </Button>

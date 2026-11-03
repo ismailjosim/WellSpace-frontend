@@ -46,7 +46,12 @@ export async function verifyMfaSetup(
     const result = await res.json();
     if (result.success) {
       try {
-        (revalidateTag as any)("user-info", { expire: 0 });
+        (
+          revalidateTag as unknown as (
+            tag: string,
+            options?: { expire: number },
+          ) => void
+        )("user-info", { expire: 0 });
       } catch {
         // ignore
       }
@@ -69,7 +74,12 @@ export async function disableMfa(
     const result = await res.json();
     if (result.success) {
       try {
-        (revalidateTag as any)("user-info", { expire: 0 });
+        (
+          revalidateTag as unknown as (
+            tag: string,
+            options?: { expire: number },
+          ) => void
+        )("user-info", { expire: 0 });
       } catch {
         // ignore
       }

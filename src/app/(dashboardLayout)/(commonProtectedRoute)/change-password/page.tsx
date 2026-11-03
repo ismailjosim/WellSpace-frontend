@@ -34,9 +34,12 @@ const ChangePasswordPage = () => {
               <KeyRound className="h-5 w-5" />
             </div>
             <div>
-              <CardTitle className="text-xl font-bold">Change Password</CardTitle>
+              <CardTitle className="text-xl font-bold">
+                Change Password
+              </CardTitle>
               <CardDescription className="text-xs">
-                Ensure your WellSpace account remains secure by using a strong, unique password.
+                Ensure your WellSpace account remains secure by using a strong,
+                unique password.
               </CardDescription>
             </div>
           </div>
@@ -53,8 +56,9 @@ const ChangePasswordPage = () => {
                   Security Recommendation
                 </span>
                 <p>
-                  Avoid reusing passwords across multiple platforms. If you have two-factor
-                  authentication (2FA) active, it will continue to protect your session seamlessly.
+                  Avoid reusing passwords across multiple platforms. If you have
+                  two-factor authentication (2FA) active, it will continue to
+                  protect your session seamlessly.
                 </p>
               </div>
             </div>

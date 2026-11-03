@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import CreatableSelect from "react-select/creatable";
+import type { StylesConfig } from "react-select";
 import { doctorQualificationOptions } from "@/constants/doctorQualifications";
 
 export interface QualificationOption {
@@ -26,7 +27,11 @@ export default function DoctorQualificationSelect({
   placeholder = "Select or type qualifications (e.g. MBBS, MD)...",
   onChange,
 }: DoctorQualificationSelectProps) {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   // Parse comma-separated defaultValue into QualificationOption[]
   const parseDefault = (val: string): QualificationOption[] => {
@@ -48,10 +53,6 @@ export default function DoctorQualificationSelect({
     setSelectedOptions(parseDefault(defaultValue));
   }
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const serializedValue = selectedOptions.map((opt) => opt.value).join(", ");
 
   const handleChange = (newValue: readonly QualificationOption[]) => {
@@ -61,8 +62,8 @@ export default function DoctorQualificationSelect({
     onChange?.(joined);
   };
 
-  const customStyles = {
-    control: (base: any, state: any) => ({
+  const customStyles: StylesConfig<QualificationOption, true> = {
+    control: (base, state) => ({
       ...base,
       backgroundColor: "var(--background)",
       borderColor: state.isFocused ? "var(--primary)" : "var(--input)",
@@ -75,7 +76,7 @@ export default function DoctorQualificationSelect({
         borderColor: "var(--primary)",
       },
     }),
-    menu: (base: any) => ({
+    menu: (base) => ({
       ...base,
       backgroundColor: "var(--popover)",
       borderColor: "var(--border)",
@@ -85,12 +86,12 @@ export default function DoctorQualificationSelect({
       zIndex: 9999,
       padding: "0.25rem",
     }),
-    menuList: (base: any) => ({
+    menuList: (base) => ({
       ...base,
       maxHeight: "14rem",
       padding: "0.25rem",
     }),
-    option: (base: any, state: any) => ({
+    option: (base, state) => ({
       ...base,
       borderRadius: "0.5rem",
       fontSize: "0.875rem",
@@ -111,19 +112,19 @@ export default function DoctorQualificationSelect({
         color: "var(--primary-foreground)",
       },
     }),
-    multiValue: (base: any) => ({
+    multiValue: (base) => ({
       ...base,
       backgroundColor: "var(--accent)",
       borderRadius: "0.375rem",
       padding: "0.1rem 0.25rem",
     }),
-    multiValueLabel: (base: any) => ({
+    multiValueLabel: (base) => ({
       ...base,
       color: "var(--accent-foreground)",
       fontSize: "0.75rem",
       fontWeight: 600,
     }),
-    multiValueRemove: (base: any) => ({
+    multiValueRemove: (base) => ({
       ...base,
       color: "var(--muted-foreground)",
       borderRadius: "0.25rem",
@@ -132,15 +133,15 @@ export default function DoctorQualificationSelect({
         color: "var(--destructive-foreground)",
       },
     }),
-    input: (base: any) => ({
+    input: (base) => ({
       ...base,
       color: "var(--foreground)",
     }),
-    placeholder: (base: any) => ({
+    placeholder: (base) => ({
       ...base,
       color: "var(--muted-foreground)",
     }),
-    singleValue: (base: any) => ({
+    singleValue: (base) => ({
       ...base,
       color: "var(--foreground)",
     }),
@@ -172,4 +173,3 @@ export default function DoctorQualificationSelect({
     </div>
   );
 }
-

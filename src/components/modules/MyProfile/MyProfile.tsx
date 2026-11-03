@@ -128,7 +128,9 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
               </div>
 
               <div className="text-center">
-                <p className="font-semibold text-lg">{userInfo?.name || "User"}</p>
+                <p className="font-semibold text-lg">
+                  {userInfo?.name || "User"}
+                </p>
                 <p className="text-sm text-muted-foreground">
                   {userInfo?.email || ""}
                 </p>
@@ -160,7 +162,9 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
               <div className="grid gap-4 md:grid-cols-2">
                 {/* Common Fields for All Roles */}
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="name" required>
+                    Full Name
+                  </Label>
                   <Input
                     id="name"
                     name="name"
@@ -182,7 +186,9 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="contactNumber">Contact Number</Label>
+                  <Label htmlFor="contactNumber" required>
+                    Contact Number
+                  </Label>
                   <Input
                     id="contactNumber"
                     name="contactNumber"
@@ -206,7 +212,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="registrationNumber">
+                      <Label htmlFor="registrationNumber" required>
                         Registration Number
                       </Label>
                       <Input
@@ -230,7 +236,9 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="appointmentFee">Appointment Fee</Label>
+                      <Label htmlFor="appointmentFee" required>
+                        Appointment Fee
+                      </Label>
                       <Input
                         id="appointmentFee"
                         name="appointmentFee"
@@ -242,7 +250,9 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="qualification">Qualification</Label>
+                      <Label htmlFor="qualification" required>
+                        Qualification
+                      </Label>
                       <DoctorQualificationSelect
                         id="qualification"
                         name="qualification"
@@ -253,7 +263,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="currentWorkingPlace">
+                      <Label htmlFor="currentWorkingPlace" required>
                         Current Working Place
                       </Label>
                       <Input
@@ -266,7 +276,9 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="designation">Designation</Label>
+                      <Label htmlFor="designation" required>
+                        Designation
+                      </Label>
                       <Input
                         id="designation"
                         name="designation"
@@ -277,7 +289,9 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="gender">Gender</Label>
+                      <Label htmlFor="gender" required>
+                        Gender
+                      </Label>
                       <select
                         id="gender"
                         name="gender"

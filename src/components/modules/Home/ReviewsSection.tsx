@@ -82,10 +82,14 @@ export default function PatientReviews() {
               Patient Testimonials
             </Badge>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
-              Loved by <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">Thousands</span>
+              Loved by{" "}
+              <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">
+                Thousands
+              </span>
             </h2>
             <p className="text-muted-foreground text-base leading-relaxed">
-              Read verified feedback from patients who experience compassionate, prompt, and secure digital healthcare on WellSpace.
+              Read verified feedback from patients who experience compassionate,
+              prompt, and secure digital healthcare on WellSpace.
             </p>
           </div>
 
@@ -140,7 +144,10 @@ export default function PatientReviews() {
                     <div className="flex items-center justify-between">
                       <div className="flex text-amber-400 gap-0.5">
                         {Array.from({ length: review.rating }).map((_, idx) => (
-                          <Star key={idx} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                          <Star
+                            key={idx}
+                            className="w-4 h-4 fill-amber-400 text-amber-400"
+                          />
                         ))}
                       </div>
                       <Quote className="h-6 w-6 text-primary/30" />
@@ -163,10 +170,14 @@ export default function PatientReviews() {
                       </Avatar>
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <p className="font-bold text-sm text-foreground">{review.name}</p>
+                          <p className="font-bold text-sm text-foreground">
+                            {review.name}
+                          </p>
                           <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
                         </div>
-                        <p className="text-[11px] text-muted-foreground">{review.role}</p>
+                        <p className="text-[11px] text-muted-foreground">
+                          {review.role}
+                        </p>
                       </div>
                     </div>
                     <span className="text-[11px] text-muted-foreground/80 font-medium">

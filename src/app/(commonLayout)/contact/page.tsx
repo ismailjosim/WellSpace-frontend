@@ -55,7 +55,8 @@ export default function ContactPage() {
       icon: Stethoscope,
       email: "clinical@wellspace.health",
       phone: "+880 1700-000001",
-      description: "Consultation coordination, prescription queries, and patient records.",
+      description:
+        "Consultation coordination, prescription queries, and patient records.",
     },
     {
       id: "billing",
@@ -63,7 +64,8 @@ export default function ContactPage() {
       icon: CreditCard,
       email: "billing@wellspace.health",
       phone: "+880 1700-000002",
-      description: "Payment status, invoice receipts, and 24-hr refund requests.",
+      description:
+        "Payment status, invoice receipts, and 24-hr refund requests.",
     },
     {
       id: "providers",
@@ -71,7 +73,8 @@ export default function ContactPage() {
       icon: UserCheck,
       email: "providers@wellspace.health",
       phone: "+880 1700-000003",
-      description: "Physician onboarding, BMDC verification, and scheduling portal.",
+      description:
+        "Physician onboarding, BMDC verification, and scheduling portal.",
     },
     {
       id: "corporate",
@@ -79,7 +82,8 @@ export default function ContactPage() {
       icon: Building2,
       email: "enterprise@wellspace.health",
       phone: "+880 1700-000004",
-      description: "Employee health benefits, NGO camps, and diagnostic center tie-ups.",
+      description:
+        "Employee health benefits, NGO camps, and diagnostic center tie-ups.",
     },
   ];
 
@@ -102,7 +106,8 @@ export default function ContactPage() {
           Support
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto">
-          Have a question about appointment bookings, doctor onboarding, or telehealth services? Our clinical coordinators are here to assist you.
+          Have a question about appointment bookings, doctor onboarding, or
+          telehealth services? Our clinical coordinators are here to assist you.
         </p>
       </div>
 
@@ -117,18 +122,30 @@ export default function ContactPage() {
               Are you experiencing a medical emergency?
             </h4>
             <p className="text-xs text-muted-foreground max-w-xl leading-relaxed">
-              Do not wait for a contact reply if you have chest pain, sudden difficulty breathing, or severe trauma. Call your local emergency hotline immediately.
+              Do not wait for a contact reply if you have chest pain, sudden
+              difficulty breathing, or severe trauma. Call your local emergency
+              hotline immediately.
             </p>
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <Button asChild size="sm" variant="destructive" className="rounded-full px-4 font-bold shadow-sm">
+          <Button
+            asChild
+            size="sm"
+            variant="destructive"
+            className="rounded-full px-4 font-bold shadow-sm"
+          >
             <a href="tel:999" className="flex items-center gap-1.5">
               <PhoneCall className="h-3.5 w-3.5" />
               <span>Call 999 / 911</span>
             </a>
           </Button>
-          <Button asChild size="sm" variant="outline" className="rounded-full px-3 text-xs">
+          <Button
+            asChild
+            size="sm"
+            variant="outline"
+            className="rounded-full px-3 text-xs"
+          >
             <Link href="/disclaimer">Read Disclaimer</Link>
           </Button>
         </div>
@@ -193,7 +210,9 @@ export default function ContactPage() {
                 <Phone className="h-5 w-5" />
               </div>
               <div>
-                <p className="font-bold text-sm text-foreground">24/7 Patient Hotline</p>
+                <p className="font-bold text-sm text-foreground">
+                  24/7 Patient Hotline
+                </p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   +880 1700-000000
                 </p>
@@ -210,7 +229,9 @@ export default function ContactPage() {
                 <Mail className="h-5 w-5" />
               </div>
               <div>
-                <p className="font-bold text-sm text-foreground">Email Support Desk</p>
+                <p className="font-bold text-sm text-foreground">
+                  Email Support Desk
+                </p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   support@wellspace.health
                 </p>
@@ -227,7 +248,9 @@ export default function ContactPage() {
                 <MapPin className="h-5 w-5" />
               </div>
               <div>
-                <p className="font-bold text-sm text-foreground">Global Operations HQ</p>
+                <p className="font-bold text-sm text-foreground">
+                  Global Operations HQ
+                </p>
                 <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
                   WellSpace Health Tower, Level 14, Gulshan-2, Dhaka, Bangladesh
                 </p>
@@ -241,7 +264,9 @@ export default function ContactPage() {
                 <Clock className="h-5 w-5" />
               </div>
               <div>
-                <p className="font-bold text-sm text-foreground">Operating Schedule</p>
+                <p className="font-bold text-sm text-foreground">
+                  Operating Schedule
+                </p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   Telehealth Consults: 24/7 Continuous
                 </p>
@@ -276,7 +301,9 @@ export default function ContactPage() {
                   Message Delivered Successfully
                 </h3>
                 <p className="text-xs text-muted-foreground max-w-md mx-auto leading-relaxed">
-                  Our clinical care coordinator for the {departments.find((d) => d.id === department)?.name} team has received your ticket and will contact you via email shortly.
+                  Our clinical care coordinator for the{" "}
+                  {departments.find((d) => d.id === department)?.name} team has
+                  received your ticket and will contact you via email shortly.
                 </p>
                 <Button
                   variant="outline"

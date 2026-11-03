@@ -3,7 +3,11 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
-import { normalizeFormData } from "@/lib/formDataHelper";
+import {
+  normalizeFormData,
+  getFormFile,
+  appendFormFile,
+} from "@/lib/formDataHelper";
 import {
   createAdminZodSchema,
   updateAdminZodSchema,
@@ -42,10 +46,8 @@ export async function createAdmin(_prevState: any, rawFormData: FormData) {
     const newFormData = new FormData();
     newFormData.append("data", JSON.stringify(finalPayload));
 
-    const file = formData.get("file");
-    if (file && typeof file === "object" && "size" in file && (file as Blob).size > 0) {
-      newFormData.append("file", file as Blob);
-    }
+    const file = getFormFile(formData, "file");
+    appendFormFile(newFormData, "file", file, "profile.jpg");
 
     const res = await serverFetch.post("/user/create-admin", {
       body: newFormData,

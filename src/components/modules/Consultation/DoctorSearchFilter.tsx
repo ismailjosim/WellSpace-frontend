@@ -36,7 +36,6 @@ export default function DoctorSearchFilters({
   if (urlSearchTerm !== prevUrlSearchTerm) {
     setPrevUrlSearchTerm(urlSearchTerm);
     setSearchTerm(urlSearchTerm);
-    isUserTypingRef.current = false;
   }
 
   const [minFee, setMinFee] = useState(urlMinFee);
@@ -79,11 +78,13 @@ export default function DoctorSearchFilters({
   );
 
   useEffect(() => {
+    if (debouncedSearch === urlSearchTerm) {
+      isUserTypingRef.current = false;
+      return;
+    }
     if (!isUserTypingRef.current) return;
     isUserTypingRef.current = false;
-    if (debouncedSearch !== urlSearchTerm) {
-      updateFilters({ searchTerm: debouncedSearch });
-    }
+    updateFilters({ searchTerm: debouncedSearch });
   }, [debouncedSearch, urlSearchTerm, updateFilters]);
 
   const handleApplyFee = () => {

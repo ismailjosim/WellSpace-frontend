@@ -14,7 +14,7 @@ export async function PATCH() {
     if (!accessToken) {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -35,7 +35,7 @@ export async function PATCH() {
         success: false,
         message: error?.message || "Failed to mark notifications read",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

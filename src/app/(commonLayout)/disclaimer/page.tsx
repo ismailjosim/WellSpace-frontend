@@ -64,8 +64,9 @@ export default function MedicalDisclaimerPage() {
             Medical Disclaimer & Emergency Guidelines
           </h1>
           <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-            Please review these critical guidelines regarding the clinical scope,
-            boundaries, and limitations of the WellSpace Telemedicine Platform.
+            Please review these critical guidelines regarding the clinical
+            scope, boundaries, and limitations of the WellSpace Telemedicine
+            Platform.
           </p>
         </div>
 
@@ -81,8 +82,9 @@ export default function MedicalDisclaimerPage() {
               </h2>
               <p className="text-sm md:text-base font-semibold text-foreground leading-relaxed">
                 WellSpace is an outpatient telehealth service. If you or someone
-                under your care requires urgent medical resuscitation or hospital
-                care, call emergency services immediately or go to the nearest emergency room.
+                under your care requires urgent medical resuscitation or
+                hospital care, call emergency services immediately or go to the
+                nearest emergency room.
               </p>
             </div>
           </div>
@@ -158,10 +160,11 @@ export default function MedicalDisclaimerPage() {
                 consultation with an individual licensed physician.
               </p>
               <p>
-                Online interactions cannot replace physical palpation, stethoscope
-                auscultation, or comprehensive vital signs checks. Attending doctors
-                hold full clinical authority to determine that a patient must be
-                referred to an in-person clinic or diagnostic center.
+                Online interactions cannot replace physical palpation,
+                stethoscope auscultation, or comprehensive vital signs checks.
+                Attending doctors hold full clinical authority to determine that
+                a patient must be referred to an in-person clinic or diagnostic
+                center.
               </p>
             </div>
           </Card>
@@ -177,14 +180,14 @@ export default function MedicalDisclaimerPage() {
             </div>
             <div className="text-sm text-muted-foreground leading-relaxed space-y-2">
               <p>
-                Practitioners on WellSpace do not prescribe controlled narcotics,
-                schedule psychotropic medications, or substances with substantial
-                risk of physical dependence.
+                Practitioners on WellSpace do not prescribe controlled
+                narcotics, schedule psychotropic medications, or substances with
+                substantial risk of physical dependence.
               </p>
               <p>
                 Physicians issue digital prescriptions only when clinically
-                appropriate and in strict accordance with national medical council
-                regulations.
+                appropriate and in strict accordance with national medical
+                council regulations.
               </p>
             </div>
           </Card>
@@ -199,11 +202,17 @@ export default function MedicalDisclaimerPage() {
                 Have questions about telehealth appropriateness?
               </p>
               <p className="text-xs text-muted-foreground">
-                Our clinical triage coordinators are available 24/7 to help guide non-emergency inquiries.
+                Our clinical triage coordinators are available 24/7 to help
+                guide non-emergency inquiries.
               </p>
             </div>
           </div>
-          <Button asChild variant="outline" size="sm" className="rounded-full shrink-0">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="rounded-full shrink-0"
+          >
             <Link href="/contact" className="flex items-center gap-1.5">
               <span>Contact Triage</span>
               <ArrowRight className="h-3.5 w-3.5" />

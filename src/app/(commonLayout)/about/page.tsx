@@ -7,7 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ShieldCheck, HeartPulse, Clock, Lock, ArrowRight, Sparkles } from "lucide-react";
+import {
+  ShieldCheck,
+  HeartPulse,
+  Clock,
+  Lock,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
 import Link from "next/link";
 
 export const dynamic = "force-static";
@@ -65,7 +72,9 @@ export default function AboutPage() {
           </span>
         </h1>
         <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-          WellSpace was established with a singular mission: to eliminate geographic and logistical boundaries in healthcare, connecting patients with certified medical professionals anytime, anywhere.
+          WellSpace was established with a singular mission: to eliminate
+          geographic and logistical boundaries in healthcare, connecting
+          patients with certified medical professionals anytime, anywhere.
         </p>
       </div>
 
@@ -96,7 +105,8 @@ export default function AboutPage() {
             Why Patients Trust WellSpace
           </h2>
           <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-            We hold ourselves to the highest clinical, ethical, and cybersecurity standards in telehealth.
+            We hold ourselves to the highest clinical, ethical, and
+            cybersecurity standards in telehealth.
           </p>
         </div>
 
@@ -112,7 +122,9 @@ export default function AboutPage() {
                   <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
                     <Icon className="h-6 w-6" />
                   </div>
-                  <CardTitle className="text-lg font-bold text-foreground">{item.title}</CardTitle>
+                  <CardTitle className="text-lg font-bold text-foreground">
+                    {item.title}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-sm leading-relaxed text-muted-foreground">
@@ -132,17 +144,27 @@ export default function AboutPage() {
             Ready to Experience Modern Healthcare?
           </h3>
           <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
-            Join thousands of satisfied patients who consult certified doctors through WellSpace every day.
+            Join thousands of satisfied patients who consult certified doctors
+            through WellSpace every day.
           </p>
         </div>
         <div className="flex flex-wrap justify-center gap-4 pt-2">
-          <Button asChild size="lg" className="rounded-full px-8 py-6 font-semibold shadow-md">
+          <Button
+            asChild
+            size="lg"
+            className="rounded-full px-8 py-6 font-semibold shadow-md"
+          >
             <Link href="/consultation">
               Find a Doctor
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-6 font-medium border-border/80">
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="rounded-full px-8 py-6 font-medium border-border/80"
+          >
             <Link href="/contact">Contact Our Team</Link>
           </Button>
         </div>

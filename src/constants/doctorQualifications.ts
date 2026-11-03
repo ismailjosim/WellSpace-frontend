@@ -60,4 +60,3 @@ export const doctorQualificationOptions = doctorQualifications.map((q) => ({
   value: q,
   label: q,
 }));
-

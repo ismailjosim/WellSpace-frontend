@@ -26,7 +26,8 @@ const serverFetchHelper = async (
 
   const accessToken = await getCookie("accessToken");
 
-  const isFormData = typeof FormData !== "undefined" && options.body instanceof FormData;
+  const isFormData =
+    typeof FormData !== "undefined" && options.body instanceof FormData;
 
   const defaultHeaders: Record<string, string> = {
     ...(accessToken

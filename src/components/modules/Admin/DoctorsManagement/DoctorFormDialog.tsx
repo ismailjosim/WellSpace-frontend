@@ -94,7 +94,9 @@ const DoctorFormDialog = ({
         <form action={formAction} className="flex flex-col flex-1 min-h-0">
           <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-4">
             <Field>
-              <FieldLabel htmlFor="name">Name</FieldLabel>
+              <FieldLabel htmlFor="name" required>
+                Name
+              </FieldLabel>
               <Input
                 id="name"
                 name="name"
@@ -105,7 +107,9 @@ const DoctorFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <FieldLabel htmlFor="email" required>
+                Email
+              </FieldLabel>
               <Input
                 id="email"
                 name="email"
@@ -120,7 +124,9 @@ const DoctorFormDialog = ({
             {!isEdit && (
               <>
                 <Field>
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <FieldLabel htmlFor="password" required>
+                    Password
+                  </FieldLabel>
                   <div className="relative">
                     <Input
                       id="password"
@@ -148,7 +154,7 @@ const DoctorFormDialog = ({
                 </Field>
 
                 <Field>
-                  <FieldLabel htmlFor="confirmPassword">
+                  <FieldLabel htmlFor="confirmPassword" required>
                     Confirm Password
                   </FieldLabel>
                   <div className="relative">
@@ -200,7 +206,9 @@ const DoctorFormDialog = ({
             <InputFieldError field="specialties" state={state} />
 
             <Field>
-              <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
+              <FieldLabel htmlFor="contactNumber" required>
+                Contact Number
+              </FieldLabel>
               <Input
                 id="contactNumber"
                 name="contactNumber"
@@ -211,7 +219,9 @@ const DoctorFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="address">Address</FieldLabel>
+              <FieldLabel htmlFor="address" required>
+                Address
+              </FieldLabel>
               <Input
                 id="address"
                 name="address"
@@ -222,7 +232,7 @@ const DoctorFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="registrationNumber">
+              <FieldLabel htmlFor="registrationNumber" required>
                 Registration Number
               </FieldLabel>
               <Input
@@ -235,7 +245,7 @@ const DoctorFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="experience">
+              <FieldLabel htmlFor="experience" required>
                 Experience (in years)
               </FieldLabel>
               <Input
@@ -250,7 +260,9 @@ const DoctorFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="gender">Gender</FieldLabel>
+              <FieldLabel htmlFor="gender" required>
+                Gender
+              </FieldLabel>
               <Input
                 id="gender"
                 name="gender"
@@ -275,7 +287,9 @@ const DoctorFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="appointmentFee">Appointment Fee</FieldLabel>
+              <FieldLabel htmlFor="appointmentFee" required>
+                Appointment Fee
+              </FieldLabel>
               <Input
                 id="appointmentFee"
                 name="appointmentFee"
@@ -288,7 +302,9 @@ const DoctorFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="qualification">Qualification</FieldLabel>
+              <FieldLabel htmlFor="qualification" required>
+                Qualification
+              </FieldLabel>
               <DoctorQualificationSelect
                 id="qualification"
                 name="qualification"
@@ -300,7 +316,7 @@ const DoctorFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="currentWorkingPlace">
+              <FieldLabel htmlFor="currentWorkingPlace" required>
                 Current Working Place
               </FieldLabel>
               <Input
@@ -313,7 +329,9 @@ const DoctorFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="designation">Designation</FieldLabel>
+              <FieldLabel htmlFor="designation" required>
+                Designation
+              </FieldLabel>
               <Input
                 id="designation"
                 name="designation"

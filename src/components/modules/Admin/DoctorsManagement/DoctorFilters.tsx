@@ -49,7 +49,8 @@ const DoctorFilters = ({ specialties }: DoctorsFilterProps) => {
   const urlSearchTerm = searchParams.get("searchTerm") || "";
 
   // Local state for popover multi-select staging
-  const [localSpecialties, setLocalSpecialties] = useState<string[]>(urlSpecialties);
+  const [localSpecialties, setLocalSpecialties] =
+    useState<string[]>(urlSpecialties);
   const [prevUrlSpecialtiesKey, setPrevUrlSpecialtiesKey] = useState(
     urlSpecialties.join(","),
   );

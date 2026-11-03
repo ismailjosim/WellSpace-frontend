@@ -9,7 +9,7 @@ const BACKEND_API_URL =
 
 export async function PATCH(
   _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
@@ -18,7 +18,7 @@ export async function PATCH(
     if (!accessToken) {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -31,7 +31,7 @@ export async function PATCH(
           Cookie: `accessToken=${accessToken}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const data = await response.json();
@@ -42,7 +42,7 @@ export async function PATCH(
         success: false,
         message: error?.message || "Failed to mark notification read",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

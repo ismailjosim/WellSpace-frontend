@@ -1,6 +1,11 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 interface DashboardSidebarContextType {
   isCollapsed: boolean;
@@ -17,28 +22,47 @@ export const DashboardSidebarProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("wellspace_dashboard_sidebar_collapsed");
-      if (saved !== null) {
-        setIsCollapsed(saved === "true");
-      }
-    } catch {
-      // ignore local storage restrictions
-    }
-    setMounted(true);
-  }, []);
+  const [userCollapsed, setUserCollapsed] = useState<boolean | null>(null);
+
+  const isCollapsed = mounted
+    ? (userCollapsed ??
+      (() => {
+        try {
+          return (
+            localStorage.getItem("wellspace_dashboard_sidebar_collapsed") ===
+            "true"
+          );
+        } catch {
+          return false;
+        }
+      })())
+    : false;
 
   const toggleSidebar = () => {
-    setIsCollapsed((prev) => {
-      const next = !prev;
+    setUserCollapsed((prev) => {
+      const current =
+        prev ??
+        (() => {
+          try {
+            return (
+              localStorage.getItem("wellspace_dashboard_sidebar_collapsed") ===
+              "true"
+            );
+          } catch {
+            return false;
+          }
+        })();
+      const next = !current;
       try {
         localStorage.setItem(
           "wellspace_dashboard_sidebar_collapsed",
-          String(next)
+          String(next),
         );
       } catch {
         // ignore
@@ -48,11 +72,11 @@ export const DashboardSidebarProvider = ({
   };
 
   const setCollapsed = (collapsed: boolean) => {
-    setIsCollapsed(collapsed);
+    setUserCollapsed(collapsed);
     try {
       localStorage.setItem(
         "wellspace_dashboard_sidebar_collapsed",
-        String(collapsed)
+        String(collapsed),
       );
     } catch {
       // ignore
@@ -62,7 +86,7 @@ export const DashboardSidebarProvider = ({
   return (
     <DashboardSidebarContext.Provider
       value={{
-        isCollapsed: mounted ? isCollapsed : false,
+        isCollapsed,
         toggleSidebar,
         setCollapsed,
       }}
@@ -76,9 +100,8 @@ export const useDashboardSidebar = () => {
   const context = useContext(DashboardSidebarContext);
   if (!context) {
     throw new Error(
-      "useDashboardSidebar must be used within a DashboardSidebarProvider"
+      "useDashboardSidebar must be used within a DashboardSidebarProvider",
     );
   }
   return context;
 };
-

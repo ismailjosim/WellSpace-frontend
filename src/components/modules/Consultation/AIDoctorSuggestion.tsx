@@ -64,11 +64,15 @@ export default function AIDoctorSuggestion() {
                 AI Diagnostic Specialist Matcher
               </CardTitle>
               <CardDescription className="text-xs text-muted-foreground">
-                Describe your symptoms in plain language to get intelligent doctor recommendations
+                Describe your symptoms in plain language to get intelligent
+                doctor recommendations
               </CardDescription>
             </div>
           </div>
-          <Badge variant="outline" className="hidden sm:inline-flex rounded-full text-[11px] font-semibold text-primary border-primary/30 bg-primary/5">
+          <Badge
+            variant="outline"
+            className="hidden sm:inline-flex rounded-full text-[11px] font-semibold text-primary border-primary/30 bg-primary/5"
+          >
             MedMatch™ AI
           </Badge>
         </div>
@@ -112,12 +116,17 @@ export default function AIDoctorSuggestion() {
           <div className="space-y-3.5 p-5 bg-card/90 rounded-2xl border border-primary/30 shadow-md">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Badge variant="outline" className="rounded-full bg-primary/10 text-primary border-primary/25 font-semibold text-xs">
+                <Badge
+                  variant="outline"
+                  className="rounded-full bg-primary/10 text-primary border-primary/25 font-semibold text-xs"
+                >
                   <ShieldCheck className="h-3 w-3 mr-1" />
                   AI Clinical Insights
                 </Badge>
               </div>
-              <span className="text-[11px] text-muted-foreground">High Confidence Match</span>
+              <span className="text-[11px] text-muted-foreground">
+                High Confidence Match
+              </span>
             </div>
 
             <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed bg-accent/30 p-3.5 rounded-xl border border-border/40">

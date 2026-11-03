@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { changePassword } from "@/services/auth/authService";
-import { Check, Eye, EyeOff, KeyRound, Loader2, Lock, ShieldCheck, X } from "lucide-react";
+import { Check, Eye, EyeOff, Loader2, Lock, X } from "lucide-react";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -62,7 +62,9 @@ export const ChangePasswordForm = ({
     <form ref={formRef} action={handleSubmit} className="space-y-4">
       {/* Current / Old Password */}
       <Field>
-        <FieldLabel htmlFor="oldPassword">Current Password</FieldLabel>
+        <FieldLabel htmlFor="oldPassword" required>
+          Current Password
+        </FieldLabel>
         <div className="relative">
           <Input
             id="oldPassword"
@@ -92,7 +94,9 @@ export const ChangePasswordForm = ({
 
       {/* New Password */}
       <Field>
-        <FieldLabel htmlFor="newPassword">New Password</FieldLabel>
+        <FieldLabel htmlFor="newPassword" required>
+          New Password
+        </FieldLabel>
         <div className="relative">
           <Input
             id="newPassword"
@@ -124,7 +128,9 @@ export const ChangePasswordForm = ({
 
       {/* Confirm New Password */}
       <Field>
-        <FieldLabel htmlFor="confirmPassword">Confirm New Password</FieldLabel>
+        <FieldLabel htmlFor="confirmPassword" required>
+          Confirm New Password
+        </FieldLabel>
         <div className="relative">
           <Input
             id="confirmPassword"
@@ -165,7 +171,9 @@ export const ChangePasswordForm = ({
             )}
             <span
               className={
-                isMinLength ? "text-foreground font-medium" : "text-muted-foreground"
+                isMinLength
+                  ? "text-foreground font-medium"
+                  : "text-muted-foreground"
               }
             >
               At least 6 characters long
@@ -228,4 +236,3 @@ export const ChangePasswordForm = ({
 };
 
 export default ChangePasswordForm;
-

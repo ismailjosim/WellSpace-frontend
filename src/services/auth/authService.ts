@@ -20,7 +20,11 @@ import {
   resetPasswordSchema,
 } from "../../schema/authSchema";
 import { verifyAccessToken } from "../../lib/JWTHandlers";
-import { normalizeFormData } from "@/lib/formDataHelper";
+import {
+  normalizeFormData,
+  getFormFile,
+  appendFormFile,
+} from "@/lib/formDataHelper";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function updateMyProfile(rawFormData: FormData) {
@@ -32,7 +36,7 @@ export async function updateMyProfile(rawFormData: FormData) {
     // Get all form fields except the file
     const data: any = {};
     formData.forEach((value, key) => {
-      if (key !== "file" && value) {
+      if (key !== "file" && key !== "profilePhoto" && value) {
         data[key] = value;
       }
     });
@@ -41,10 +45,8 @@ export async function updateMyProfile(rawFormData: FormData) {
     uploadFormData.append("data", JSON.stringify(data));
 
     // Add the file if it exists
-    const file = formData.get("file");
-    if (file && file instanceof File && file.size > 0) {
-      uploadFormData.append("file", file);
-    }
+    const file = getFormFile(formData, "file");
+    appendFormFile(uploadFormData, "file", file, "profile.jpg");
 
     const response = await serverFetch.patch(`/user/update-my-profile`, {
       body: uploadFormData,

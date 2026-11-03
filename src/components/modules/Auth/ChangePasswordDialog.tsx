@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { KeyRound, ShieldAlert } from "lucide-react";
+import { KeyRound } from "lucide-react";
 import ChangePasswordForm from "./ChangePasswordForm";
 
 interface ChangePasswordDialogProps {
@@ -47,4 +47,3 @@ export const ChangePasswordDialog = ({
 };
 
 export default ChangePasswordDialog;
-

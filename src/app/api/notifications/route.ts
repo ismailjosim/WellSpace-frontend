@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     if (!accessToken) {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
           "Content-Type": "application/json",
         },
         cache: "no-store",
-      }
+      },
     );
 
     const data = await response.json();
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
         success: false,
         message: error?.message || "Failed to fetch notifications",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

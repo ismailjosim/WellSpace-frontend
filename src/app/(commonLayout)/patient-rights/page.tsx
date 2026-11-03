@@ -89,7 +89,9 @@ export default function PatientRightsPage() {
             <span>•</span>
             <span>Version: 3.2.0</span>
             <span>•</span>
-            <span className="text-primary font-medium">Compliance Certified</span>
+            <span className="text-primary font-medium">
+              Compliance Certified
+            </span>
           </div>
         </div>
 
@@ -140,11 +142,11 @@ export default function PatientRightsPage() {
                 1. Technology & Diagnostic Limitations
               </h4>
               <p>
-                Virtual consultations utilize secure high-definition video, audio,
-                and digital chat. However, telehealth cannot replicate hands-on
-                palpation, auscultation, or comprehensive physical exams. Your
-                doctor may determine that an in-person examination or lab testing
-                is medically necessary before issuing diagnoses.
+                Virtual consultations utilize secure high-definition video,
+                audio, and digital chat. However, telehealth cannot replicate
+                hands-on palpation, auscultation, or comprehensive physical
+                exams. Your doctor may determine that an in-person examination
+                or lab testing is medically necessary before issuing diagnoses.
               </p>
             </div>
             <div className="space-y-3">
@@ -153,10 +155,10 @@ export default function PatientRightsPage() {
               </h4>
               <p>
                 Physicians issue digital prescriptions through our verified
-                network. In accordance with federal and local pharmaceutical laws,
-                certain schedule controlled substances, narcotics, or psychiatric
-                medications cannot be prescribed via virtual visits without a prior
-                documented in-person evaluation.
+                network. In accordance with federal and local pharmaceutical
+                laws, certain schedule controlled substances, narcotics, or
+                psychiatric medications cannot be prescribed via virtual visits
+                without a prior documented in-person evaluation.
               </p>
             </div>
             <div className="space-y-3">
@@ -164,8 +166,8 @@ export default function PatientRightsPage() {
                 3. Technical Connection Interruption
               </h4>
               <p>
-                In the event of a broadband or hardware disconnection exceeding 5
-                minutes during an ongoing consultation, our platform protocol
+                In the event of a broadband or hardware disconnection exceeding
+                5 minutes during an ongoing consultation, our platform protocol
                 prompts immediate reconnection or automatic rescheduling at zero
                 additional charge to the patient.
               </p>
@@ -177,8 +179,8 @@ export default function PatientRightsPage() {
               <p>
                 All practicing doctors on WellSpace hold valid licenses in the
                 jurisdiction where patient care is registered. Medical advice is
-                governed by the statutory standards of the corresponding national
-                medical council.
+                governed by the statutory standards of the corresponding
+                national medical council.
               </p>
             </div>
           </div>
@@ -194,8 +196,9 @@ export default function PatientRightsPage() {
           </div>
           <Card className="rounded-2xl border border-border/60 bg-card p-6 md:p-8">
             <p className="text-sm text-muted-foreground mb-4">
-              Safe healthcare is a mutual partnership between patient and medical
-              provider. By using WellSpace, patients agree to uphold the following:
+              Safe healthcare is a mutual partnership between patient and
+              medical provider. By using WellSpace, patients agree to uphold the
+              following:
             </p>
             <ul className="space-y-3 text-sm text-foreground">
               {patientResponsibilities.map((resp, i) => (
@@ -219,9 +222,9 @@ export default function PatientRightsPage() {
               Have concerns about your clinical care or treatment?
             </h3>
             <p className="text-sm text-muted-foreground max-w-xl">
-              Our independent Clinical Quality Committee investigates all patient
-              complaints, provider conduct concerns, and privacy inquiries within 48
-              business hours.
+              Our independent Clinical Quality Committee investigates all
+              patient complaints, provider conduct concerns, and privacy
+              inquiries within 48 business hours.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
@@ -247,4 +250,3 @@ export default function PatientRightsPage() {
     </div>
   );
 }
-

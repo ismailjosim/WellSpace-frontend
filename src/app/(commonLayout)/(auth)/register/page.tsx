@@ -20,7 +20,9 @@ const RegisterPage = () => {
             <BrandLogo href="/" textSize="xl" />
           </div>
           <div className="space-y-1">
-            <CardTitle className="text-2xl font-bold tracking-tight text-foreground">Create Your Account</CardTitle>
+            <CardTitle className="text-2xl font-bold tracking-tight text-foreground">
+              Create Your Account
+            </CardTitle>
             <CardDescription className="text-sm text-muted-foreground">
               Join WellSpace to access verified clinicians and telehealth tools
             </CardDescription>

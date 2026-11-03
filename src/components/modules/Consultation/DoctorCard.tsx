@@ -49,7 +49,9 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                 <div className="flex items-center gap-1 text-amber-500">
                   <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
                   <span className="text-xs font-bold text-foreground">
-                    {doctor.averageRating ? doctor.averageRating.toFixed(1) : "New"}
+                    {doctor.averageRating
+                      ? doctor.averageRating.toFixed(1)
+                      : "New"}
                   </span>
                 </div>
                 {doctor.doctorSpecialties &&
@@ -108,7 +110,10 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                 </Badge>
               ))}
               {doctor.doctorSpecialties.length > 3 && (
-                <Badge variant="outline" className="text-[10px] py-0 border-border/80">
+                <Badge
+                  variant="outline"
+                  className="text-[10px] py-0 border-border/80"
+                >
                   +{doctor.doctorSpecialties.length - 3} more
                 </Badge>
               )}
@@ -118,7 +123,11 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
 
         <CardFooter className="pt-3 border-t border-border/50 flex gap-2">
           <Link className="flex-1" href={`/consultation/doctor/${doctor.id}`}>
-            <Button variant="outline" size="sm" className="w-full rounded-xl text-xs font-medium">
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full rounded-xl text-xs font-medium"
+            >
               <Eye className="h-3.5 w-3.5 mr-1" />
               Profile
             </Button>

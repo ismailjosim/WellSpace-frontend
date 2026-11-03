@@ -15,7 +15,13 @@ export function UserInfoCell({ name, email, photo }: UserInfoCellProps) {
     <div className="flex items-center gap-3">
       <Avatar>
         {photo ? (
-          <Image src={photo} alt={name || "User"} width={40} height={40} unoptimized />
+          <Image
+            src={photo}
+            alt={name || "User"}
+            width={40}
+            height={40}
+            unoptimized
+          />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-primary/10 text-primary font-semibold">
             {getInitials(name)}

@@ -71,7 +71,9 @@ const SpecialtiesFormDialog = ({
 
         <form ref={formRef} action={formAction} className="space-y-4">
           <Field>
-            <FieldLabel htmlFor="title">Title</FieldLabel>
+            <FieldLabel htmlFor="title" required>
+              Title
+            </FieldLabel>
             <Input
               id="title"
               name="title"
@@ -83,7 +85,7 @@ const SpecialtiesFormDialog = ({
           </Field>
 
           <Field>
-            <FieldLabel htmlFor="file">
+            <FieldLabel htmlFor="file" required={!isEdit}>
               {isEdit ? "Update Icon (Optional)" : "Upload Icon"}
             </FieldLabel>
 

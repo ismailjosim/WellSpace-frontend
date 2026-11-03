@@ -115,10 +115,14 @@ export default function FAQPage() {
           Knowledge Hub
         </Badge>
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
-          Frequently Asked <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">Questions</span>
+          Frequently Asked{" "}
+          <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">
+            Questions
+          </span>
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base max-w-lg mx-auto">
-          Find answers to common questions regarding appointments, telehealth video rooms, prescriptions, and billing.
+          Find answers to common questions regarding appointments, telehealth
+          video rooms, prescriptions, and billing.
         </p>
 
         {/* Search Bar */}
@@ -138,19 +142,28 @@ export default function FAQPage() {
         {filteredCategories.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground space-y-2">
             <HelpCircle className="h-10 w-10 mx-auto text-muted-foreground/40 mb-2" />
-            <p className="text-base font-semibold text-foreground">No questions found</p>
-            <p className="text-xs">Try searching with a different keyword or topic</p>
+            <p className="text-base font-semibold text-foreground">
+              No questions found
+            </p>
+            <p className="text-xs">
+              Try searching with a different keyword or topic
+            </p>
           </div>
         ) : (
           filteredCategories.map((cat, idx) => {
             const Icon = cat.icon;
             return (
-              <div key={idx} className="rounded-2xl border border-border/60 bg-card p-6 shadow-xs space-y-4">
+              <div
+                key={idx}
+                className="rounded-2xl border border-border/60 bg-card p-6 shadow-xs space-y-4"
+              >
                 <div className="flex items-center gap-2.5 pb-2 border-b border-border/40">
                   <div className="p-2 rounded-xl bg-primary/10 text-primary border border-primary/20">
                     <Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="text-lg font-bold text-foreground">{cat.category}</h3>
+                  <h3 className="text-lg font-bold text-foreground">
+                    {cat.category}
+                  </h3>
                 </div>
 
                 <Accordion type="single" collapsible className="w-full">

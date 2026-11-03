@@ -7,7 +7,7 @@ export const createDoctorZodSchema = z.object({
   contactNumber: z
     .string()
     .min(10, "Contact Number must be at least 10 characters long"),
-  address: z.string().optional(),
+  address: z.string().min(1, "Address is required"),
   registrationNumber: z
     .string()
     .min(3, "Registration Number must be at least 3 characters long"),

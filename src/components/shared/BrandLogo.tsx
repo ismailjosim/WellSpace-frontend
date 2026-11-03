@@ -41,7 +41,7 @@ export function BrandLogo({
           <span
             className={cn(
               "font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground/90 to-primary bg-clip-text text-transparent leading-tight",
-              textClasses
+              textClasses,
             )}
           >
             Well<span className="text-primary">Space</span>
@@ -62,4 +62,3 @@ export function BrandLogo({
 
   return content;
 }
-

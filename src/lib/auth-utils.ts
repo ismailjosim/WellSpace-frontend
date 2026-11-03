@@ -90,7 +90,9 @@ export const isValidRedirectForRole = (
   const normalized = (role || "").toString().toUpperCase();
   if (
     routeOwner === "ADMIN" &&
-    (normalized === "ADMIN" || normalized === "SUPER_ADMIN" || normalized === "SUPERADMIN")
+    (normalized === "ADMIN" ||
+      normalized === "SUPER_ADMIN" ||
+      normalized === "SUPERADMIN")
   ) {
     return true;
   }

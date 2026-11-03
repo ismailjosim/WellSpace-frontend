@@ -91,7 +91,9 @@ const AdminFormDialog = ({
           <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-4">
             {/* Basic Information */}
             <Field>
-              <FieldLabel htmlFor="name">Name</FieldLabel>
+              <FieldLabel htmlFor="name" required>
+                Name
+              </FieldLabel>
               <Input
                 id="name"
                 name="name"
@@ -102,7 +104,9 @@ const AdminFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <FieldLabel htmlFor="email" required>
+                Email
+              </FieldLabel>
               <Input
                 id="email"
                 name="email"
@@ -115,7 +119,9 @@ const AdminFormDialog = ({
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
+              <FieldLabel htmlFor="contactNumber" required>
+                Contact Number
+              </FieldLabel>
               <Input
                 id="contactNumber"
                 name="contactNumber"
@@ -130,7 +136,9 @@ const AdminFormDialog = ({
             {/* Password Field (Create Mode Only) */}
             {!isEdit && (
               <Field>
-                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <FieldLabel htmlFor="password" required>
+                  Password
+                </FieldLabel>
                 <Input
                   id="password"
                   name="password"

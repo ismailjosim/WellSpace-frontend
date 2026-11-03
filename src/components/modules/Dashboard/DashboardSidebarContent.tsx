@@ -12,11 +12,7 @@ import { getIconComponent } from "@/lib/icon-mapper";
 import { cn } from "@/lib/utils";
 import { NavSection } from "@/types/dashboard.interface";
 import { UserInfo } from "@/types/user.interface";
-import {
-  PanelLeftClose,
-  PanelLeftOpen,
-  ShieldCheck,
-} from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BrandLogo } from "@/components/shared/BrandLogo";
@@ -40,14 +36,14 @@ const DashboardSidebarContent = ({
     <aside
       className={cn(
         "hidden md:flex h-full flex-col border-r border-border/60 bg-sidebar text-sidebar-foreground min-h-0 transition-all duration-300 ease-in-out select-none",
-        isCollapsed ? "w-[72px]" : "w-64"
+        isCollapsed ? "w-[72px]" : "w-64",
       )}
     >
       {/* Brand Header */}
       <div
         className={cn(
           "flex h-16 shrink-0 items-center border-b border-border/60 transition-all",
-          isCollapsed ? "justify-center px-2" : "justify-between px-5"
+          isCollapsed ? "justify-center px-2" : "justify-between px-5",
         )}
       >
         <BrandLogo
@@ -72,7 +68,12 @@ const DashboardSidebarContent = ({
       </div>
 
       {/* Navigation */}
-      <div className={cn("flex-1 min-h-0 overflow-y-auto py-4", isCollapsed ? "px-2" : "px-3")}>
+      <div
+        className={cn(
+          "flex-1 min-h-0 overflow-y-auto py-4",
+          isCollapsed ? "px-2" : "px-3",
+        )}
+      >
         <nav className={cn("space-y-6", isCollapsed && "space-y-3")}>
           {navItems.map((section, sectionIdx) => (
             <div key={sectionIdx}>
@@ -101,7 +102,7 @@ const DashboardSidebarContent = ({
                               "flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-200 mx-auto relative",
                               isActive
                                 ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20 font-semibold"
-                                : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                             )}
                           >
                             <Icon className="h-4 w-4 shrink-0" />
@@ -112,10 +113,16 @@ const DashboardSidebarContent = ({
                             )}
                           </Link>
                         </TooltipTrigger>
-                        <TooltipContent side="right" className="flex items-center gap-2">
+                        <TooltipContent
+                          side="right"
+                          className="flex items-center gap-2"
+                        >
                           <span className="font-medium">{item.title}</span>
                           {item.badge && (
-                            <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
+                            <Badge
+                              variant="secondary"
+                              className="text-[10px] px-1.5 py-0"
+                            >
                               {item.badge}
                             </Badge>
                           )}
@@ -132,7 +139,7 @@ const DashboardSidebarContent = ({
                         "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                         isActive
                           ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20 font-semibold"
-                          : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                          : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                       )}
                     >
                       <Icon
@@ -140,7 +147,7 @@ const DashboardSidebarContent = ({
                           "h-4 w-4 shrink-0",
                           isActive
                             ? "text-primary-foreground"
-                            : "text-muted-foreground"
+                            : "text-muted-foreground",
                         )}
                       />
                       <span className="flex-1 truncate">{item.title}</span>
@@ -151,7 +158,7 @@ const DashboardSidebarContent = ({
                             "ml-auto text-xs px-2 py-0.5",
                             isActive
                               ? "bg-white/20 text-white"
-                              : "bg-primary/10 text-primary"
+                              : "bg-primary/10 text-primary",
                           )}
                         >
                           {item.badge}
@@ -171,7 +178,12 @@ const DashboardSidebarContent = ({
       </div>
 
       {/* Bottom User Area & Quick Fold/Unfold */}
-      <div className={cn("shrink-0 border-t border-border/60 transition-all", isCollapsed ? "p-2.5" : "p-4")}>
+      <div
+        className={cn(
+          "shrink-0 border-t border-border/60 transition-all",
+          isCollapsed ? "p-2.5" : "p-4",
+        )}
+      >
         {isCollapsed ? (
           <div className="flex flex-col items-center gap-2">
             <Tooltip>

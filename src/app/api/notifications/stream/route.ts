@@ -14,7 +14,7 @@ export async function GET() {
   }
 
   const backendStreamUrl = `${BACKEND_API_URL}/notifications/stream?token=${encodeURIComponent(
-    accessToken
+    accessToken,
   )}`;
 
   try {

@@ -172,7 +172,9 @@ export function LoginForm({ redirect }: { redirect?: string }) {
       <FieldGroup>
         {/* Email Field */}
         <Field>
-          <FieldLabel htmlFor="email">Email Address</FieldLabel>
+          <FieldLabel htmlFor="email" required>
+            Email Address
+          </FieldLabel>
           <Input
             id="email"
             name="email"
@@ -185,7 +187,9 @@ export function LoginForm({ redirect }: { redirect?: string }) {
         {/* Password Field */}
         <Field>
           <div className="flex items-center">
-            <FieldLabel htmlFor="password">Password</FieldLabel>
+            <FieldLabel htmlFor="password" required>
+              Password
+            </FieldLabel>
             <a
               href="#"
               className="ml-auto inline-block text-sm underline-offset-4 hover:underline"

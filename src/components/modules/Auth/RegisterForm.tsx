@@ -40,20 +40,26 @@ const RegisterForm = () => {
     <form action={formAction}>
       <FieldGroup>
         <Field>
-          <FieldLabel htmlFor="name">Full Name</FieldLabel>
+          <FieldLabel htmlFor="name" required>
+            Full Name
+          </FieldLabel>
           <Input id="name" name="name" type="text" placeholder="John Doe" />
 
           <InputFieldError field="name" state={state} />
         </Field>
 
         <Field>
-          <FieldLabel htmlFor="email">Email Address</FieldLabel>
+          <FieldLabel htmlFor="email" required>
+            Email Address
+          </FieldLabel>
           <Input name="email" type="email" placeholder="your@email.com" />
           <InputFieldError field="email" state={state} />
         </Field>
 
         <Field>
-          <FieldLabel htmlFor="password">Password</FieldLabel>
+          <FieldLabel htmlFor="password" required>
+            Password
+          </FieldLabel>
           <div className="relative">
             <Input
               name="password"

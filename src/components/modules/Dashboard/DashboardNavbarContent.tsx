@@ -52,7 +52,10 @@ const DashboardNavbarContent = ({
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-64 p-0 border-r border-border/60">
+            <SheetContent
+              side="left"
+              className="w-64 p-0 border-r border-border/60"
+            >
               <DashboardMobileSidebar
                 userInfo={userInfo}
                 navItems={navItems || []}

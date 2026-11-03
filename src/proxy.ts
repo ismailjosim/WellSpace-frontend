@@ -34,9 +34,7 @@ export async function proxy(request: NextRequest) {
         isTokenValid = true;
         const rawRole = (verifiedToken.role || "").toString().toUpperCase();
         userRole =
-          rawRole === "SUPERADMIN"
-            ? "SUPER_ADMIN"
-            : (rawRole as UserRole);
+          rawRole === "SUPERADMIN" ? "SUPER_ADMIN" : (rawRole as UserRole);
         needPasswordChange = Boolean(verifiedToken.needPasswordChange);
       }
     } catch {

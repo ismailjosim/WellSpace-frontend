@@ -32,8 +32,9 @@ export default function TermsOfServicePage() {
           </p>
           <p className="mt-2">
             These terms constitute a binding electronic agreement between you
-            and WellSpace Health Inc., governing your access to web applications,
-            APIs, video consultation rooms, and digital healthcare records.
+            and WellSpace Health Inc., governing your access to web
+            applications, APIs, video consultation rooms, and digital healthcare
+            records.
           </p>
         </>
       ),
@@ -54,8 +55,8 @@ export default function TermsOfServicePage() {
             Medical diagnosis, advice, prescriptions, and clinical judgment are
             exercised solely by the individual healthcare provider under their
             own professional license and clinical autonomy. The existence of
-            WellSpace does not replace comprehensive in-person emergency hospital
-            care.
+            WellSpace does not replace comprehensive in-person emergency
+            hospital care.
           </p>
         </>
       ),
@@ -66,7 +67,9 @@ export default function TermsOfServicePage() {
       title: "3. Patient Conduct & Representation",
       content: (
         <>
-          <p>As a patient user, you explicitly agree and warrant that you will:</p>
+          <p>
+            As a patient user, you explicitly agree and warrant that you will:
+          </p>
           <ul className="list-disc list-inside space-y-1.5 mt-2 pl-2">
             <li>
               Provide true, precise, and current health information, known drug
@@ -77,13 +80,13 @@ export default function TermsOfServicePage() {
               session cookies, and 2FA authentication factors.
             </li>
             <li>
-              Refrain from taking screen recordings, screenshots, or audio captures
-              of attending physicians during consultations without express mutual
-              written consent.
+              Refrain from taking screen recordings, screenshots, or audio
+              captures of attending physicians during consultations without
+              express mutual written consent.
             </li>
             <li>
-              Never impersonate another individual or register on behalf of a minor
-              without documented legal guardian authority.
+              Never impersonate another individual or register on behalf of a
+              minor without documented legal guardian authority.
             </li>
           </ul>
         </>
@@ -103,8 +106,8 @@ export default function TermsOfServicePage() {
           <p className="mt-2">
             Patients may cancel an appointment up to 24 hours prior to the
             scheduled start time for a 100% full refund to their original
-            payment source. Cancellations within 24 hours or failure to enter the
-            virtual consultation room within 15 minutes of the start time
+            payment source. Cancellations within 24 hours or failure to enter
+            the virtual consultation room within 15 minutes of the start time
             (&quot;no-show&quot;) are non-refundable to honor the reserved
             clinical time of the physician.
           </p>
@@ -148,10 +151,11 @@ export default function TermsOfServicePage() {
         <>
           <p>
             To the maximum extent permitted by applicable law, WellSpace and its
-            affiliates, directors, and licensors shall not be held liable for any
-            indirect, punitive, special, or consequential damages resulting from
-            network connectivity interruptions, technical hardware limitations,
-            or independent clinical advice rendered by healthcare providers.
+            affiliates, directors, and licensors shall not be held liable for
+            any indirect, punitive, special, or consequential damages resulting
+            from network connectivity interruptions, technical hardware
+            limitations, or independent clinical advice rendered by healthcare
+            providers.
           </p>
         </>
       ),
@@ -164,10 +168,10 @@ export default function TermsOfServicePage() {
         <>
           <p>
             WELLSPACE IS STRICTLY AN OUTPATIENT TELEHEALTH PLATFORM AND IS NEVER
-            APPROPRIATE FOR LIFE-THREATENING EMERGENCIES. If you experience chest
-            pain, stroke symptoms, severe bleeding, or acute respiratory distress,
-            you must call emergency services (999/911) or proceed immediately to
-            the nearest emergency room.
+            APPROPRIATE FOR LIFE-THREATENING EMERGENCIES. If you experience
+            chest pain, stroke symptoms, severe bleeding, or acute respiratory
+            distress, you must call emergency services (999/911) or proceed
+            immediately to the nearest emergency room.
           </p>
           <div className="mt-3">
             <Link
@@ -206,7 +210,9 @@ export default function TermsOfServicePage() {
             <span>•</span>
             <span>Effective: November 1, 2026</span>
             <span>•</span>
-            <span className="text-primary font-medium">Standard Patient Agreement</span>
+            <span className="text-primary font-medium">
+              Standard Patient Agreement
+            </span>
           </div>
         </div>
 
@@ -245,7 +251,8 @@ export default function TermsOfServicePage() {
               Questions regarding our legal terms?
             </p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Contact our legal and patient compliance team at legal@wellspace.health
+              Contact our legal and patient compliance team at
+              legal@wellspace.health
             </p>
           </div>
           <Link

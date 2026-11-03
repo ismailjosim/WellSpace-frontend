@@ -25,7 +25,6 @@ const SchedulesFilter = () => {
   if (urlStartDate !== prevUrlStartDate) {
     setPrevUrlStartDate(urlStartDate);
     setStartDateInput(urlStartDate);
-    isUserChangingRef.current = false;
   }
 
   const [endDateInput, setEndDateInput] = useState(urlEndDate);
@@ -34,7 +33,6 @@ const SchedulesFilter = () => {
   if (urlEndDate !== prevUrlEndDate) {
     setPrevUrlEndDate(urlEndDate);
     setEndDateInput(urlEndDate);
-    isUserChangingRef.current = false;
   }
 
   // Debounced values
@@ -43,15 +41,19 @@ const SchedulesFilter = () => {
 
   // Apply debounced filters to URL ONLY when user changed the input
   useEffect(() => {
+    if (
+      debouncedStartDate === urlStartDate &&
+      debouncedEndDate === urlEndDate
+    ) {
+      isUserChangingRef.current = false;
+      return;
+    }
+
     if (!isUserChangingRef.current) {
       return;
     }
 
     isUserChangingRef.current = false;
-
-    if (debouncedStartDate === urlStartDate && debouncedEndDate === urlEndDate) {
-      return;
-    }
 
     const params = new URLSearchParams(searchParams.toString());
 
@@ -73,7 +75,15 @@ const SchedulesFilter = () => {
       const qs = params.toString();
       router.push(qs ? `?${qs}` : pathname);
     });
-  }, [debouncedStartDate, debouncedEndDate, urlStartDate, urlEndDate, searchParams, router, pathname]);
+  }, [
+    debouncedStartDate,
+    debouncedEndDate,
+    urlStartDate,
+    urlEndDate,
+    searchParams,
+    router,
+    pathname,
+  ]);
 
   return (
     <div className="space-y-3">
@@ -81,7 +91,10 @@ const SchedulesFilter = () => {
       <div className="flex items-center gap-3 flex-wrap">
         {/* Start Date Filter */}
         <div className="flex items-center gap-2">
-          <label htmlFor="startDate" className="text-sm font-medium text-muted-foreground">
+          <label
+            htmlFor="startDate"
+            className="text-sm font-medium text-muted-foreground"
+          >
             Start Date:
           </label>
           <Input
@@ -99,7 +112,10 @@ const SchedulesFilter = () => {
 
         {/* End Date Filter */}
         <div className="flex items-center gap-2">
-          <label htmlFor="endDate" className="text-sm font-medium text-muted-foreground">
+          <label
+            htmlFor="endDate"
+            className="text-sm font-medium text-muted-foreground"
+          >
             End Date:
           </label>
           <Input

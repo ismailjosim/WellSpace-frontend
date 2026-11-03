@@ -73,7 +73,8 @@ export const loginUser = async (
         success: false,
         type: "server",
         message: sanitizeErrorMessage(
-          result.message || "Invalid credentials or service temporarily unavailable."
+          result.message ||
+            "Invalid credentials or service temporarily unavailable.",
         ),
         code: result.error?.cause || null,
       };

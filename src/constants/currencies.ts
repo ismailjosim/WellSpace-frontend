@@ -7,1017 +7,1017 @@ export interface ICurrency {
 
 export const CURRENCIES: ICurrency[] = [
   {
-    "key": "XUA",
-    "value": "ADB Unit of Account",
-    "emoji": "XUA",
-    "symbol": ""
+    key: "XUA",
+    value: "ADB Unit of Account",
+    emoji: "XUA",
+    symbol: "",
   },
   {
-    "key": "AFN",
-    "value": "Afghani",
-    "emoji": "AFN",
-    "symbol": ""
+    key: "AFN",
+    value: "Afghani",
+    emoji: "AFN",
+    symbol: "",
   },
   {
-    "key": "DZD",
-    "value": "Algerian Dinar",
-    "emoji": "DZD",
-    "symbol": "DA"
+    key: "DZD",
+    value: "Algerian Dinar",
+    emoji: "DZD",
+    symbol: "DA",
   },
   {
-    "key": "ARS",
-    "value": "Argentine Peso",
-    "emoji": "ARS",
-    "symbol": "$"
+    key: "ARS",
+    value: "Argentine Peso",
+    emoji: "ARS",
+    symbol: "$",
   },
   {
-    "key": "AMD",
-    "value": "Armenian Dram",
-    "emoji": "AMD",
-    "symbol": "֏"
+    key: "AMD",
+    value: "Armenian Dram",
+    emoji: "AMD",
+    symbol: "֏",
   },
   {
-    "key": "AWG",
-    "value": "Aruban Florin",
-    "emoji": "AWG",
-    "symbol": "ƒ"
+    key: "AWG",
+    value: "Aruban Florin",
+    emoji: "AWG",
+    symbol: "ƒ",
   },
   {
-    "key": "AUD",
-    "value": "Australian Dollar",
-    "emoji": "AUD",
-    "symbol": "$"
+    key: "AUD",
+    value: "Australian Dollar",
+    emoji: "AUD",
+    symbol: "$",
   },
   {
-    "key": "AZN",
-    "value": "Azerbaijanian Manat",
-    "emoji": "AZN",
-    "symbol": "₼"
+    key: "AZN",
+    value: "Azerbaijanian Manat",
+    emoji: "AZN",
+    symbol: "₼",
   },
   {
-    "key": "BSD",
-    "value": "Bahamian Dollar",
-    "emoji": "BSD",
-    "symbol": "$"
+    key: "BSD",
+    value: "Bahamian Dollar",
+    emoji: "BSD",
+    symbol: "$",
   },
   {
-    "key": "BHD",
-    "value": "Bahraini Dinar",
-    "emoji": "BHD",
-    "symbol": "د.ب"
+    key: "BHD",
+    value: "Bahraini Dinar",
+    emoji: "BHD",
+    symbol: "د.ب",
   },
   {
-    "key": "THB",
-    "value": "Baht",
-    "emoji": "THB",
-    "symbol": "Bt"
+    key: "THB",
+    value: "Baht",
+    emoji: "THB",
+    symbol: "Bt",
   },
   {
-    "key": "PAB",
-    "value": "Balboa",
-    "emoji": "PAB",
-    "symbol": "B/."
+    key: "PAB",
+    value: "Balboa",
+    emoji: "PAB",
+    symbol: "B/.",
   },
   {
-    "key": "BBD",
-    "value": "Barbados Dollar",
-    "emoji": "BBD",
-    "symbol": "Bds$ "
+    key: "BBD",
+    value: "Barbados Dollar",
+    emoji: "BBD",
+    symbol: "Bds$ ",
   },
   {
-    "key": "BYN",
-    "value": "Belarussian Ruble",
-    "emoji": "BYN",
-    "symbol": ""
+    key: "BYN",
+    value: "Belarussian Ruble",
+    emoji: "BYN",
+    symbol: "",
   },
   {
-    "key": "BZD",
-    "value": "Belize Dollar",
-    "emoji": "BZD",
-    "symbol": "$"
+    key: "BZD",
+    value: "Belize Dollar",
+    emoji: "BZD",
+    symbol: "$",
   },
   {
-    "key": "BMD",
-    "value": "Bermudian Dollar",
-    "emoji": "BMD",
-    "symbol": "$"
+    key: "BMD",
+    value: "Bermudian Dollar",
+    emoji: "BMD",
+    symbol: "$",
   },
   {
-    "key": "VES",
-    "value": "Bolivar",
-    "emoji": "VES",
-    "symbol": ""
+    key: "VES",
+    value: "Bolivar",
+    emoji: "VES",
+    symbol: "",
   },
   {
-    "key": "VEF",
-    "value": "Bolivar (deprecated)",
-    "emoji": "VEF",
-    "symbol": "Bs."
+    key: "VEF",
+    value: "Bolivar (deprecated)",
+    emoji: "VEF",
+    symbol: "Bs.",
   },
   {
-    "key": "BOB",
-    "value": "Boliviano",
-    "emoji": "BOB",
-    "symbol": "$b"
+    key: "BOB",
+    value: "Boliviano",
+    emoji: "BOB",
+    symbol: "$b",
   },
   {
-    "key": "BRL",
-    "value": "Brazilian Real",
-    "emoji": "BRL",
-    "symbol": "R$"
+    key: "BRL",
+    value: "Brazilian Real",
+    emoji: "BRL",
+    symbol: "R$",
   },
   {
-    "key": "BND",
-    "value": "Brunei Dollar",
-    "emoji": "BND",
-    "symbol": "$"
+    key: "BND",
+    value: "Brunei Dollar",
+    emoji: "BND",
+    symbol: "$",
   },
   {
-    "key": "BGN",
-    "value": "Bulgarian Lev",
-    "emoji": "BGN",
-    "symbol": "лв"
+    key: "BGN",
+    value: "Bulgarian Lev",
+    emoji: "BGN",
+    symbol: "лв",
   },
   {
-    "key": "BIF",
-    "value": "Burundi Franc",
-    "emoji": "BIF",
-    "symbol": "FBu "
+    key: "BIF",
+    value: "Burundi Franc",
+    emoji: "BIF",
+    symbol: "FBu ",
   },
   {
-    "key": "XOF",
-    "value": "CFA Franc BCEAO",
-    "emoji": "XOF",
-    "symbol": "XOF "
+    key: "XOF",
+    value: "CFA Franc BCEAO",
+    emoji: "XOF",
+    symbol: "XOF ",
   },
   {
-    "key": "XAF",
-    "value": "CFA Franc BEAC",
-    "emoji": "XAF",
-    "symbol": "$"
+    key: "XAF",
+    value: "CFA Franc BEAC",
+    emoji: "XAF",
+    symbol: "$",
   },
   {
-    "key": "XPF",
-    "value": "CFP Franc",
-    "emoji": "XPF",
-    "symbol": "XPF "
+    key: "XPF",
+    value: "CFP Franc",
+    emoji: "XPF",
+    symbol: "XPF ",
   },
   {
-    "key": "CVE",
-    "value": "Cabo Verde Escudo",
-    "emoji": "CVE",
-    "symbol": "$"
+    key: "CVE",
+    value: "Cabo Verde Escudo",
+    emoji: "CVE",
+    symbol: "$",
   },
   {
-    "key": "CAD",
-    "value": "Canadian Dollar",
-    "emoji": "CAD",
-    "symbol": "CA$"
+    key: "CAD",
+    value: "Canadian Dollar",
+    emoji: "CAD",
+    symbol: "CA$",
   },
   {
-    "key": "KYD",
-    "value": "Cayman Islands Dollar",
-    "emoji": "KYD",
-    "symbol": "$"
+    key: "KYD",
+    value: "Cayman Islands Dollar",
+    emoji: "KYD",
+    symbol: "$",
   },
   {
-    "key": "CLP",
-    "value": "Chilean Peso",
-    "emoji": "CLP",
-    "symbol": "$"
+    key: "CLP",
+    value: "Chilean Peso",
+    emoji: "CLP",
+    symbol: "$",
   },
   {
-    "key": "COP",
-    "value": "Colombian Peso",
-    "emoji": "COP",
-    "symbol": "$"
+    key: "COP",
+    value: "Colombian Peso",
+    emoji: "COP",
+    symbol: "$",
   },
   {
-    "key": "KMF",
-    "value": "Comoro Franc",
-    "emoji": "KMF",
-    "symbol": "KMF "
+    key: "KMF",
+    value: "Comoro Franc",
+    emoji: "KMF",
+    symbol: "KMF ",
   },
   {
-    "key": "CDF",
-    "value": "Congolese Franc",
-    "emoji": "CDF",
-    "symbol": "FC "
+    key: "CDF",
+    value: "Congolese Franc",
+    emoji: "CDF",
+    symbol: "FC ",
   },
   {
-    "key": "BAM",
-    "value": "Convertible Mark",
-    "emoji": "BAM",
-    "symbol": "KM "
+    key: "BAM",
+    value: "Convertible Mark",
+    emoji: "BAM",
+    symbol: "KM ",
   },
   {
-    "key": "NIO",
-    "value": "Cordoba Oro",
-    "emoji": "NIO",
-    "symbol": "C$"
+    key: "NIO",
+    value: "Cordoba Oro",
+    emoji: "NIO",
+    symbol: "C$",
   },
   {
-    "key": "CRC",
-    "value": "Costa Rican Colon",
-    "emoji": "CRC",
-    "symbol": "₡"
+    key: "CRC",
+    value: "Costa Rican Colon",
+    emoji: "CRC",
+    symbol: "₡",
   },
   {
-    "key": "CUP",
-    "value": "Cuban Peso",
-    "emoji": "CUP",
-    "symbol": "$"
+    key: "CUP",
+    value: "Cuban Peso",
+    emoji: "CUP",
+    symbol: "$",
   },
   {
-    "key": "CZK",
-    "value": "Czech Koruna",
-    "emoji": "CZK",
-    "symbol": "Kč"
+    key: "CZK",
+    value: "Czech Koruna",
+    emoji: "CZK",
+    symbol: "Kč",
   },
   {
-    "key": "GMD",
-    "value": "Dalasi",
-    "emoji": "GMD",
-    "symbol": "GMD "
+    key: "GMD",
+    value: "Dalasi",
+    emoji: "GMD",
+    symbol: "GMD ",
   },
   {
-    "key": "DKK",
-    "value": "Danish Krone",
-    "emoji": "DKK",
-    "symbol": "kr."
+    key: "DKK",
+    value: "Danish Krone",
+    emoji: "DKK",
+    symbol: "kr.",
   },
   {
-    "key": "MKD",
-    "value": "Denar",
-    "emoji": "MKD",
-    "symbol": "ден"
+    key: "MKD",
+    value: "Denar",
+    emoji: "MKD",
+    symbol: "ден",
   },
   {
-    "key": "DJF",
-    "value": "Djibouti Franc",
-    "emoji": "DJF",
-    "symbol": "DJF "
+    key: "DJF",
+    value: "Djibouti Franc",
+    emoji: "DJF",
+    symbol: "DJF ",
   },
   {
-    "key": "STN",
-    "value": "Dobra",
-    "emoji": "STN",
-    "symbol": ""
+    key: "STN",
+    value: "Dobra",
+    emoji: "STN",
+    symbol: "",
   },
   {
-    "key": "DOP",
-    "value": "Dominican Peso",
-    "emoji": "DOP",
-    "symbol": "$"
+    key: "DOP",
+    value: "Dominican Peso",
+    emoji: "DOP",
+    symbol: "$",
   },
   {
-    "key": "VND",
-    "value": "Dong",
-    "emoji": "VND",
-    "symbol": "₫"
+    key: "VND",
+    value: "Dong",
+    emoji: "VND",
+    symbol: "₫",
   },
   {
-    "key": "XCD",
-    "value": "East Caribbean Dollar",
-    "emoji": "XCD",
-    "symbol": "$"
+    key: "XCD",
+    value: "East Caribbean Dollar",
+    emoji: "XCD",
+    symbol: "$",
   },
   {
-    "key": "EGP",
-    "value": "Egyptian Pound",
-    "emoji": "EGP",
-    "symbol": "£"
+    key: "EGP",
+    value: "Egyptian Pound",
+    emoji: "EGP",
+    symbol: "£",
   },
   {
-    "key": "SVC",
-    "value": "El Salvador Colon",
-    "emoji": "SVC",
-    "symbol": "¢"
+    key: "SVC",
+    value: "El Salvador Colon",
+    emoji: "SVC",
+    symbol: "¢",
   },
   {
-    "key": "ETB",
-    "value": "Ethiopian Birr",
-    "emoji": "ETB",
-    "symbol": "BR"
+    key: "ETB",
+    value: "Ethiopian Birr",
+    emoji: "ETB",
+    symbol: "BR",
   },
   {
-    "key": "EUR",
-    "value": "Euro",
-    "emoji": "💶",
-    "symbol": "€"
+    key: "EUR",
+    value: "Euro",
+    emoji: "💶",
+    symbol: "€",
   },
   {
-    "key": "FKP",
-    "value": "Falkland Islands Pound",
-    "emoji": "FKP",
-    "symbol": "£"
+    key: "FKP",
+    value: "Falkland Islands Pound",
+    emoji: "FKP",
+    symbol: "£",
   },
   {
-    "key": "FJD",
-    "value": "Fiji Dollar",
-    "emoji": "FJD",
-    "symbol": "FJ$"
+    key: "FJD",
+    value: "Fiji Dollar",
+    emoji: "FJD",
+    symbol: "FJ$",
   },
   {
-    "key": "HUF",
-    "value": "Forint",
-    "emoji": "HUF",
-    "symbol": "Ft"
+    key: "HUF",
+    value: "Forint",
+    emoji: "HUF",
+    symbol: "Ft",
   },
   {
-    "key": "GHS",
-    "value": "Ghana Cedi",
-    "emoji": "GHS",
-    "symbol": "₵"
+    key: "GHS",
+    value: "Ghana Cedi",
+    emoji: "GHS",
+    symbol: "₵",
   },
   {
-    "key": "GIP",
-    "value": "Gibraltar Pound",
-    "emoji": "GIP",
-    "symbol": "£"
+    key: "GIP",
+    value: "Gibraltar Pound",
+    emoji: "GIP",
+    symbol: "£",
   },
   {
-    "key": "HTG",
-    "value": "Gourde",
-    "emoji": "HTG",
-    "symbol": "G"
+    key: "HTG",
+    value: "Gourde",
+    emoji: "HTG",
+    symbol: "G",
   },
   {
-    "key": "PYG",
-    "value": "Guarani",
-    "emoji": "PYG",
-    "symbol": "Gs"
+    key: "PYG",
+    value: "Guarani",
+    emoji: "PYG",
+    symbol: "Gs",
   },
   {
-    "key": "GNF",
-    "value": "Guinea Franc",
-    "emoji": "GNF",
-    "symbol": "FG"
+    key: "GNF",
+    value: "Guinea Franc",
+    emoji: "GNF",
+    symbol: "FG",
   },
   {
-    "key": "GYD",
-    "value": "Guyana Dollar",
-    "emoji": "GYD",
-    "symbol": "$"
+    key: "GYD",
+    value: "Guyana Dollar",
+    emoji: "GYD",
+    symbol: "$",
   },
   {
-    "key": "HKD",
-    "value": "Hong Kong Dollar",
-    "emoji": "HKD",
-    "symbol": "HK$"
+    key: "HKD",
+    value: "Hong Kong Dollar",
+    emoji: "HKD",
+    symbol: "HK$",
   },
   {
-    "key": "UAH",
-    "value": "Hryvnia",
-    "emoji": "UAH",
-    "symbol": "UAH "
+    key: "UAH",
+    value: "Hryvnia",
+    emoji: "UAH",
+    symbol: "UAH ",
   },
   {
-    "key": "ISK",
-    "value": "Iceland Krona",
-    "emoji": "ISK",
-    "symbol": "kr"
+    key: "ISK",
+    value: "Iceland Krona",
+    emoji: "ISK",
+    symbol: "kr",
   },
   {
-    "key": "INR",
-    "value": "Indian Rupee",
-    "emoji": "INR",
-    "symbol": "₹"
+    key: "INR",
+    value: "Indian Rupee",
+    emoji: "INR",
+    symbol: "₹",
   },
   {
-    "key": "IRR",
-    "value": "Iranian Rial",
-    "emoji": "IRR",
-    "symbol": "﷼"
+    key: "IRR",
+    value: "Iranian Rial",
+    emoji: "IRR",
+    symbol: "﷼",
   },
   {
-    "key": "IQD",
-    "value": "Iraqi Dinar",
-    "emoji": "IQD",
-    "symbol": "د.ع"
+    key: "IQD",
+    value: "Iraqi Dinar",
+    emoji: "IQD",
+    symbol: "د.ع",
   },
   {
-    "key": "JMD",
-    "value": "Jamaican Dollar",
-    "emoji": "JMD",
-    "symbol": "$"
+    key: "JMD",
+    value: "Jamaican Dollar",
+    emoji: "JMD",
+    symbol: "$",
   },
   {
-    "key": "JOD",
-    "value": "Jordanian Dinar",
-    "emoji": "JOD",
-    "symbol": "JD"
+    key: "JOD",
+    value: "Jordanian Dinar",
+    emoji: "JOD",
+    symbol: "JD",
   },
   {
-    "key": "KES",
-    "value": "Kenyan Shilling",
-    "emoji": "KES",
-    "symbol": "Ksh"
+    key: "KES",
+    value: "Kenyan Shilling",
+    emoji: "KES",
+    symbol: "Ksh",
   },
   {
-    "key": "PGK",
-    "value": "Kina",
-    "emoji": "PGK",
-    "symbol": "K"
+    key: "PGK",
+    value: "Kina",
+    emoji: "PGK",
+    symbol: "K",
   },
   {
-    "key": "LAK",
-    "value": "Kip",
-    "emoji": "LAK",
-    "symbol": "₭"
+    key: "LAK",
+    value: "Kip",
+    emoji: "LAK",
+    symbol: "₭",
   },
   {
-    "key": "HRK",
-    "value": "Kuna",
-    "emoji": "HRK",
-    "symbol": "kn"
+    key: "HRK",
+    value: "Kuna",
+    emoji: "HRK",
+    symbol: "kn",
   },
   {
-    "key": "KWD",
-    "value": "Kuwaiti Dinar",
-    "emoji": "KWD",
-    "symbol": "ك"
+    key: "KWD",
+    value: "Kuwaiti Dinar",
+    emoji: "KWD",
+    symbol: "ك",
   },
   {
-    "key": "MWK",
-    "value": "Kwacha",
-    "emoji": "MWK",
-    "symbol": "MK "
+    key: "MWK",
+    value: "Kwacha",
+    emoji: "MWK",
+    symbol: "MK ",
   },
   {
-    "key": "AOA",
-    "value": "Kwanza",
-    "emoji": "AOA",
-    "symbol": "Kz "
+    key: "AOA",
+    value: "Kwanza",
+    emoji: "AOA",
+    symbol: "Kz ",
   },
   {
-    "key": "MMK",
-    "value": "Kyat",
-    "emoji": "MMK",
-    "symbol": "K"
+    key: "MMK",
+    value: "Kyat",
+    emoji: "MMK",
+    symbol: "K",
   },
   {
-    "key": "GEL",
-    "value": "Lari",
-    "emoji": "GEL",
-    "symbol": "GEL "
+    key: "GEL",
+    value: "Lari",
+    emoji: "GEL",
+    symbol: "GEL ",
   },
   {
-    "key": "LBP",
-    "value": "Lebanese Pound",
-    "emoji": "LBP",
-    "symbol": "ل.ل"
+    key: "LBP",
+    value: "Lebanese Pound",
+    emoji: "LBP",
+    symbol: "ل.ل",
   },
   {
-    "key": "ALL",
-    "value": "Lek",
-    "emoji": "ALL",
-    "symbol": "Lek "
+    key: "ALL",
+    value: "Lek",
+    emoji: "ALL",
+    symbol: "Lek ",
   },
   {
-    "key": "HNL",
-    "value": "Lempira",
-    "emoji": "HNL",
-    "symbol": "L"
+    key: "HNL",
+    value: "Lempira",
+    emoji: "HNL",
+    symbol: "L",
   },
   {
-    "key": "SLL",
-    "value": "Leone",
-    "emoji": "SLL",
-    "symbol": "Le "
+    key: "SLL",
+    value: "Leone",
+    emoji: "SLL",
+    symbol: "Le ",
   },
   {
-    "key": "LRD",
-    "value": "Liberian Dollar",
-    "emoji": "LRD",
-    "symbol": "$"
+    key: "LRD",
+    value: "Liberian Dollar",
+    emoji: "LRD",
+    symbol: "$",
   },
   {
-    "key": "LYD",
-    "value": "Libyan Dinar",
-    "emoji": "LYD",
-    "symbol": "LD "
+    key: "LYD",
+    value: "Libyan Dinar",
+    emoji: "LYD",
+    symbol: "LD ",
   },
   {
-    "key": "SZL",
-    "value": "Lilangeni",
-    "emoji": "SZL",
-    "symbol": "E"
+    key: "SZL",
+    value: "Lilangeni",
+    emoji: "SZL",
+    symbol: "E",
   },
   {
-    "key": "LSL",
-    "value": "Loti",
-    "emoji": "LSL",
-    "symbol": "LSL "
+    key: "LSL",
+    value: "Loti",
+    emoji: "LSL",
+    symbol: "LSL ",
   },
   {
-    "key": "MGA",
-    "value": "Malagasy Ariary",
-    "emoji": "MGA",
-    "symbol": ""
+    key: "MGA",
+    value: "Malagasy Ariary",
+    emoji: "MGA",
+    symbol: "",
   },
   {
-    "key": "MYR",
-    "value": "Malaysian Ringgit",
-    "emoji": "MYR",
-    "symbol": "RM"
+    key: "MYR",
+    value: "Malaysian Ringgit",
+    emoji: "MYR",
+    symbol: "RM",
   },
   {
-    "key": "MUR",
-    "value": "Mauritius Rupee",
-    "emoji": "MUR",
-    "symbol": "Rs"
+    key: "MUR",
+    value: "Mauritius Rupee",
+    emoji: "MUR",
+    symbol: "Rs",
   },
   {
-    "key": "MXN",
-    "value": "Mexican Peso",
-    "emoji": "MXN",
-    "symbol": "$"
+    key: "MXN",
+    value: "Mexican Peso",
+    emoji: "MXN",
+    symbol: "$",
   },
   {
-    "key": "MXV",
-    "value": "Mexican Unidad de Inversion (UDI)",
-    "emoji": "MXV",
-    "symbol": ""
+    key: "MXV",
+    value: "Mexican Unidad de Inversion (UDI)",
+    emoji: "MXV",
+    symbol: "",
   },
   {
-    "key": "MDL",
-    "value": "Moldovan Leu",
-    "emoji": "MDL",
-    "symbol": "MDL "
+    key: "MDL",
+    value: "Moldovan Leu",
+    emoji: "MDL",
+    symbol: "MDL ",
   },
   {
-    "key": "MAD",
-    "value": "Moroccan Dirham",
-    "emoji": "MAD",
-    "symbol": "MAD "
+    key: "MAD",
+    value: "Moroccan Dirham",
+    emoji: "MAD",
+    symbol: "MAD ",
   },
   {
-    "key": "MZN",
-    "value": "Mozambique Metical",
-    "emoji": "MZN",
-    "symbol": "Mt"
+    key: "MZN",
+    value: "Mozambique Metical",
+    emoji: "MZN",
+    symbol: "Mt",
   },
   {
-    "key": "NGN",
-    "value": "Naira",
-    "emoji": "NGN",
-    "symbol": "₦"
+    key: "NGN",
+    value: "Naira",
+    emoji: "NGN",
+    symbol: "₦",
   },
   {
-    "key": "ERN",
-    "value": "Nakfa",
-    "emoji": "ERN",
-    "symbol": "NKf "
+    key: "ERN",
+    value: "Nakfa",
+    emoji: "ERN",
+    symbol: "NKf ",
   },
   {
-    "key": "NAD",
-    "value": "Namibia Dollar",
-    "emoji": "NAD",
-    "symbol": "$"
+    key: "NAD",
+    value: "Namibia Dollar",
+    emoji: "NAD",
+    symbol: "$",
   },
   {
-    "key": "NPR",
-    "value": "Nepalese Rupee",
-    "emoji": "NPR",
-    "symbol": "Rs."
+    key: "NPR",
+    value: "Nepalese Rupee",
+    emoji: "NPR",
+    symbol: "Rs.",
   },
   {
-    "key": "ANG",
-    "value": "Netherlands Antillean Guilder",
-    "emoji": "ANG",
-    "symbol": "ƒ"
+    key: "ANG",
+    value: "Netherlands Antillean Guilder",
+    emoji: "ANG",
+    symbol: "ƒ",
   },
   {
-    "key": "ILS",
-    "value": "New Israeli Sheqel",
-    "emoji": "ILS",
-    "symbol": "₪"
+    key: "ILS",
+    value: "New Israeli Sheqel",
+    emoji: "ILS",
+    symbol: "₪",
   },
   {
-    "key": "TWD",
-    "value": "New Taiwan Dollar",
-    "emoji": "TWD",
-    "symbol": "NT$"
+    key: "TWD",
+    value: "New Taiwan Dollar",
+    emoji: "TWD",
+    symbol: "NT$",
   },
   {
-    "key": "NZD",
-    "value": "New Zealand Dollar",
-    "emoji": "NZD",
-    "symbol": "$"
+    key: "NZD",
+    value: "New Zealand Dollar",
+    emoji: "NZD",
+    symbol: "$",
   },
   {
-    "key": "BTN",
-    "value": "Ngultrum",
-    "emoji": "BTN",
-    "symbol": "BTN "
+    key: "BTN",
+    value: "Ngultrum",
+    emoji: "BTN",
+    symbol: "BTN ",
   },
   {
-    "key": "KPW",
-    "value": "North Korean Won",
-    "emoji": "KPW",
-    "symbol": "₩"
+    key: "KPW",
+    value: "North Korean Won",
+    emoji: "KPW",
+    symbol: "₩",
   },
   {
-    "key": "NOK",
-    "value": "Norwegian Krone",
-    "emoji": "NOK",
-    "symbol": "kr"
+    key: "NOK",
+    value: "Norwegian Krone",
+    emoji: "NOK",
+    symbol: "kr",
   },
   {
-    "key": "PEN",
-    "value": "Nuevo Sol",
-    "emoji": "PEN",
-    "symbol": "S/."
+    key: "PEN",
+    value: "Nuevo Sol",
+    emoji: "PEN",
+    symbol: "S/.",
   },
   {
-    "key": "MRU",
-    "value": "Ouguiya",
-    "emoji": "MRU",
-    "symbol": ""
+    key: "MRU",
+    value: "Ouguiya",
+    emoji: "MRU",
+    symbol: "",
   },
   {
-    "key": "PKR",
-    "value": "Pakistan Rupee",
-    "emoji": "PKR",
-    "symbol": "Rs"
+    key: "PKR",
+    value: "Pakistan Rupee",
+    emoji: "PKR",
+    symbol: "Rs",
   },
   {
-    "key": "MOP",
-    "value": "Pataca",
-    "emoji": "MOP",
-    "symbol": "MOP$"
+    key: "MOP",
+    value: "Pataca",
+    emoji: "MOP",
+    symbol: "MOP$",
   },
   {
-    "key": "TOP",
-    "value": "Pa’anga",
-    "emoji": "TOP",
-    "symbol": "$"
+    key: "TOP",
+    value: "Pa’anga",
+    emoji: "TOP",
+    symbol: "$",
   },
   {
-    "key": "CUC",
-    "value": "Peso Convertible",
-    "emoji": "CUC",
-    "symbol": ""
+    key: "CUC",
+    value: "Peso Convertible",
+    emoji: "CUC",
+    symbol: "",
   },
   {
-    "key": "UYU",
-    "value": "Peso Uruguayo",
-    "emoji": "UYU",
-    "symbol": "$"
+    key: "UYU",
+    value: "Peso Uruguayo",
+    emoji: "UYU",
+    symbol: "$",
   },
   {
-    "key": "PHP",
-    "value": "Philippine Peso",
-    "emoji": "PHP",
-    "symbol": "₱"
+    key: "PHP",
+    value: "Philippine Peso",
+    emoji: "PHP",
+    symbol: "₱",
   },
   {
-    "key": "GBP",
-    "value": "Pound Sterling",
-    "emoji": "💷",
-    "symbol": "£"
+    key: "GBP",
+    value: "Pound Sterling",
+    emoji: "💷",
+    symbol: "£",
   },
   {
-    "key": "BWP",
-    "value": "Pula",
-    "emoji": "BWP",
-    "symbol": "P"
+    key: "BWP",
+    value: "Pula",
+    emoji: "BWP",
+    symbol: "P",
   },
   {
-    "key": "QAR",
-    "value": "Qatari Rial",
-    "emoji": "QAR",
-    "symbol": "﷼ "
+    key: "QAR",
+    value: "Qatari Rial",
+    emoji: "QAR",
+    symbol: "﷼ ",
   },
   {
-    "key": "GTQ",
-    "value": "Quetzal",
-    "emoji": "GTQ",
-    "symbol": "Q."
+    key: "GTQ",
+    value: "Quetzal",
+    emoji: "GTQ",
+    symbol: "Q.",
   },
   {
-    "key": "ZAR",
-    "value": "Rand",
-    "emoji": "ZAR",
-    "symbol": "R"
+    key: "ZAR",
+    value: "Rand",
+    emoji: "ZAR",
+    symbol: "R",
   },
   {
-    "key": "OMR",
-    "value": "Rial Omani",
-    "emoji": "OMR",
-    "symbol": "RO"
+    key: "OMR",
+    value: "Rial Omani",
+    emoji: "OMR",
+    symbol: "RO",
   },
   {
-    "key": "KHR",
-    "value": "Riel",
-    "emoji": "KHR",
-    "symbol": "៛"
+    key: "KHR",
+    value: "Riel",
+    emoji: "KHR",
+    symbol: "៛",
   },
   {
-    "key": "RON",
-    "value": "Romanian Leu",
-    "emoji": "RON",
-    "symbol": "lei"
+    key: "RON",
+    value: "Romanian Leu",
+    emoji: "RON",
+    symbol: "lei",
   },
   {
-    "key": "MVR",
-    "value": "Rufiyaa",
-    "emoji": "MVR",
-    "symbol": "MVR "
+    key: "MVR",
+    value: "Rufiyaa",
+    emoji: "MVR",
+    symbol: "MVR ",
   },
   {
-    "key": "IDR",
-    "value": "Rupiah",
-    "emoji": "IDR",
-    "symbol": "Rp."
+    key: "IDR",
+    value: "Rupiah",
+    emoji: "IDR",
+    symbol: "Rp.",
   },
   {
-    "key": "RUB",
-    "value": "Russian Ruble",
-    "emoji": "RUB",
-    "symbol": "₽"
+    key: "RUB",
+    value: "Russian Ruble",
+    emoji: "RUB",
+    symbol: "₽",
   },
   {
-    "key": "RWF",
-    "value": "Rwanda Franc",
-    "emoji": "RWF",
-    "symbol": "RWF "
+    key: "RWF",
+    value: "Rwanda Franc",
+    emoji: "RWF",
+    symbol: "RWF ",
   },
   {
-    "key": "XDR",
-    "value": "SDR (Special Drawing Right)",
-    "emoji": "XDR",
-    "symbol": ""
+    key: "XDR",
+    value: "SDR (Special Drawing Right)",
+    emoji: "XDR",
+    symbol: "",
   },
   {
-    "key": "SHP",
-    "value": "Saint Helena Pound",
-    "emoji": "SHP",
-    "symbol": "£"
+    key: "SHP",
+    value: "Saint Helena Pound",
+    emoji: "SHP",
+    symbol: "£",
   },
   {
-    "key": "SAR",
-    "value": "Saudi Riyal",
-    "emoji": "SAR",
-    "symbol": "﷼"
+    key: "SAR",
+    value: "Saudi Riyal",
+    emoji: "SAR",
+    symbol: "﷼",
   },
   {
-    "key": "RSD",
-    "value": "Serbian Dinar",
-    "emoji": "RSD",
-    "symbol": "РСД"
+    key: "RSD",
+    value: "Serbian Dinar",
+    emoji: "RSD",
+    symbol: "РСД",
   },
   {
-    "key": "SCR",
-    "value": "Seychelles Rupee",
-    "emoji": "SCR",
-    "symbol": "₨"
+    key: "SCR",
+    value: "Seychelles Rupee",
+    emoji: "SCR",
+    symbol: "₨",
   },
   {
-    "key": "SGD",
-    "value": "Singapore Dollar",
-    "emoji": "SGD",
-    "symbol": "$"
+    key: "SGD",
+    value: "Singapore Dollar",
+    emoji: "SGD",
+    symbol: "$",
   },
   {
-    "key": "SBD",
-    "value": "Solomon Islands Dollar",
-    "emoji": "SBD",
-    "symbol": "$"
+    key: "SBD",
+    value: "Solomon Islands Dollar",
+    emoji: "SBD",
+    symbol: "$",
   },
   {
-    "key": "KGS",
-    "value": "Som",
-    "emoji": "KGS",
-    "symbol": "лв"
+    key: "KGS",
+    value: "Som",
+    emoji: "KGS",
+    symbol: "лв",
   },
   {
-    "key": "SOS",
-    "value": "Somali Shilling",
-    "emoji": "SOS",
-    "symbol": "S"
+    key: "SOS",
+    value: "Somali Shilling",
+    emoji: "SOS",
+    symbol: "S",
   },
   {
-    "key": "TJS",
-    "value": "Somoni",
-    "emoji": "TJS",
-    "symbol": "TJS "
+    key: "TJS",
+    value: "Somoni",
+    emoji: "TJS",
+    symbol: "TJS ",
   },
   {
-    "key": "SSP",
-    "value": "South Sudanese Pound",
-    "emoji": "SSP",
-    "symbol": ""
+    key: "SSP",
+    value: "South Sudanese Pound",
+    emoji: "SSP",
+    symbol: "",
   },
   {
-    "key": "LKR",
-    "value": "Sri Lanka Rupee",
-    "emoji": "LKR",
-    "symbol": "₨"
+    key: "LKR",
+    value: "Sri Lanka Rupee",
+    emoji: "LKR",
+    symbol: "₨",
   },
   {
-    "key": "XSU",
-    "value": "Sucre",
-    "emoji": "XSU",
-    "symbol": ""
+    key: "XSU",
+    value: "Sucre",
+    emoji: "XSU",
+    symbol: "",
   },
   {
-    "key": "SDG",
-    "value": "Sudanese Pound",
-    "emoji": "SDG",
-    "symbol": "LSd"
+    key: "SDG",
+    value: "Sudanese Pound",
+    emoji: "SDG",
+    symbol: "LSd",
   },
   {
-    "key": "SRD",
-    "value": "Surinam Dollar",
-    "emoji": "SRD",
-    "symbol": ""
+    key: "SRD",
+    value: "Surinam Dollar",
+    emoji: "SRD",
+    symbol: "",
   },
   {
-    "key": "SEK",
-    "value": "Swedish Krona",
-    "emoji": "SEK",
-    "symbol": "kr"
+    key: "SEK",
+    value: "Swedish Krona",
+    emoji: "SEK",
+    symbol: "kr",
   },
   {
-    "key": "CHF",
-    "value": "Swiss Franc",
-    "emoji": "CHF",
-    "symbol": "CHF "
+    key: "CHF",
+    value: "Swiss Franc",
+    emoji: "CHF",
+    symbol: "CHF ",
   },
   {
-    "key": "SYP",
-    "value": "Syrian Pound",
-    "emoji": "SYP",
-    "symbol": "£"
+    key: "SYP",
+    value: "Syrian Pound",
+    emoji: "SYP",
+    symbol: "£",
   },
   {
-    "key": "BDT",
-    "value": "Taka",
-    "emoji": "BDT",
-    "symbol": "Tk "
+    key: "BDT",
+    value: "Taka",
+    emoji: "BDT",
+    symbol: "Tk ",
   },
   {
-    "key": "WST",
-    "value": "Tala",
-    "emoji": "WST",
-    "symbol": "WST "
+    key: "WST",
+    value: "Tala",
+    emoji: "WST",
+    symbol: "WST ",
   },
   {
-    "key": "TZS",
-    "value": "Tanzanian Shilling",
-    "emoji": "TZS",
-    "symbol": "TZs"
+    key: "TZS",
+    value: "Tanzanian Shilling",
+    emoji: "TZS",
+    symbol: "TZs",
   },
   {
-    "key": "KZT",
-    "value": "Tenge",
-    "emoji": "KZT",
-    "symbol": "₸"
+    key: "KZT",
+    value: "Tenge",
+    emoji: "KZT",
+    symbol: "₸",
   },
   {
-    "key": "TTD",
-    "value": "Trinidad and Tobago Dollar",
-    "emoji": "TTD",
-    "symbol": "TT$"
+    key: "TTD",
+    value: "Trinidad and Tobago Dollar",
+    emoji: "TTD",
+    symbol: "TT$",
   },
   {
-    "key": "MNT",
-    "value": "Tugrik",
-    "emoji": "MNT",
-    "symbol": "₮"
+    key: "MNT",
+    value: "Tugrik",
+    emoji: "MNT",
+    symbol: "₮",
   },
   {
-    "key": "TND",
-    "value": "Tunisian Dinar",
-    "emoji": "TND",
-    "symbol": "TND "
+    key: "TND",
+    value: "Tunisian Dinar",
+    emoji: "TND",
+    symbol: "TND ",
   },
   {
-    "key": "TRY",
-    "value": "Turkish Lira",
-    "emoji": "TRY",
-    "symbol": "TL"
+    key: "TRY",
+    value: "Turkish Lira",
+    emoji: "TRY",
+    symbol: "TL",
   },
   {
-    "key": "TMT",
-    "value": "Turkmenistan New Manat",
-    "emoji": "TMT",
-    "symbol": ""
+    key: "TMT",
+    value: "Turkmenistan New Manat",
+    emoji: "TMT",
+    symbol: "",
   },
   {
-    "key": "AED",
-    "value": "UAE Dirham",
-    "emoji": "AED",
-    "symbol": "Dhs."
+    key: "AED",
+    value: "UAE Dirham",
+    emoji: "AED",
+    symbol: "Dhs.",
   },
   {
-    "key": "USD",
-    "value": "US Dollar",
-    "emoji": "💵",
-    "symbol": "$"
+    key: "USD",
+    value: "US Dollar",
+    emoji: "💵",
+    symbol: "$",
   },
   {
-    "key": "USN",
-    "value": "US Dollar Next day",
-    "emoji": "USN",
-    "symbol": ""
+    key: "USN",
+    value: "US Dollar Next day",
+    emoji: "USN",
+    symbol: "",
   },
   {
-    "key": "UGX",
-    "value": "Uganda Shilling",
-    "emoji": "UGX",
-    "symbol": "UGX"
+    key: "UGX",
+    value: "Uganda Shilling",
+    emoji: "UGX",
+    symbol: "UGX",
   },
   {
-    "key": "CLF",
-    "value": "Unidad de Fomento",
-    "emoji": "CLF",
-    "symbol": ""
+    key: "CLF",
+    value: "Unidad de Fomento",
+    emoji: "CLF",
+    symbol: "",
   },
   {
-    "key": "COU",
-    "value": "Unidad de Valor Real (UVR)",
-    "emoji": "COU",
-    "symbol": ""
+    key: "COU",
+    value: "Unidad de Valor Real (UVR)",
+    emoji: "COU",
+    symbol: "",
   },
   {
-    "key": "UYI",
-    "value": "Uruguay Peso en Unidades Indexadas (URUIURUI)",
-    "emoji": "UYI",
-    "symbol": ""
+    key: "UYI",
+    value: "Uruguay Peso en Unidades Indexadas (URUIURUI)",
+    emoji: "UYI",
+    symbol: "",
   },
   {
-    "key": "UZS",
-    "value": "Uzbekistan Sum",
-    "emoji": "UZS",
-    "symbol": "лв"
+    key: "UZS",
+    value: "Uzbekistan Sum",
+    emoji: "UZS",
+    symbol: "лв",
   },
   {
-    "key": "VUV",
-    "value": "Vatu",
-    "emoji": "VUV",
-    "symbol": "VT"
+    key: "VUV",
+    value: "Vatu",
+    emoji: "VUV",
+    symbol: "VT",
   },
   {
-    "key": "CHE",
-    "value": "WIR Euro",
-    "emoji": "CHE",
-    "symbol": ""
+    key: "CHE",
+    value: "WIR Euro",
+    emoji: "CHE",
+    symbol: "",
   },
   {
-    "key": "CHW",
-    "value": "WIR Franc",
-    "emoji": "CHW",
-    "symbol": ""
+    key: "CHW",
+    value: "WIR Franc",
+    emoji: "CHW",
+    symbol: "",
   },
   {
-    "key": "KRW",
-    "value": "Won",
-    "emoji": "KRW",
-    "symbol": "₩"
+    key: "KRW",
+    value: "Won",
+    emoji: "KRW",
+    symbol: "₩",
   },
   {
-    "key": "YER",
-    "value": "Yemeni Rial",
-    "emoji": "YER",
-    "symbol": "﷼ "
+    key: "YER",
+    value: "Yemeni Rial",
+    emoji: "YER",
+    symbol: "﷼ ",
   },
   {
-    "key": "JPY",
-    "value": "Yen",
-    "emoji": "💴",
-    "symbol": "¥"
+    key: "JPY",
+    value: "Yen",
+    emoji: "💴",
+    symbol: "¥",
   },
   {
-    "key": "CNY",
-    "value": "Yuan Renminbi",
-    "emoji": "CNY",
-    "symbol": "¥"
+    key: "CNY",
+    value: "Yuan Renminbi",
+    emoji: "CNY",
+    symbol: "¥",
   },
   {
-    "key": "YUD",
-    "value": "Yugoslavian Dinar",
-    "emoji": "YUD",
-    "symbol": ""
+    key: "YUD",
+    value: "Yugoslavian Dinar",
+    emoji: "YUD",
+    symbol: "",
   },
   {
-    "key": "ZMW",
-    "value": "Zambian Kwacha",
-    "emoji": "ZMW",
-    "symbol": ""
+    key: "ZMW",
+    value: "Zambian Kwacha",
+    emoji: "ZMW",
+    symbol: "",
   },
   {
-    "key": "ZWL",
-    "value": "Zimbabwe Dollar",
-    "emoji": "ZWL",
-    "symbol": ""
+    key: "ZWL",
+    value: "Zimbabwe Dollar",
+    emoji: "ZWL",
+    symbol: "",
   },
   {
-    "key": "PLN",
-    "value": "Zloty",
-    "emoji": "PLN",
-    "symbol": "zł"
-  }
+    key: "PLN",
+    value: "Zloty",
+    emoji: "PLN",
+    symbol: "zł",
+  },
 ];

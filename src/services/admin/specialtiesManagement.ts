@@ -2,7 +2,11 @@
 import z from "zod";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
-import { normalizeFormData } from "@/lib/formDataHelper";
+import {
+  normalizeFormData,
+  getFormFile,
+  appendFormFile,
+} from "@/lib/formDataHelper";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const createSpecialtyValidationSchema = z.object({
@@ -30,10 +34,8 @@ export async function createSpecialty(_prevState: any, rawFormData: FormData) {
     const newFormData = new FormData();
     newFormData.append("data", JSON.stringify(validatedPayload));
 
-    const file = formData.get("file");
-    if (file && typeof file === "object" && "size" in file && (file as Blob).size > 0) {
-      newFormData.append("file", file as Blob);
-    }
+    const file = getFormFile(formData, "file");
+    appendFormFile(newFormData, "file", file, "specialty.png");
 
     const res = await serverFetch.post("/specialties", {
       body: newFormData,
@@ -52,7 +54,11 @@ export async function createSpecialty(_prevState: any, rawFormData: FormData) {
   }
 }
 
-export async function updateSpecialty(id: string, _prevState: any, rawFormData: FormData) {
+export async function updateSpecialty(
+  id: string,
+  _prevState: any,
+  rawFormData: FormData,
+) {
   try {
     const formData = normalizeFormData(rawFormData);
     const title = formData.get("title") as string;

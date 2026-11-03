@@ -29,22 +29,22 @@ const SearchFilter = ({
   if (urlParamValue !== prevUrlValue) {
     setPrevUrlValue(urlParamValue);
     setValue(urlParamValue);
-    isUserTypingRef.current = false;
   }
 
   const debouncedValue = useDebounce(value, 400);
 
   // Push to URL ONLY when the change originated from the user typing in this input
   useEffect(() => {
+    if (debouncedValue === urlParamValue) {
+      isUserTypingRef.current = false;
+      return;
+    }
+
     if (!isUserTypingRef.current) {
       return;
     }
 
     isUserTypingRef.current = false;
-
-    if (debouncedValue === urlParamValue) {
-      return;
-    }
 
     const params = new URLSearchParams(searchParams.toString());
 
@@ -60,7 +60,14 @@ const SearchFilter = ({
       const qs = params.toString();
       router.push(qs ? `?${qs}` : pathname);
     });
-  }, [debouncedValue, paramName, router, searchParams, urlParamValue, pathname]);
+  }, [
+    debouncedValue,
+    paramName,
+    router,
+    searchParams,
+    urlParamValue,
+    pathname,
+  ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     isUserTypingRef.current = true;

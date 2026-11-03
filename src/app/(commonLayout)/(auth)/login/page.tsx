@@ -25,7 +25,9 @@ const LoginPage = async ({
             <BrandLogo href="/" textSize="xl" />
           </div>
           <div className="space-y-1">
-            <CardTitle className="text-2xl font-bold tracking-tight text-foreground">Welcome Back</CardTitle>
+            <CardTitle className="text-2xl font-bold tracking-tight text-foreground">
+              Welcome Back
+            </CardTitle>
             <CardDescription className="text-sm text-muted-foreground">
               Sign in with your verified credentials to access care
             </CardDescription>

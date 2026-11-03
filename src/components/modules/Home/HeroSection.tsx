@@ -1,7 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, Calendar, Star, Sparkles, Loader2, ArrowRight, ShieldCheck } from "lucide-react";
+import {
+  Search,
+  Calendar,
+  Star,
+  Sparkles,
+  Loader2,
+  ArrowRight,
+  ShieldCheck,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -72,7 +80,9 @@ export default function HeroSection() {
           <div
             key={index}
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-105"
+              index === currentSlide
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-105"
             } transition-transform duration-10000`}
           >
             <Image
@@ -120,7 +130,9 @@ export default function HeroSection() {
 
             {/* Description */}
             <p className="text-base sm:text-lg text-slate-200/90 max-w-xl leading-relaxed">
-              Experience modern clinical care without delays. Describe your symptoms, match with top-rated board-certified specialists, and consult via encrypted HD video in minutes.
+              Experience modern clinical care without delays. Describe your
+              symptoms, match with top-rated board-certified specialists, and
+              consult via encrypted HD video in minutes.
             </p>
 
             {/* Action Buttons */}
@@ -150,19 +162,31 @@ export default function HeroSection() {
             {/* Verified Trust Badges */}
             <div className="pt-6 border-t border-white/15 grid grid-cols-3 gap-2 sm:gap-6 max-w-lg">
               <div>
-                <div className="text-xl sm:text-3xl font-extrabold text-white">50K+</div>
-                <div className="text-[11px] sm:text-xs text-slate-300/80 mt-0.5">Patients Served</div>
+                <div className="text-xl sm:text-3xl font-extrabold text-white">
+                  50K+
+                </div>
+                <div className="text-[11px] sm:text-xs text-slate-300/80 mt-0.5">
+                  Patients Served
+                </div>
               </div>
               <div>
-                <div className="text-xl sm:text-3xl font-extrabold text-white">1,000+</div>
-                <div className="text-[11px] sm:text-xs text-slate-300/80 mt-0.5">Verified Doctors</div>
+                <div className="text-xl sm:text-3xl font-extrabold text-white">
+                  1,000+
+                </div>
+                <div className="text-[11px] sm:text-xs text-slate-300/80 mt-0.5">
+                  Verified Doctors
+                </div>
               </div>
               <div>
                 <div className="flex items-center gap-1">
-                  <span className="text-xl sm:text-3xl font-extrabold text-white">4.9</span>
+                  <span className="text-xl sm:text-3xl font-extrabold text-white">
+                    4.9
+                  </span>
                   <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-400 text-amber-400" />
                 </div>
-                <div className="text-[11px] sm:text-xs text-slate-300/80 mt-0.5">Rating (12k+)</div>
+                <div className="text-[11px] sm:text-xs text-slate-300/80 mt-0.5">
+                  Rating (12k+)
+                </div>
               </div>
             </div>
           </div>
@@ -179,7 +203,9 @@ export default function HeroSection() {
                     <CardTitle className="text-lg font-bold text-white">
                       AI Doctor Match
                     </CardTitle>
-                    <p className="text-[11px] text-teal-300/80 font-medium">MedMatch™ Clinical Engine</p>
+                    <p className="text-[11px] text-teal-300/80 font-medium">
+                      MedMatch™ Clinical Engine
+                    </p>
                   </div>
                 </div>
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
@@ -224,7 +250,9 @@ export default function HeroSection() {
                 {(aiError || aiSuggestion) && (
                   <div className="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md space-y-3">
                     {aiError ? (
-                      <p className="text-xs text-rose-200 font-medium">{aiError}</p>
+                      <p className="text-xs text-rose-200 font-medium">
+                        {aiError}
+                      </p>
                     ) : (
                       <div className="space-y-3">
                         <div className="text-xs text-teal-200 font-medium flex items-center gap-1.5">
@@ -271,7 +299,9 @@ export default function HeroSection() {
 
                 <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-300/80 pt-1">
                   <Sparkles className="w-3.5 h-3.5 text-teal-300 shrink-0" />
-                  <span>Clinical privacy preserved. Zero diagnostic data stored.</span>
+                  <span>
+                    Clinical privacy preserved. Zero diagnostic data stored.
+                  </span>
                 </div>
               </CardContent>
             </Card>

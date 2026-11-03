@@ -16,14 +16,62 @@ import {
 import Link from "next/link";
 
 const specialists = [
-  { id: 1, name: "Cardiology", icon: HeartPulse, doctors: "45+ Doctors", desc: "Heart & Vascular Health" },
-  { id: 2, name: "Neurology", icon: Brain, doctors: "32+ Doctors", desc: "Brain & Nervous System" },
-  { id: 3, name: "General Medicine", icon: Stethoscope, doctors: "80+ Doctors", desc: "Primary & Family Care" },
-  { id: 4, name: "Pediatrics", icon: Baby, doctors: "38+ Doctors", desc: "Child & Infant Care" },
-  { id: 5, name: "Ophthalmology", icon: Eye, doctors: "25+ Doctors", desc: "Vision & Eye Care" },
-  { id: 6, name: "Orthopedics", icon: Bone, doctors: "30+ Doctors", desc: "Bones & Joint Health" },
-  { id: 7, name: "Physiotherapy", icon: Activity, doctors: "28+ Doctors", desc: "Rehabilitation & Mobility" },
-  { id: 8, name: "Mental Health", icon: User, doctors: "40+ Doctors", desc: "Psychiatry & Therapy" },
+  {
+    id: 1,
+    name: "Cardiology",
+    icon: HeartPulse,
+    doctors: "45+ Doctors",
+    desc: "Heart & Vascular Health",
+  },
+  {
+    id: 2,
+    name: "Neurology",
+    icon: Brain,
+    doctors: "32+ Doctors",
+    desc: "Brain & Nervous System",
+  },
+  {
+    id: 3,
+    name: "General Medicine",
+    icon: Stethoscope,
+    doctors: "80+ Doctors",
+    desc: "Primary & Family Care",
+  },
+  {
+    id: 4,
+    name: "Pediatrics",
+    icon: Baby,
+    doctors: "38+ Doctors",
+    desc: "Child & Infant Care",
+  },
+  {
+    id: 5,
+    name: "Ophthalmology",
+    icon: Eye,
+    doctors: "25+ Doctors",
+    desc: "Vision & Eye Care",
+  },
+  {
+    id: 6,
+    name: "Orthopedics",
+    icon: Bone,
+    doctors: "30+ Doctors",
+    desc: "Bones & Joint Health",
+  },
+  {
+    id: 7,
+    name: "Physiotherapy",
+    icon: Activity,
+    doctors: "28+ Doctors",
+    desc: "Rehabilitation & Mobility",
+  },
+  {
+    id: 8,
+    name: "Mental Health",
+    icon: User,
+    doctors: "40+ Doctors",
+    desc: "Psychiatry & Therapy",
+  },
 ];
 
 export default function SpecialistsSection() {
@@ -41,10 +89,14 @@ export default function SpecialistsSection() {
             Clinical Specialties
           </Badge>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground">
-            Explore Care by <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">Specialty</span>
+            Explore Care by{" "}
+            <span className="bg-gradient-to-r from-primary to-cyan-500 bg-clip-text text-transparent">
+              Specialty
+            </span>
           </h2>
           <p className="text-muted-foreground text-base leading-relaxed">
-            Connect directly with verified specialists across top medical disciplines, available for same-day video appointments.
+            Connect directly with verified specialists across top medical
+            disciplines, available for same-day video appointments.
           </p>
         </div>
 
@@ -52,7 +104,11 @@ export default function SpecialistsSection() {
           {specialists.map((item) => {
             const Icon = item.icon;
             return (
-              <Link key={item.id} href={`/consultation`} className="group block">
+              <Link
+                key={item.id}
+                href={`/consultation`}
+                className="group block"
+              >
                 <Card className="relative h-full overflow-hidden rounded-2xl border border-border/60 bg-card/70 backdrop-blur-md hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 group-hover:-translate-y-1.5">
                   <CardContent className="p-6 flex flex-col justify-between h-full space-y-5">
                     <div className="flex items-start justify-between">

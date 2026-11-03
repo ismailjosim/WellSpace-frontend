@@ -109,7 +109,14 @@ const roleChartConfig = {
   },
 } satisfies ChartConfig;
 
-const pieColors = ["#0ea5e9", "#0d9488", "#6366f1", "#f59e0b", "#ec4899", "#8b5cf6"];
+const pieColors = [
+  "#0ea5e9",
+  "#0d9488",
+  "#6366f1",
+  "#f59e0b",
+  "#ec4899",
+  "#8b5cf6",
+];
 
 const formatEnum = (value?: string) =>
   value ? value.replaceAll("_", " ") : "Unknown";
@@ -144,7 +151,9 @@ function MetricCard({
     <Card className="rounded-2xl border border-border/60 bg-card hover:border-primary/40 hover:shadow-md transition-all">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
-          <CardDescription className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</CardDescription>
+          <CardDescription className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            {title}
+          </CardDescription>
           <CardTitle className="mt-2 text-2xl sm:text-3xl font-extrabold tabular-nums text-foreground">
             {value}
           </CardTitle>
@@ -154,7 +163,9 @@ function MetricCard({
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-xs text-muted-foreground font-medium">{description}</p>
+        <p className="text-xs text-muted-foreground font-medium">
+          {description}
+        </p>
       </CardContent>
     </Card>
   );

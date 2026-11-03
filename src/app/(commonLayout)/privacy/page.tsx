@@ -56,23 +56,25 @@ export default function PrivacyPolicyPage() {
           <ul className="list-disc list-inside space-y-1.5 mt-2 pl-2">
             <li>
               <strong>Account Identity:</strong> Full legal name, date of birth,
-              gender, primary email address, mobile phone number, and emergency contact.
+              gender, primary email address, mobile phone number, and emergency
+              contact.
             </li>
             <li>
-              <strong>Electronic Protected Health Information (ePHI):</strong> Blood
-              group, known allergies, chronic conditions, current medication
-              schedules, immunization records, and uploaded lab test reports.
+              <strong>Electronic Protected Health Information (ePHI):</strong>{" "}
+              Blood group, known allergies, chronic conditions, current
+              medication schedules, immunization records, and uploaded lab test
+              reports.
             </li>
             <li>
-              <strong>Consultation Records:</strong> Session timestamps, duration,
-              doctor clinical visit notes, ICD-10 diagnostic codes, and digital
-              prescriptions.
+              <strong>Consultation Records:</strong> Session timestamps,
+              duration, doctor clinical visit notes, ICD-10 diagnostic codes,
+              and digital prescriptions.
             </li>
             <li>
-              <strong>Payment Metadata:</strong> Transaction IDs, card brand, and
-              last 4 digits (full card credentials are tokenized directly by PCI-DSS
-              Level 1 Stripe / SSLCommerz gateways; WellSpace never stores raw card
-              numbers).
+              <strong>Payment Metadata:</strong> Transaction IDs, card brand,
+              and last 4 digits (full card credentials are tokenized directly by
+              PCI-DSS Level 1 Stripe / SSLCommerz gateways; WellSpace never
+              stores raw card numbers).
             </li>
           </ul>
         </>
@@ -89,13 +91,26 @@ export default function PrivacyPolicyPage() {
             coordination:
           </p>
           <ul className="list-disc list-inside space-y-1.5 mt-2 pl-2">
-            <li>Matching you with qualified medical specialists and reviewing doctor availability.</li>
-            <li>Enabling treating physicians to review your health records prior to consultation.</li>
-            <li>Generating official digitally verifiable prescriptions and follow-up guidance.</li>
-            <li>Delivering automated appointment reminders via email and transactional notifications.</li>
+            <li>
+              Matching you with qualified medical specialists and reviewing
+              doctor availability.
+            </li>
+            <li>
+              Enabling treating physicians to review your health records prior
+              to consultation.
+            </li>
+            <li>
+              Generating official digitally verifiable prescriptions and
+              follow-up guidance.
+            </li>
+            <li>
+              Delivering automated appointment reminders via email and
+              transactional notifications.
+            </li>
           </ul>
           <p className="mt-3 font-semibold text-foreground">
-            WELLSPACE NEVER SELLS, LEASES, OR MONETIZES PATIENT PERSONAL OR CLINICAL DATA TO THIRD PARTIES OR PHARMACEUTICAL ADVERTISERS.
+            WELLSPACE NEVER SELLS, LEASES, OR MONETIZES PATIENT PERSONAL OR
+            CLINICAL DATA TO THIRD PARTIES OR PHARMACEUTICAL ADVERTISERS.
           </p>
         </>
       ),
@@ -113,8 +128,8 @@ export default function PrivacyPolicyPage() {
             service creation.
           </p>
           <p className="mt-2">
-            Non-clinical diagnostic staging uploads or draft notes may be deleted
-            at any time upon verified patient request.
+            Non-clinical diagnostic staging uploads or draft notes may be
+            deleted at any time upon verified patient request.
           </p>
         </>
       ),
@@ -129,19 +144,21 @@ export default function PrivacyPolicyPage() {
           <ul className="list-disc list-inside space-y-1.5 mt-2 pl-2">
             <li>
               <strong>Right to Access & Portability:</strong> Instantly view and
-              download your electronic medical records and prescriptions in PDF/JSON format.
+              download your electronic medical records and prescriptions in
+              PDF/JSON format.
             </li>
             <li>
-              <strong>Right to Rectification:</strong> Request correction of inaccurate
-              demographic or personal background data.
+              <strong>Right to Rectification:</strong> Request correction of
+              inaccurate demographic or personal background data.
             </li>
             <li>
-              <strong>Right to Erasure (Account Deletion):</strong> Request account
-              deactivation and redaction of non-statutory personal identifiers.
+              <strong>Right to Erasure (Account Deletion):</strong> Request
+              account deactivation and redaction of non-statutory personal
+              identifiers.
             </li>
             <li>
-              <strong>Consent Revocation:</strong> Revoke optional notifications or
-              diagnostic sharing preferences at any time.
+              <strong>Consent Revocation:</strong> Revoke optional notifications
+              or diagnostic sharing preferences at any time.
             </li>
           </ul>
         </>
@@ -172,7 +189,9 @@ export default function PrivacyPolicyPage() {
             <span>•</span>
             <span>Standard: HIPAA / GDPR Aligned</span>
             <span>•</span>
-            <span className="text-primary font-medium">Zero Data Monetization</span>
+            <span className="text-primary font-medium">
+              Zero Data Monetization
+            </span>
           </div>
         </div>
 
@@ -244,7 +263,8 @@ export default function PrivacyPolicyPage() {
               Contact our Data Protection Officer (DPO)
             </p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Submit data access requests, deletion tickets, or privacy questions to dpo@wellspace.health
+              Submit data access requests, deletion tickets, or privacy
+              questions to dpo@wellspace.health
             </p>
           </div>
           <Link

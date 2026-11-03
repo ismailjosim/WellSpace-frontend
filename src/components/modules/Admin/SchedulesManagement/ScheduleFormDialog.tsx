@@ -65,7 +65,9 @@ const ScheduleFormDialog = ({
           <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-4">
             {/* Start Date */}
             <Field>
-              <FieldLabel htmlFor="startDate">Start Date</FieldLabel>
+              <FieldLabel htmlFor="startDate" required>
+                Start Date
+              </FieldLabel>
               <Input
                 id="startDate"
                 name="startDate"
@@ -77,7 +79,9 @@ const ScheduleFormDialog = ({
 
             {/* End Date */}
             <Field>
-              <FieldLabel htmlFor="endDate">End Date</FieldLabel>
+              <FieldLabel htmlFor="endDate" required>
+                End Date
+              </FieldLabel>
               <Input
                 id="endDate"
                 name="endDate"
@@ -89,7 +93,9 @@ const ScheduleFormDialog = ({
 
             {/* Start Time */}
             <Field>
-              <FieldLabel htmlFor="startTime">Start Time</FieldLabel>
+              <FieldLabel htmlFor="startTime" required>
+                Start Time
+              </FieldLabel>
               <Input
                 id="startTime"
                 name="startTime"
@@ -105,7 +111,9 @@ const ScheduleFormDialog = ({
 
             {/* End Time */}
             <Field>
-              <FieldLabel htmlFor="endTime">End Time</FieldLabel>
+              <FieldLabel htmlFor="endTime" required>
+                End Time
+              </FieldLabel>
               <Input
                 id="endTime"
                 name="endTime"

@@ -42,7 +42,9 @@ const SpecialtyMultiSelect = ({
 }: SpecialtyMultiSelectProps) => {
   return (
     <Field>
-      <FieldLabel htmlFor="specialties">Specialties (Required)</FieldLabel>
+      <FieldLabel htmlFor="specialties" required>
+        Specialties
+      </FieldLabel>
 
       {/* Hidden Inputs for Form Submission */}
       <Input
