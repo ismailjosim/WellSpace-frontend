@@ -52,10 +52,33 @@ const markAllNotificationsAsRead = async () => {
   return result.data;
 };
 
+const getNotificationById = async (id: string) => {
+  try {
+    const response = await fetch(`/api/notifications/${id}`, {
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || "Failed to load notification details");
+    }
+
+    return result.data;
+  } catch (error: unknown) {
+    console.error("[Notification Detail Fetch Error]", error);
+    throw error;
+  }
+};
+
 const getNotificationStreamUrl = () => `/api/notifications/stream`;
 
 export const notificationService = {
   getNotifications,
+  getNotificationById,
   markNotificationAsRead,
   markAllNotificationsAsRead,
   getNotificationStreamUrl,

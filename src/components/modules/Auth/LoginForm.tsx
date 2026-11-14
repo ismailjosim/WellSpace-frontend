@@ -190,12 +190,12 @@ export function LoginForm({ redirect }: { redirect?: string }) {
             <FieldLabel htmlFor="password" required>
               Password
             </FieldLabel>
-            <a
-              href="#"
-              className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+            <Link
+              href="/forgot-password"
+              className="ml-auto inline-block text-sm text-primary underline-offset-4 hover:underline font-medium"
             >
               Forgot your password?
-            </a>
+            </Link>
           </div>
           <div className="relative">
             <Input

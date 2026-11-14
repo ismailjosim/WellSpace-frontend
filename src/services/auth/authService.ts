@@ -115,30 +115,44 @@ export async function resetPassword(_prevState: any, rawFormData: FormData) {
   // console.log(payload)
 
   try {
+    const resetToken = (formData.get("token") as string) || null;
+    const targetUserId = (formData.get("id") as string) || null;
     const accessToken = await getCookie("accessToken");
 
-    if (!accessToken) {
-      throw new Error("User not authenticated");
+    const effectiveToken = resetToken || (accessToken as string);
+
+    if (!effectiveToken) {
+      throw new Error(
+        "Invalid or missing password reset token. Please request a new link.",
+      );
     }
 
-    const verifiedToken = jwt.verify(
-      accessToken as string,
-      process.env.ACCESS_TOKEN_SECRET as string,
-    ) as jwt.JwtPayload;
+    let userRole: UserRole | null = null;
+    let userId = targetUserId;
 
-    const userRole: UserRole = verifiedToken.role;
+    if (accessToken) {
+      try {
+        const verifiedToken = jwt.verify(
+          accessToken as string,
+          process.env.ACCESS_TOKEN_SECRET as string,
+        ) as jwt.JwtPayload;
+        userRole = verifiedToken.role;
+        const user = await getUserInfo();
+        userId = user?.id || userId;
+        revalidateTag("user-info", { expire: 0 });
+      } catch {
+        // Continue with resetToken if present
+      }
+    }
 
-    const user = await getUserInfo();
-    revalidateTag("user-info", { expire: 0 });
-    // console.log(user)
     // API Call
     const response = await serverFetch.post("/auth/reset-password", {
       body: JSON.stringify({
-        id: user?.id,
+        id: userId,
         password: payload?.newPassword,
       }),
       headers: {
-        Authorization: accessToken,
+        Authorization: `Bearer ${effectiveToken}`,
         "Content-Type": "application/json",
       },
     });
@@ -150,19 +164,22 @@ export async function resetPassword(_prevState: any, rawFormData: FormData) {
     }
 
     if (result.success) {
-      // await get
       revalidateTag("user-info", { expire: 0 });
     }
 
-    if (redirectTo) {
-      const requestedPath = redirectTo.toString();
-      if (isValidRedirectForRole(requestedPath, userRole)) {
-        redirect(`${requestedPath}?loggedIn=true`);
+    if (userRole) {
+      if (redirectTo) {
+        const requestedPath = redirectTo.toString();
+        if (isValidRedirectForRole(requestedPath, userRole)) {
+          redirect(`${requestedPath}?loggedIn=true`);
+        } else {
+          redirect(`${getDefaultDashboardRoutes(userRole)}?loggedIn=true`);
+        }
       } else {
         redirect(`${getDefaultDashboardRoutes(userRole)}?loggedIn=true`);
       }
     } else {
-      redirect(`${getDefaultDashboardRoutes(userRole)}?loggedIn=true`);
+      redirect("/login?reset=success");
     }
   } catch (error: any) {
     console.log("error in reset password", error);

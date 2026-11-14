@@ -10,8 +10,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { notificationService } from "@/services/notification/notification.service";
 import { INotification } from "@/types/notification.interface";
-import { Bell, CheckCheck } from "lucide-react";
+import { Bell, CheckCheck, ArrowRight } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const formatNotificationTime = (date: string) =>
   new Date(date).toLocaleString("en-US", {
@@ -22,6 +24,8 @@ const formatNotificationTime = (date: string) =>
   });
 
 const NotificationDropdown = () => {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState<INotification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -92,6 +96,14 @@ const NotificationDropdown = () => {
     };
   }, []);
 
+  const handleNotificationClick = async (notification: INotification) => {
+    if (!notification.isRead) {
+      handleMarkAsRead(notification);
+    }
+    setOpen(false);
+    router.push(`/notifications/${notification.id}`);
+  };
+
   const handleMarkAsRead = async (notification: INotification) => {
     if (notification.isRead) return;
 
@@ -123,7 +135,7 @@ const NotificationDropdown = () => {
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" className="relative">
           <Bell className="h-5 w-5" />
@@ -164,8 +176,8 @@ const NotificationDropdown = () => {
               <button
                 key={notification.id}
                 type="button"
-                onClick={() => handleMarkAsRead(notification)}
-                className="flex w-full gap-3 px-3 py-3 text-left hover:bg-accent"
+                onClick={() => handleNotificationClick(notification)}
+                className="flex w-full gap-3 px-3 py-3 text-left hover:bg-accent transition-colors"
               >
                 <span
                   className={`mt-1 h-2 w-2 shrink-0 rounded-full ${
@@ -176,7 +188,7 @@ const NotificationDropdown = () => {
                   <span className="block text-sm font-medium leading-5">
                     {notification.title}
                   </span>
-                  <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                  <span className="mt-1 block text-xs leading-5 text-muted-foreground line-clamp-2">
                     {notification.message}
                   </span>
                   <span className="mt-1 block text-[11px] text-muted-foreground">
@@ -186,6 +198,17 @@ const NotificationDropdown = () => {
               </button>
             ))
           )}
+        </div>
+        <DropdownMenuSeparator className="m-0" />
+        <div className="p-2 bg-muted/20">
+          <Link
+            href="/notifications"
+            onClick={() => setOpen(false)}
+            className="flex items-center justify-center gap-1.5 py-1 text-xs font-medium text-primary hover:underline text-center w-full"
+          >
+            <span>View All in Notification Center</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

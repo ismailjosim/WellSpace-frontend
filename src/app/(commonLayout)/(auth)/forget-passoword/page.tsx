@@ -1,5 +1,5 @@
-const ResetPasswordPage = () => {
-  return <div>This is Reset password Page</div>;
-};
+import { redirect } from "next/navigation";
 
-export default ResetPasswordPage;
+export default function ForgetPasswordAlias() {
+  redirect("/forgot-password");
+}

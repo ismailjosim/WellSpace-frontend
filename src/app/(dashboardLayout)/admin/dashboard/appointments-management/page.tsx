@@ -33,7 +33,11 @@ const AppointmentsManagementPage = async ({
 
       <TablePagination
         currentPage={response?.meta?.page || 1}
-        totalPages={response?.meta?.totalPage || 1}
+        totalPages={
+          Math.ceil(
+            (response?.meta?.total || 1) / (response?.meta?.limit || 10),
+          ) || 1
+        }
       />
     </div>
   );

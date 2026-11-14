@@ -33,6 +33,7 @@ interface IChatMessage {
   attachment?: string | null;
   fileType?: string | null;
   isRead?: boolean;
+  isFailed?: boolean;
 }
 
 export default function AppointmentChatDialog({
@@ -52,9 +53,18 @@ export default function AppointmentChatDialog({
 
     let isMounted = true;
     const fetchChat = async () => {
+      // Pause polling if tab is backgrounded
+      if (typeof document !== "undefined" && document.hidden) return;
+
       const res = await getChatRoom(appointmentId);
       if (isMounted && res.success && res.data?.chatRoom?.messages) {
-        setMessages(res.data.chatRoom.messages);
+        setMessages((prev) => {
+          // Keep any locally pending/failed messages
+          const pending = prev.filter(
+            (m) => m.id.startsWith("temp-") && m.isFailed,
+          );
+          return [...res.data.chatRoom.messages, ...pending];
+        });
         markChatAsRead(appointmentId);
       }
       if (isMounted) {
@@ -64,9 +74,18 @@ export default function AppointmentChatDialog({
 
     fetchChat();
     const interval = setInterval(fetchChat, 5000);
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden && isMounted) {
+        fetchChat();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
       isMounted = false;
       clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [open, appointmentId]);
 
@@ -78,14 +97,15 @@ export default function AppointmentChatDialog({
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputText.trim()) return;
+    if (!inputText.trim() || sending) return;
 
     const text = inputText.trim();
     setInputText("");
     setSending(true);
 
+    const tempId = `temp-${Date.now()}`;
     const tempMessage: IChatMessage = {
-      id: `temp-${Date.now()}`,
+      id: tempId,
       senderRole: role,
       content: text,
       createdAt: new Date().toISOString(),
@@ -96,9 +116,43 @@ export default function AppointmentChatDialog({
     try {
       const res = await sendChatMessage(appointmentId, { content: text });
       if (!res.success) {
+        setMessages((prev) =>
+          prev.map((m) => (m.id === tempId ? { ...m, isFailed: true } : m)),
+        );
         toast.error(res.message || "Failed to send message");
       }
     } catch {
+      setMessages((prev) =>
+        prev.map((m) => (m.id === tempId ? { ...m, isFailed: true } : m)),
+      );
+      toast.error("Failed to deliver message");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const handleRetry = async (failedMsg: IChatMessage) => {
+    setSending(true);
+    setMessages((prev) =>
+      prev.map((m) => (m.id === failedMsg.id ? { ...m, isFailed: false } : m)),
+    );
+
+    try {
+      const res = await sendChatMessage(appointmentId, {
+        content: failedMsg.content,
+      });
+      if (!res.success) {
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === failedMsg.id ? { ...m, isFailed: true } : m,
+          ),
+        );
+        toast.error(res.message || "Failed to send message");
+      }
+    } catch {
+      setMessages((prev) =>
+        prev.map((m) => (m.id === failedMsg.id ? { ...m, isFailed: true } : m)),
+      );
       toast.error("Failed to deliver message");
     } finally {
       setSending(false);
@@ -157,19 +211,35 @@ export default function AppointmentChatDialog({
                   </span>
                   <div
                     className={`max-w-[80%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
-                      isMine
-                        ? "bg-primary text-primary-foreground rounded-br-xs"
-                        : "bg-card border text-card-foreground rounded-bl-xs shadow-2xs"
+                      msg.isFailed
+                        ? "bg-destructive/10 border border-destructive/40 text-destructive rounded-br-xs"
+                        : isMine
+                          ? "bg-primary text-primary-foreground rounded-br-xs"
+                          : "bg-card border text-card-foreground rounded-bl-xs shadow-2xs"
                     }`}
                   >
                     {msg.content}
                   </div>
-                  <span className="text-[9px] text-muted-foreground/80 mt-0.5 px-1">
-                    {new Date(msg.createdAt).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </span>
+                  {msg.isFailed && (
+                    <div className="flex items-center gap-1.5 mt-0.5 text-[10px] text-destructive">
+                      <span>Failed to deliver</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRetry(msg)}
+                        className="underline hover:opacity-80 font-medium"
+                      >
+                        Retry
+                      </button>
+                    </div>
+                  )}
+                  {!msg.isFailed && (
+                    <span className="text-[9px] text-muted-foreground/80 mt-0.5 px-1">
+                      {new Date(msg.createdAt).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                  )}
                 </div>
               );
             })

@@ -54,7 +54,12 @@ const ConsultationPage = async ({
         {/* Pagination */}
         <TablePagination
           currentPage={doctorsResponse?.meta?.page || 1}
-          totalPages={doctorsResponse?.meta?.totalPage || 1}
+          totalPages={
+            Math.ceil(
+              (doctorsResponse?.meta?.total || 1) /
+                (doctorsResponse?.meta?.limit || 10),
+            ) || 1
+          }
         />
       </div>
     </div>

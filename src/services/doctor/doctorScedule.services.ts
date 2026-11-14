@@ -10,10 +10,17 @@ export async function getDoctorOwnSchedules(queryString?: string) {
     );
     const result = await response.json();
     console.log({ result });
+    const schedulesArray = Array.isArray(result?.data)
+      ? result.data
+      : Array.isArray(result?.data?.data)
+        ? result.data.data
+        : [];
+    const meta = result?.meta || result?.data?.meta;
+
     return {
-      success: result.success,
-      data: Array.isArray(result.data) ? result.data : [],
-      meta: result.meta,
+      success: !!result?.success,
+      data: schedulesArray,
+      meta,
     };
   } catch (error: any) {
     console.log(error);

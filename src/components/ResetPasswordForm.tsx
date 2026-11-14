@@ -15,7 +15,15 @@ import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 import { resetPassword } from "../services/auth/authService";
 
-const ResetPasswordForm = ({ redirect }: { redirect?: string }) => {
+const ResetPasswordForm = ({
+  redirect,
+  token,
+  userId,
+}: {
+  redirect?: string;
+  token?: string;
+  userId?: string;
+}) => {
   const [state, formAction, isPending] = useActionState(resetPassword, null);
 
   useEffect(() => {
@@ -27,6 +35,8 @@ const ResetPasswordForm = ({ redirect }: { redirect?: string }) => {
   return (
     <form action={formAction}>
       {redirect && <Input type="hidden" name="redirect" value={redirect} />}
+      {token && <Input type="hidden" name="token" value={token} />}
+      {userId && <Input type="hidden" name="id" value={userId} />}
       <FieldGroup>
         <div className="grid grid-cols-1 gap-4">
           {/* New Password */}

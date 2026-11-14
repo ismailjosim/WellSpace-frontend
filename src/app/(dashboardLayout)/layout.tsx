@@ -8,7 +8,7 @@ const CommonDashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <DashboardSidebarProvider>
       <TooltipProvider delayDuration={150}>
-        <div className="flex h-screen max-h-screen h-dvh max-h-dvh overflow-hidden">
+        <div className="flex h-screen max-h-dvh overflow-hidden">
           <DashboardSidebar />
           <div className="flex flex-1 flex-col overflow-hidden min-w-0">
             <DashboardNav />
