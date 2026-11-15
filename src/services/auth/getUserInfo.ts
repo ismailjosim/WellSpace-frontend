@@ -47,6 +47,7 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
           result.data.admin?.name ||
           result.data.doctor?.name ||
           result.data.patient?.name ||
+          result.data.shopStaff?.name ||
           profile?.name ||
           result.data.name ||
           tokenPayload?.name ||
@@ -58,6 +59,11 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
         doctor: result.data.doctor || (role === "DOCTOR" ? profile : undefined),
         patient:
           result.data.patient || (role === "PATIENT" ? profile : undefined),
+        shopStaff:
+          result.data.shopStaff ||
+          (role === "SHOP_MANAGER" || role === "SHOP_ASSISTANT"
+            ? profile
+            : undefined),
       };
     }
 

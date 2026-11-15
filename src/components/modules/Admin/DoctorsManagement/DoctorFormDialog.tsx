@@ -267,9 +267,7 @@ const DoctorFormDialog = ({
                 id="contactNumber"
                 name="contactNumber"
                 placeholder="+1234567890"
-                defaultValue={
-                  isEdit ? doctor?.contactNumber : "+8801711234501"
-                }
+                defaultValue={isEdit ? doctor?.contactNumber : "+8801711234501"}
                 required
               />
               <InputFieldError state={state} field="contactNumber" />
@@ -301,9 +299,7 @@ const DoctorFormDialog = ({
                 id="registrationNumber"
                 name="registrationNumber"
                 placeholder="REG123456"
-                defaultValue={
-                  isEdit ? doctor?.registrationNumber : "A-45213"
-                }
+                defaultValue={isEdit ? doctor?.registrationNumber : "A-45213"}
                 required
               />
               <InputFieldError state={state} field="registrationNumber" />

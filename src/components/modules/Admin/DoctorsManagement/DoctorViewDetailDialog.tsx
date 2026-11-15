@@ -472,8 +472,8 @@ const DoctorViewDetailDialog = ({
 
                 {status !== "VERIFIED" && !hasRequiredDocuments && (
                   <p className="text-xs text-amber-700 dark:text-amber-300">
-                    Both the license and degree certificates are required
-                    before this doctor can be verified.
+                    Both the license and degree certificates are required before
+                    this doctor can be verified.
                   </p>
                 )}
 

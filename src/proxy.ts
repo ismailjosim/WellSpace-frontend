@@ -110,12 +110,15 @@ export async function proxy(request: NextRequest) {
   if (
     routerOwner === "ADMIN" ||
     routerOwner === "DOCTOR" ||
-    routerOwner === "PATIENT"
+    routerOwner === "PATIENT" ||
+    routerOwner === "SHOP"
   ) {
     const hasAccess =
       (routerOwner === "ADMIN" &&
         (userRole === "ADMIN" || userRole === "SUPER_ADMIN")) ||
-      userRole === routerOwner;
+      userRole === routerOwner ||
+      (routerOwner === "SHOP" &&
+        (userRole === "SHOP_MANAGER" || userRole === "SHOP_ASSISTANT"));
 
     if (!hasAccess && userRole) {
       const defaultRoute = getDefaultDashboardRoutes(userRole);

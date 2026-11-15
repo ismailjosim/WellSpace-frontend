@@ -2,7 +2,13 @@
 // exact: ["/my-profile",'settings']
 // patterns:["/^|/dashboard/","route sharing with /dashboard/* /dashboard/analytics, /dashboard/settings/profile"]
 
-export type UserRole = "SUPER_ADMIN" | "ADMIN" | "DOCTOR" | "PATIENT";
+export type UserRole =
+  | "SUPER_ADMIN"
+  | "ADMIN"
+  | "DOCTOR"
+  | "PATIENT"
+  | "SHOP_MANAGER"
+  | "SHOP_ASSISTANT";
 
 export type RouteConfig = {
   exact: string[];
@@ -29,6 +35,10 @@ export const patientProtectedRoutes: RouteConfig = {
   exact: [],
   patterns: [/^\/dashboard/],
 };
+export const shopProtectedRoutes: RouteConfig = {
+  exact: [],
+  patterns: [/^\/shop/],
+};
 
 export const isAuthRoute = (path: string) => {
   return authRoutes.some((route) => path.startsWith(route)); //* Use startsWith for prefix matching for example /login, /login/step2
@@ -46,7 +56,7 @@ export const isRouteMatches = (path: string, routes: RouteConfig): boolean => {
 };
 export const getRouteOwner = (
   path: string,
-): "ADMIN" | "DOCTOR" | "PATIENT" | "COMMON" | null => {
+): "ADMIN" | "DOCTOR" | "PATIENT" | "SHOP" | "COMMON" | null => {
   if (isRouteMatches(path, doctorProtectedRoutes)) {
     return "DOCTOR";
   }
@@ -55,6 +65,9 @@ export const getRouteOwner = (
   }
   if (isRouteMatches(path, patientProtectedRoutes)) {
     return "PATIENT";
+  }
+  if (isRouteMatches(path, shopProtectedRoutes)) {
+    return "SHOP";
   }
 
   if (isRouteMatches(path, commonProtectedRoutes)) {
@@ -73,6 +86,9 @@ export const getDefaultDashboardRoutes = (role: UserRole | string) => {
       return "/doctor/dashboard";
     case "PATIENT":
       return "/dashboard";
+    case "SHOP_MANAGER":
+    case "SHOP_ASSISTANT":
+      return "/shop/dashboard";
     default:
       return "/";
   }
@@ -93,6 +109,13 @@ export const isValidRedirectForRole = (
     (normalized === "ADMIN" ||
       normalized === "SUPER_ADMIN" ||
       normalized === "SUPERADMIN")
+  ) {
+    return true;
+  }
+
+  if (
+    routeOwner === "SHOP" &&
+    (normalized === "SHOP_MANAGER" || normalized === "SHOP_ASSISTANT")
   ) {
     return true;
   }

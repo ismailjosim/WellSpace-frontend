@@ -1,6 +1,6 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { Activity } from "lucide-react";
 
 interface HeartbeatLoaderProps {
   text?: string;
@@ -31,121 +31,122 @@ export default function HeartbeatLoader({
     xl: "text-[24px]",
   };
 
-  const iconSizeClasses = {
-    sm: 12,
-    md: 16,
-    lg: 24,
-    xl: 32,
-  };
-
   return (
     <div
-      className={`flex flex-col items-center gap-4 ${className} justify-center min-h-screen`}
+      role="status"
+      aria-live="polite"
+      className={`flex min-h-screen flex-col items-center justify-center gap-4 ${className}`}
     >
-      {/* Main Container */}
-      <div className={`relative ${sizeClasses[size]}`}>
-        {/* Outer Pulsing Ring */}
-        {animated && (
-          <motion.div
-            className="absolute inset-0 rounded-full border-[3px] border-blue-500"
-            initial={{ scale: 1, opacity: 1 }}
-            animate={{ scale: 1.15, opacity: 0 }}
+      <motion.svg
+        viewBox="0 0 120 120"
+        className={sizeClasses[size]}
+        role="img"
+        aria-label="WellSpace is loading"
+      >
+        <defs>
+          <linearGradient
+            id="wellspace-loader-ring"
+            x1="0"
+            y1="0"
+            x2="1"
+            y2="1"
+          >
+            <stop offset="0%" stopColor="#00b6a5" />
+            <stop offset="100%" stopColor="#ff8a00" />
+          </linearGradient>
+        </defs>
+
+        <motion.circle
+          cx="60"
+          cy="60"
+          r="53"
+          fill="none"
+          stroke="url(#wellspace-loader-ring)"
+          strokeDasharray="72 16 24 16"
+          strokeLinecap="round"
+          strokeWidth="3"
+          style={{ transformOrigin: "center" }}
+          animate={animated ? { rotate: 360 } : undefined}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+
+        <motion.circle
+          cx="60"
+          cy="60"
+          r="44"
+          fill="#ffffff"
+          fillOpacity="0.88"
+          stroke="#00a994"
+          strokeOpacity="0.18"
+          strokeWidth="1"
+          animate={animated ? { scale: [0.96, 1.04, 0.96] } : undefined}
+          style={{ transformOrigin: "center" }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        {showIcon ? (
+          <motion.path
+            d="M20 60h22l8-18 17 38 9-20h24"
+            fill="none"
+            stroke="#00a994"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="5"
+            animate={animated ? { pathLength: [0.2, 1, 0.2] } : undefined}
             transition={{
-              duration: 2,
+              duration: 1.8,
               repeat: Infinity,
-              ease: "easeOut",
+              ease: "easeInOut",
             }}
           />
-        )}
-
-        {/* Static Outer Ring */}
-        <div className="absolute inset-0 rounded-full border-[3px] border-blue-500" />
-
-        {/* Inner Container with Heartbeat */}
-        <div className="absolute inset-[15%] flex items-center justify-center">
-          {showIcon ? (
-            <motion.div
-              animate={
-                animated
-                  ? {
-                      scale: [1, 1.1, 1],
-                    }
-                  : {}
-              }
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <Activity
-                className="text-blue-500"
-                size={iconSizeClasses[size]}
-                strokeWidth={2}
-              />
-            </motion.div>
-          ) : (
-            <svg
-              className="w-full h-full"
-              style={{ transform: "scaleX(-1)" }}
-              fill="none"
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 58 58"
-            >
-              <motion.path
-                d="M52.744 28.7694H46.7983C45.7505 28.7672 44.7309 29.1082 43.8953 29.7403C43.0597 30.3724 42.4541 31.2609 42.1712 32.2697L36.5372 52.3124C36.5009 52.4369 36.4252 52.5463 36.3214 52.6241C36.2177 52.7019 36.0915 52.744 35.9618 52.744C35.8321 52.744 35.7059 52.7019 35.6022 52.6241C35.4984 52.5463 35.4227 52.4369 35.3864 52.3124L22.1525 5.22645C22.1162 5.10195 22.0404 4.99259 21.9367 4.91478C21.8329 4.83697 21.7068 4.79491 21.5771 4.79491C21.4474 4.79491 21.3212 4.83697 21.2175 4.91478C21.1137 4.99259 21.038 5.10195 21.0017 5.22645L15.3677 25.2692C15.0859 26.2741 14.4839 27.1596 13.6532 27.7913C12.8224 28.423 11.8082 28.7665 10.7646 28.7694H4.79491"
-                stroke="#3B82F6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                initial={animated ? { pathLength: 0, opacity: 0 } : {}}
-                animate={
-                  animated
-                    ? {
-                        pathLength: 1,
-                        opacity: 1,
-                      }
-                    : {}
-                }
-                transition={{
-                  pathLength: {
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  },
-                  opacity: {
-                    duration: 0.5,
-                  },
-                }}
-              />
-            </svg>
-          )}
-        </div>
-
-        {/* Heartbeat Pulse Effect */}
-        {animated && (
-          <motion.div
-            className="absolute inset-[15%] rounded-full bg-blue-500/20"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.5, 0.2, 0.5],
-            }}
+        ) : (
+          <motion.image
+            href="/wellspace-logo.png"
+            x="22"
+            y="22"
+            width="76"
+            height="76"
+            preserveAspectRatio="xMidYMid meet"
+            animate={animated ? { scale: [0.94, 1.02, 0.94] } : undefined}
+            style={{ transformOrigin: "60px 60px" }}
             transition={{
-              duration: 1.5,
+              duration: 2,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           />
         )}
-      </div>
 
-      {/* Text */}
+        {animated && (
+          <motion.circle
+            cx="60"
+            cy="7"
+            r="3"
+            fill="#ff8a00"
+            animate={{ opacity: [0.45, 1, 0.45], scale: [0.8, 1.2, 0.8] }}
+            transition={{
+              duration: 1.4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        )}
+      </motion.svg>
+
       {text && (
         <motion.p
-          className={`font-medium text-muted-foreground text-center ${textSizeClasses[size]}`}
-          initial={animated ? { opacity: 0, y: 10 } : {}}
-          animate={animated ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5, duration: 0.5 }}
+          className={`text-center font-medium text-muted-foreground ${textSizeClasses[size]}`}
+          initial={animated ? { opacity: 0, y: 10 } : undefined}
+          animate={animated ? { opacity: 1, y: 0 } : undefined}
+          transition={{ delay: 0.3, duration: 0.5 }}
         >
           {text}
         </motion.p>

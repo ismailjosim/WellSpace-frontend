@@ -13,6 +13,12 @@ export interface UserInfo {
   isMfaEnabled?: boolean;
   mfaMethod?: string;
   admin?: IAdmin;
+  shopStaff?: {
+    id: string;
+    name: string;
+    email: string;
+    contactNumber: string;
+  };
   patient?: IPatient;
   doctor?: IDoctor;
   createdAt: string;

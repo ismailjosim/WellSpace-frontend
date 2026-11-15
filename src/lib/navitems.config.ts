@@ -11,13 +11,27 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
           title: "Dashboard",
           href: defaultDashboard,
           icon: "LayoutDashboard",
-          roles: ["PATIENT", "DOCTOR", "ADMIN", "SUPER_ADMIN"],
+          roles: [
+            "PATIENT",
+            "DOCTOR",
+            "ADMIN",
+            "SUPER_ADMIN",
+            "SHOP_MANAGER",
+            "SHOP_ASSISTANT",
+          ],
         },
         {
           title: "My Profile",
           href: `/my-profile`,
           icon: "User",
-          roles: ["PATIENT", "DOCTOR", "ADMIN", "SUPER_ADMIN"],
+          roles: [
+            "PATIENT",
+            "DOCTOR",
+            "ADMIN",
+            "SUPER_ADMIN",
+            "SHOP_MANAGER",
+            "SHOP_ASSISTANT",
+          ],
         },
       ],
     },
@@ -84,6 +98,12 @@ export const patientNavItems: NavSection[] = [
         icon: "Activity",
         roles: ["PATIENT"],
       },
+      {
+        title: "Medicine Orders",
+        href: "/dashboard/medicine-orders",
+        icon: "Pill",
+        roles: ["PATIENT"],
+      },
     ],
   },
 ];
@@ -107,6 +127,23 @@ export const adminNavItems: NavSection[] = [
       {
         title: "Patients",
         href: "/admin/dashboard/patients-management",
+        icon: "Users",
+        roles: ["ADMIN", "SUPER_ADMIN"],
+      },
+    ],
+  },
+  {
+    title: "Pharmacy Overview",
+    items: [
+      {
+        title: "Shop Overview",
+        href: "/admin/dashboard/shop-overview",
+        icon: "Pill",
+        roles: ["ADMIN", "SUPER_ADMIN"],
+      },
+      {
+        title: "Shop Staff",
+        href: "/admin/dashboard/shop-staff",
         icon: "Users",
         roles: ["ADMIN", "SUPER_ADMIN"],
       },
@@ -179,6 +216,34 @@ export const getNavItemsByRole = (
       ];
     case "PATIENT":
       return [...commonNavItems, ...patientNavItems];
+    case "SHOP_MANAGER":
+    case "SHOP_ASSISTANT":
+      return [
+        ...commonNavItems,
+        {
+          title: "Pharmacy",
+          items: [
+            {
+              title: "Shop Overview",
+              href: "/shop/dashboard",
+              icon: "LayoutDashboard",
+              roles: ["SHOP_MANAGER", "SHOP_ASSISTANT"],
+            },
+            {
+              title: "Medicine Catalog",
+              href: "/shop/dashboard/medicines",
+              icon: "Pill",
+              roles: ["SHOP_MANAGER", "SHOP_ASSISTANT"],
+            },
+            {
+              title: "Orders",
+              href: "/shop/dashboard/orders",
+              icon: "ShoppingBag",
+              roles: ["SHOP_MANAGER", "SHOP_ASSISTANT"],
+            },
+          ],
+        },
+      ];
     default:
       return [];
   }
