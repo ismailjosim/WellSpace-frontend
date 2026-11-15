@@ -54,16 +54,30 @@ const DoctorViewDetailDialog = ({
   doctor,
 }: IDoctorViewDialogProps) => {
   const router = useRouter();
-  const [status, setStatus] = useState<string>(
-    doctor?.verificationStatus || "PENDING",
-  );
+  const [statusOverride, setStatusOverride] = useState<{
+    doctorId: string;
+    from: string;
+    to: string;
+  } | null>(null);
   const [rejectionReasonInput, setRejectionReasonInput] = useState("");
   const [showRejectInput, setShowRejectInput] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
+  const initialStatus = doctor?.verificationStatus || "PENDING";
+  const status =
+    statusOverride &&
+    statusOverride.doctorId === doctor?.id &&
+    statusOverride.from === initialStatus
+      ? statusOverride.to
+      : initialStatus;
+
   if (!doctor) {
     return null;
   }
+
+  const hasRequiredDocuments = Boolean(
+    doctor.licenseDocumentUrl && doctor.degreeDocumentUrl,
+  );
 
   const handleApprove = async () => {
     if (!doctor?.id) return;
@@ -73,7 +87,11 @@ const DoctorViewDetailDialog = ({
         status: "VERIFIED",
       });
       if (res.success) {
-        setStatus("VERIFIED");
+        setStatusOverride({
+          doctorId: doctor.id,
+          from: initialStatus,
+          to: "VERIFIED",
+        });
         toast.success(`Dr. ${doctor.name} has been verified successfully!`);
         router.refresh();
       } else {
@@ -95,7 +113,11 @@ const DoctorViewDetailDialog = ({
         rejectionReason: rejectionReasonInput.trim(),
       });
       if (res.success) {
-        setStatus("REJECTED");
+        setStatusOverride({
+          doctorId: doctor.id,
+          from: initialStatus,
+          to: "REJECTED",
+        });
         setShowRejectInput(false);
         toast.success(`Verification for Dr. ${doctor.name} has been rejected.`);
         router.refresh();
@@ -110,7 +132,16 @@ const DoctorViewDetailDialog = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
+    <Dialog
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!nextOpen) {
+          setShowRejectInput(false);
+          setRejectionReasonInput("");
+          onClose();
+        }
+      }}
+    >
       <DialogContent className="min-w-5xl max-h-[90vh] flex flex-col p-0">
         <DialogHeader className="px-6 pt-6 pb-4">
           <DialogTitle>Doctor Profile</DialogTitle>
@@ -411,7 +442,7 @@ const DoctorViewDetailDialog = ({
                     {status !== "VERIFIED" && (
                       <Button
                         size="sm"
-                        disabled={isProcessing}
+                        disabled={isProcessing || !hasRequiredDocuments}
                         onClick={handleApprove}
                         className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs flex items-center gap-1.5"
                       >
@@ -424,7 +455,7 @@ const DoctorViewDetailDialog = ({
                       </Button>
                     )}
 
-                    {status !== "REJECTED" && (
+                    {status !== "VERIFIED" && status !== "REJECTED" && (
                       <Button
                         size="sm"
                         variant="destructive"
@@ -438,6 +469,13 @@ const DoctorViewDetailDialog = ({
                     )}
                   </div>
                 </div>
+
+                {status !== "VERIFIED" && !hasRequiredDocuments && (
+                  <p className="text-xs text-amber-700 dark:text-amber-300">
+                    Both the license and degree certificates are required
+                    before this doctor can be verified.
+                  </p>
+                )}
 
                 {showRejectInput && (
                   <div className="pt-2 space-y-2">

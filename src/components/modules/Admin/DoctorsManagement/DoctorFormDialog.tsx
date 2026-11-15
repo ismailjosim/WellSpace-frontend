@@ -52,6 +52,10 @@ const DoctorFormDialog = ({
   const [gender, setGender] = useState<"MALE" | "FEMALE">(
     doctor?.gender || "MALE",
   );
+  const [doctorName, setDoctorName] = useState(doctor?.name || "");
+  const [doctorEmail, setDoctorEmail] = useState(doctor?.email || "");
+  const [emailManuallyEdited, setEmailManuallyEdited] = useState(isEdit);
+  const [customSpecialties, setCustomSpecialties] = useState<ISpecialty[]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -67,8 +71,27 @@ const DoctorFormDialog = ({
     open,
   });
 
+  const allSpecialties = [...(specialties || []), ...customSpecialties];
+
   const getSpecialtyTitle = (id: string): string => {
-    return specialties?.find((s) => s.id === id)?.title || "Unknown";
+    return allSpecialties.find((s) => s.id === id)?.title || "Unknown";
+  };
+
+  const handleNameChange = (name: string) => {
+    setDoctorName(name);
+    if (isEdit || emailManuallyEdited) return;
+
+    const emailName = name
+      .trim()
+      .replace(/^dr\.?\s*/i, "")
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(Boolean)
+      .join(".")
+      .replace(/[^a-z0-9.]/g, "")
+      .replace(/\.+/g, ".")
+      .replace(/^\.+|\.+$/g, "");
+    setDoctorEmail(emailName ? `${emailName}@wellspace.com` : "");
   };
 
   useEffect(() => {
@@ -89,7 +112,19 @@ const DoctorFormDialog = ({
     }
   }, [state, isEdit, onClose, onSuccess]);
   return (
-    <Dialog open={open} onOpenChange={onClose}>
+    <Dialog
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!nextOpen) {
+          setGender(doctor?.gender || "MALE");
+          setDoctorName(doctor?.name || "");
+          setDoctorEmail(doctor?.email || "");
+          setEmailManuallyEdited(Boolean(doctor));
+          setCustomSpecialties([]);
+          onClose();
+        }
+      }}
+    >
       <DialogContent className="max-h-[90vh] flex flex-col p-0">
         <DialogHeader className="px-6 pt-6 pb-4">
           <DialogTitle>{isEdit ? "Edit Doctor" : "Add New Doctor"}</DialogTitle>
@@ -105,7 +140,8 @@ const DoctorFormDialog = ({
                 id="name"
                 name="name"
                 placeholder="Dr. John Doe"
-                defaultValue={isEdit ? doctor?.name : undefined}
+                value={doctorName}
+                onChange={(event) => handleNameChange(event.target.value)}
                 required
               />
               <InputFieldError state={state} field="name" />
@@ -120,7 +156,11 @@ const DoctorFormDialog = ({
                 name="email"
                 type="email"
                 placeholder="doctor@example.com"
-                defaultValue={isEdit ? doctor?.email : undefined}
+                value={doctorEmail}
+                onChange={(event) => {
+                  setDoctorEmail(event.target.value);
+                  setEmailManuallyEdited(true);
+                }}
                 disabled={isEdit}
                 required
               />
@@ -139,6 +179,7 @@ const DoctorFormDialog = ({
                       name="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter password"
+                      defaultValue="PASSWORD"
                       className="pr-10"
                       required
                     />
@@ -170,6 +211,7 @@ const DoctorFormDialog = ({
                       name="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm password"
+                      defaultValue="PASSWORD"
                       className="pr-10"
                       required
                     />
@@ -200,13 +242,17 @@ const DoctorFormDialog = ({
               removedSpecialtyIds={specialtySelection.removedSpecialtyIds}
               currentSpecialtyId={specialtySelection.currentSpecialtyId}
               availableSpecialties={specialtySelection.getAvailableSpecialties(
-                specialties!,
+                allSpecialties,
               )}
+              allSpecialties={allSpecialties}
               isEdit={isEdit}
               onCurrentSpecialtyChange={
                 specialtySelection.setCurrentSpecialtyId
               }
               onAddSpecialty={specialtySelection.handleAddSpecialty}
+              onSpecialtyCreated={(specialty) =>
+                setCustomSpecialties((current) => [...current, specialty])
+              }
               onRemoveSpecialty={specialtySelection.handleRemoveSpecialty}
               getSpecialtyTitle={getSpecialtyTitle}
               getNewSpecialties={specialtySelection.getNewSpecialties}
@@ -221,7 +267,9 @@ const DoctorFormDialog = ({
                 id="contactNumber"
                 name="contactNumber"
                 placeholder="+1234567890"
-                defaultValue={doctor?.contactNumber}
+                defaultValue={
+                  isEdit ? doctor?.contactNumber : "+8801711234501"
+                }
                 required
               />
               <InputFieldError state={state} field="contactNumber" />
@@ -235,7 +283,11 @@ const DoctorFormDialog = ({
                 id="address"
                 name="address"
                 placeholder="123 Main St, City, Country"
-                defaultValue={isEdit ? doctor?.address : undefined}
+                defaultValue={
+                  isEdit
+                    ? doctor?.address
+                    : "House 12, Road 5, Dhanmondi, Dhaka"
+                }
                 required
               />
               <InputFieldError state={state} field="address" />
@@ -249,7 +301,9 @@ const DoctorFormDialog = ({
                 id="registrationNumber"
                 name="registrationNumber"
                 placeholder="REG123456"
-                defaultValue={isEdit ? doctor?.registrationNumber : undefined}
+                defaultValue={
+                  isEdit ? doctor?.registrationNumber : "A-45213"
+                }
                 required
               />
               <InputFieldError state={state} field="registrationNumber" />
@@ -264,7 +318,7 @@ const DoctorFormDialog = ({
                 name="experience"
                 type="number"
                 placeholder="5"
-                defaultValue={isEdit ? doctor?.experience : undefined}
+                defaultValue={isEdit ? doctor?.experience : 5}
                 min="0"
                 required
               />
@@ -307,7 +361,7 @@ const DoctorFormDialog = ({
                 name="appointmentFee"
                 type="number"
                 placeholder="100"
-                defaultValue={isEdit ? doctor?.appointmentFee : undefined}
+                defaultValue={isEdit ? doctor?.appointmentFee : 1000}
                 min="0"
                 required
               />

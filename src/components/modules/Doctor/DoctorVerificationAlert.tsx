@@ -36,9 +36,14 @@ export default function DoctorVerificationAlert({
   licenseDocumentUrl,
   degreeDocumentUrl,
 }: DoctorVerificationAlertProps) {
-  const [currentStatus, setCurrentStatus] = useState(status);
+  const [statusOverride, setStatusOverride] = useState<{
+    from: typeof status;
+    to: typeof status;
+  } | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const currentStatus =
+    statusOverride?.from === status ? statusOverride.to : status;
 
   if (currentStatus === "VERIFIED") {
     return (
@@ -46,7 +51,8 @@ export default function DoctorVerificationAlert({
         <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
         <span>
           <strong>Credentials Verified:</strong> You are fully authorized to
-          accept bookings and issue clinical prescriptions.
+          accept bookings and issue clinical prescriptions. Contact an
+          administrator to request credential document updates.
         </span>
       </div>
     );
@@ -59,8 +65,11 @@ export default function DoctorVerificationAlert({
     const licenseFile = formData.get("licenseDocument") as File | null;
     const degreeFile = formData.get("degreeDocument") as File | null;
 
-    if (!licenseFile?.name && !degreeFile?.name) {
-      toast.error("Please select at least one document to upload");
+    if (
+      !(licenseFile?.name || licenseDocumentUrl) ||
+      !(degreeFile?.name || degreeDocumentUrl)
+    ) {
+      toast.error("Upload both a license certificate and a degree certificate");
       return;
     }
 
@@ -68,7 +77,7 @@ export default function DoctorVerificationAlert({
       setIsUploading(true);
       const res = await uploadDoctorVerificationDocuments(formData);
       if (res.success) {
-        setCurrentStatus("UNDER_REVIEW");
+        setStatusOverride({ from: status, to: "UNDER_REVIEW" });
         setModalOpen(false);
         toast.success(
           "Medical certificates submitted successfully! Status updated to Under Review.",
@@ -178,6 +187,7 @@ export default function DoctorVerificationAlert({
                 type="file"
                 accept=".pdf,.png,.jpg,.jpeg,.webp"
                 className="text-xs cursor-pointer"
+                required={!licenseDocumentUrl}
               />
               {licenseDocumentUrl && (
                 <p className="text-[10px] text-muted-foreground truncate">
@@ -196,6 +206,7 @@ export default function DoctorVerificationAlert({
                 type="file"
                 accept=".pdf,.png,.jpg,.jpeg,.webp"
                 className="text-xs cursor-pointer"
+                required={!degreeDocumentUrl}
               />
               {degreeDocumentUrl && (
                 <p className="text-[10px] text-muted-foreground truncate">
