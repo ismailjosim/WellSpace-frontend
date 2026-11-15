@@ -186,7 +186,10 @@ export default function AdminAnalyticsDashboard({
   data,
   activeRange,
 }: AdminAnalyticsDashboardProps) {
-  const totalUsers = data.patientCount + data.doctorCount + data.adminCount;
+  const totalUsers = data.userRoleDistribution.reduce(
+    (total, item) => total + item.count,
+    0,
+  );
   const maxSpecialtyDoctors = Math.max(
     ...data.topSpecialties.map((specialty) => specialty.doctorCount),
     1,
@@ -333,17 +336,25 @@ export default function AdminAnalyticsDashboard({
       </div>
 
       <div className="grid gap-6 xl:grid-cols-3">
-        <Card>
+        <Card className="min-w-0">
           <CardHeader>
             <CardTitle>User Mix</CardTitle>
             <CardDescription>Total users by role</CardDescription>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={roleChartConfig} className="h-65">
+            <ChartContainer
+              config={roleChartConfig}
+              className="h-65 w-full min-w-0 aspect-auto"
+            >
               <BarChart
                 accessibilityLayer
                 data={data.userRoleDistribution.map((item) => ({
-                  role: formatEnum(item.role),
+                  role:
+                    item.role === "SHOP_MANAGER"
+                      ? "SHOP MGR"
+                      : item.role === "SHOP_ASSISTANT"
+                        ? "SHOP ASST"
+                        : formatEnum(item.role),
                   count: item.count,
                 }))}
               >
@@ -357,7 +368,7 @@ export default function AdminAnalyticsDashboard({
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="min-w-0">
           <CardHeader>
             <CardTitle>Payment Status</CardTitle>
             <CardDescription>Paid vs unpaid appointments</CardDescription>
@@ -386,7 +397,7 @@ export default function AdminAnalyticsDashboard({
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="min-w-0">
           <CardHeader>
             <CardTitle>Top Specialties</CardTitle>
             <CardDescription>By assigned doctor count</CardDescription>

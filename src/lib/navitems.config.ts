@@ -130,6 +130,12 @@ export const adminNavItems: NavSection[] = [
         icon: "Users",
         roles: ["ADMIN", "SUPER_ADMIN"],
       },
+      {
+        title: "Shop Staff",
+        href: "/admin/dashboard/shop-staff",
+        icon: "Users",
+        roles: ["ADMIN", "SUPER_ADMIN"],
+      },
     ],
   },
   {
@@ -139,12 +145,6 @@ export const adminNavItems: NavSection[] = [
         title: "Shop Overview",
         href: "/admin/dashboard/shop-overview",
         icon: "Pill",
-        roles: ["ADMIN", "SUPER_ADMIN"],
-      },
-      {
-        title: "Shop Staff",
-        href: "/admin/dashboard/shop-staff",
-        icon: "Users",
         roles: ["ADMIN", "SUPER_ADMIN"],
       },
     ],
